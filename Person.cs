@@ -2,39 +2,32 @@
 {
 	internal abstract class Person : IComparable
 	{
-		private string firstName;
-		private string lastName;
-		private int socialSecurityNumber;
-		private DateTime birthday;
-		private string address;
-		private string email;
-		private string phoneNumber;
-
-		public string FirstName { get => this.firstName; set => this.firstName = value; }
-		public string LastName { get => this.lastName; set => this.lastName = value.ToUpper(); }
-		public int SocialSecurityNumber { get => this.socialSecurityNumber; set => this.socialSecurityNumber = value; }
-		public DateTime Birthday { get => this.birthday; set => this.birthday = value; }
-		public string Address { get => this.address; set => this.address = value; }
-		public string Email { get => this.email; set => this.email = value; }
-		public string PhoneNumber { get => this.phoneNumber; set => this.phoneNumber = value; }
+		public string FirstName { get; set; }
+		private string _lastName;
+		public string LastName { get => this._lastName; set => this._lastName = value.ToUpper(); }
+		public int SocialSecurityNumber { get; init; }
+		public DateTime Birthday { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string PhoneNumber { get; set; }
 
 		public Person(string firstName = "Unknown", string lastName = "UNKNOWN",
 			int socialSecurityNumber = 0, DateTime? birthday = null, string address = "",
 			string email = "", string phoneNumber = "")
 		{
-			this.firstName = firstName;
-			this.lastName = lastName.ToUpper();
-			this.socialSecurityNumber = socialSecurityNumber;
-			this.birthday = birthday is null ? new DateTime() : (DateTime)birthday;
-			this.address = address;
-			this.email = email;
-			this.phoneNumber = phoneNumber;
+			this.FirstName = firstName;
+			this.LastName = lastName;
+			this.SocialSecurityNumber = socialSecurityNumber;
+			this.Birthday = birthday is null ? new DateTime() : (DateTime)birthday;
+			this.Address = address;
+			this.Email = email;
+			this.PhoneNumber = phoneNumber;
 		}
 
 		public override string ToString()
 		{
-			return $"{this.firstName} {this.lastName} #{this.socialSecurityNumber} | " +
-				$"birthday: {this.birthday}, address: {this.address}, email: {this.email}, phoneNumber: {this.phoneNumber}";
+			return $"{this.FirstName} {this.LastName} #{this.SocialSecurityNumber} | " +
+				$"birthday: {this.Birthday}, address: {this.Address}, email: {this.Email}, phoneNumber: {this.PhoneNumber}";
 		}
 
 		public int CompareTo(object? obj)
