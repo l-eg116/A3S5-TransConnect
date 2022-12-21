@@ -21,7 +21,7 @@ namespace A3S5_TransConnect
 		}
 
 		public override string ToString()
-			=> $"Vehicle {this.Model} ({this.Brand}) #{this.NumberPlate} | LastRevision: {this.LastRevision}, " +
-			$"KilometerCount: {this.KilometerCount}, FuelType: {this.FuelType}";
+			=> $"{this.GetType().Name} {this.Model} ({this.Brand}) #{this.NumberPlate} | LastRevision: {this.LastRevision}, " +
+			$"KilometerCount: {this.KilometerCount}km, FuelType: {this.FuelType}";
 	}
 }

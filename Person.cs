@@ -6,7 +6,7 @@
 		private string _lastName;
 		public string LastName { get => this._lastName; set => this._lastName = value.ToUpper(); }
 		public int SocialSecurityNumber { get; init; }
-		public DateTime Birthday { get; set; }
+		public DateTime? Birthday { get; set; }
 		public string Address { get; set; }
 		public string Email { get; set; }
 		public string PhoneNumber { get; set; }
@@ -18,7 +18,7 @@
 			this.FirstName = firstName;
 			this.LastName = lastName;
 			this.SocialSecurityNumber = socialSecurityNumber;
-			this.Birthday = birthday is null ? new DateTime() : (DateTime)birthday;
+			this.Birthday = birthday;
 			this.Address = address;
 			this.Email = email;
 			this.PhoneNumber = phoneNumber;
@@ -27,7 +27,7 @@
 		public override string ToString()
 		{
 			return $"{this.FirstName} {this.LastName} #{this.SocialSecurityNumber} | " +
-				$"birthday: {this.Birthday}, address: {this.Address}, email: {this.Email}, phoneNumber: {this.PhoneNumber}";
+				$"Birthday: {this.Birthday}, Address: {this.Address}, Email: {this.Email}, PhoneNumber: {this.PhoneNumber}";
 		}
 
 		public int CompareTo(object? obj)

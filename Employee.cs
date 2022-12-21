@@ -21,8 +21,8 @@
 
 		public override string ToString()
 		{
-			return base.ToString() + $"joinDate: {this.JoinDate}, jobTitle:{this.JobTitle}, " +
-				$"salary: {this.Salary}, " + (this.HasSubordinates() ? this.Subordinates.Count : 0) + " subordinate(s)";
+			return base.ToString() + $", JoinDate: {this.JoinDate}, JobTitle: {this.JobTitle}, " +
+				$"Salary: {this.Salary}, " + (this.HasSubordinates() ? this.Subordinates.Count : 0) + " subordinate(s)";
 		}
 
 		public bool HasSubordinates()
