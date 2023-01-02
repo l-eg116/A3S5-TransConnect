@@ -16,5 +16,50 @@ namespace A3S5_TransConnect
 
 		public override string ToString()
 			=> $"CityMap | {this.Cities.Count} cities, {this.Roads.Count} roads";
+
+		public List<Road> RoadsTo(City city)
+		{
+			List<Road> roads = new List<Road>();
+			foreach (Road r in this.Roads)
+				if (r.Links(city))
+					roads.Add(r);
+			return roads;
+		}
+
+		public Dictionary<City, (uint, City?, bool)> Dijkstra(City root)
+		{
+			// (city, distance to origin, parent, toTick?)
+			Dictionary<City, (uint, City?, bool)> mapState = new Dictionary<City, (uint, City?, bool)>();
+			foreach (City c in this.Cities)
+				mapState.Add(c, (uint.MaxValue, null, true));
+			mapState[root] = (0, null, true);
+
+			while (mapState.Any(x => x.Value.Item3))
+			{
+				City next = mapState.Where(kvp => kvp.Value.Item3).First().Key;
+				foreach (KeyValuePair<City, (uint, City?, bool)> kvp in mapState.Where(kvp => kvp.Value.Item3))
+					if (kvp.Value.Item1 < mapState[next].Item1)
+						next = kvp.Key;
+				mapState[next] = (mapState[next].Item1, mapState[next].Item2, false);
+
+				foreach (Road r in this.RoadsTo(next))
+					if (mapState[r.Other(next)].Item1 > mapState[next].Item1 + r.Distance)
+						mapState[r.Other(next)] = (mapState[next].Item1 + r.Distance, next, mapState[r.Other(next)].Item3);
+			}
+
+			return mapState;
+		}
+		public uint DistanceBetween(City from, City to)
+			=> this.Dijkstra(from)[to].Item1;
+		public List<Road>? PathFromTo(City from, City to)
+		{
+			List<Road> path = new List<Road>();
+			Dictionary<City, (uint, City?, bool)> map = this.Dijkstra(from);
+			for (City? current = to; current != from; current = map[current].Item2)
+				if (current is null || map[current].Item2 is null) return null;
+				else path.Add(this.Roads.Where(r => r.Links(current, map[current].Item2)).Single());
+			path.Reverse();
+			return path;
+		}
 	}
 }
