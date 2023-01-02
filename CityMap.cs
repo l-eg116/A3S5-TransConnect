@@ -9,8 +9,8 @@ namespace A3S5_TransConnect
 		{
 			this.Cities = cities is null ? new HashSet<City>() : cities;
 			this.Roads = roads is null ? new HashSet<Road>() : roads;
-			foreach(Road road in this.Roads)
-				if(!this.Cities.Contains(road.Black) || !this.Cities.Contains(road.White))
+			foreach (Road road in this.Roads)
+				if (!this.Cities.Contains(road.Black) || !this.Cities.Contains(road.White))
 					throw new ArgumentException("Roads passed should all connect cities in the passed cities.");
 		}
 

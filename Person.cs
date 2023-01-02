@@ -1,6 +1,6 @@
 ﻿namespace A3S5_TransConnect
 {
-	internal abstract class Person : IComparable
+	internal abstract class Person : IComparable, ISaveLoadable<Person>
 	{
 		public string FirstName { get; set; }
 		private string _lastName;
@@ -34,5 +34,8 @@
 		{
 			return obj is Person ? this.ToString().CompareTo(obj.ToString()) : 1;
 		}
+
+		public virtual bool Save(string path, bool suppressErrors = false) => throw new NotImplementedException();
+		public static Person? Load(string path, bool suppressErrors = false) => throw new NotImplementedException();
 	}
 }
