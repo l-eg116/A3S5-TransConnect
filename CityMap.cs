@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic.FileIO;
+
 namespace A3S5_TransConnect
 {
 	class CityMap
@@ -12,6 +14,44 @@ namespace A3S5_TransConnect
 			foreach (Road road in this.Roads)
 				if (!this.Cities.Contains(road.Black) || !this.Cities.Contains(road.White))
 					throw new ArgumentException("Roads passed should all connect cities in the passed cities.");
+		}
+		public CityMap(HashSet<Road>? roads = null)
+		{
+			this.Cities = new HashSet<City>();
+			this.Roads = roads is null ? new HashSet<Road>() : roads;
+			foreach (Road road in this.Roads)
+			{
+				this.Cities.Add(road.Black);
+				this.Cities.Add(road.White);
+			}
+		}
+
+		public static CityMap? LoadCSV(string path, bool ignoreErrors = false)
+		{
+			HashSet<Road> roads = new HashSet<Road>();
+			List<string[]?> csvTable = new List<string[]?>();
+			try
+			{
+				using (TextFieldParser csvParser = new TextFieldParser(path))
+				{
+					csvParser.CommentTokens = new string[] { "#" };
+					csvParser.SetDelimiters(new string[] { ",", ";" });
+					csvParser.HasFieldsEnclosedInQuotes = true;
+					while (!csvParser.EndOfData) csvTable.Add(csvParser.ReadFields());
+				}
+			}
+			catch (Exception ex)
+			{
+				if (ignoreErrors) return null;
+				else throw ex;
+			}
+			foreach (string[]? csvLine in csvTable)
+				if (csvLine != null && csvLine.Length >= 3)
+				{
+					uint d = uint.TryParse(csvLine[2], out uint x) ? x : 0;
+					roads.Add(new Road(new City(csvLine[0]), new City(csvLine[1]), d));
+				}
+			return new CityMap(roads);
 		}
 
 		public override string ToString()
