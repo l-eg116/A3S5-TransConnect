@@ -4,18 +4,18 @@ namespace A3S5_TransConnect
 	{
 		public City Black { get; init; }
 		public City White { get; init; }
-		public uint Distance { get; set; }
+		public uint DistanceKm { get; set; }
 
-		public Road(City black, City white, uint distance = 0)
+		public Road(City black, City white, uint distanceKm = 0)
 		{
 			if (black == white) throw new ArgumentException("Black and White cannot be the same City.");
 			this.Black = black;
 			this.White = white;
-			this.Distance = distance;
+			this.DistanceKm = distanceKm;
 		}
 
 		public override string ToString()
-			=> $"Road | {this.Black} <=> {this.White} ({this.Distance} km)";
+			=> $"Road | {this.Black} <=> {this.White} ({this.DistanceKm} km)";
 
 		public override int GetHashCode()
 			=> this.Black.GetHashCode() ^ this.White.GetHashCode();

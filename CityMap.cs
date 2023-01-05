@@ -83,8 +83,8 @@ namespace A3S5_TransConnect
 				mapState[next] = (mapState[next].Item1, mapState[next].Item2, false);
 
 				foreach (Road r in this.RoadsTo(next))
-					if (mapState[r.Other(next)].Item1 > mapState[next].Item1 + r.Distance)
-						mapState[r.Other(next)] = (mapState[next].Item1 + r.Distance, next, mapState[r.Other(next)].Item3);
+					if (mapState[r.Other(next)].Item1 > mapState[next].Item1 + r.DistanceKm)
+						mapState[r.Other(next)] = (mapState[next].Item1 + r.DistanceKm, next, mapState[r.Other(next)].Item3);
 			}
 
 			return mapState;
