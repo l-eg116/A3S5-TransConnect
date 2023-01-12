@@ -31,5 +31,8 @@ namespace A3S5_TransConnect
 			=> $"Ticket | Client: #{this.Client.SocialSecurityNumber}, {this.Origin} -> {this.Destination}, " +
 				$"Driver: #{this.Driver.SocialSecurityNumber}, Vehicle: #{this.Vehicle.NumberPlate}, Date: {this.Date}, " +
 				$"Cost: {this.Cost}€, Payed: {this.Payed}";
+		
+		public bool IsPast()
+			=> this.Date.CompareTo(DateTime.Now) < 0;
 	}
 }
