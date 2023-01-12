@@ -38,6 +38,8 @@ namespace A3S5_TransConnect
 			}
 		}
 
+		public CompanyTree() : this(default, default)
+		{ }
 		public CompanyTree(string name = "Unnamed Company", Employee? root = null)
 		{
 			this.Name = name;

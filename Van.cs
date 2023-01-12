@@ -4,6 +4,8 @@ namespace A3S5_TransConnect
 	{
 		public string Type { get; set; }
 
+		public Van() : this(default, default, default, default, default, default, default)
+		{ }
 		public Van(string model = "Unknown", string brand = "Unknown", string numberPlate = "00AAA000",
 			DateTime? lastRevision = null, uint kilometerCount = 0, string fuelType = "Unknown", string type = "Utility")
 			: base(model, brand, numberPlate, lastRevision, kilometerCount, fuelType)

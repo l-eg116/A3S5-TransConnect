@@ -9,6 +9,8 @@ namespace A3S5_TransConnect
 		public uint KilometerCount { get; set; }
 		public string FuelType { get; set; }
 
+		public Vehicle() : this(default, default, default, default, default, default)
+		{ }
 		public Vehicle(string model = "Unknown", string brand = "Unknown", string numberPlate = "00AAA000",
 			DateTime? lastRevision = null, uint kilometerCount = 0, string fuelType = "Unknown")
 		{

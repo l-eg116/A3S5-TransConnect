@@ -11,6 +11,8 @@ namespace A3S5_TransConnect
 		private double _cost;
 		public double Cost { get => this._cost; set => this._cost = Math.Max(0, value); }
 
+		public Ticket() : this(default, default, default, default, default, default, default)
+		{ }
 		public Ticket(Client? client = null, string origin = "Unknown", string destination = "Unknown",
 			Employee? driver = null, Vehicle? vehicle = null, DateTime? date = null, double cost = 0)
 		{

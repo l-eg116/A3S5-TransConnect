@@ -7,6 +7,8 @@
 		public uint Salary { get; set; }
 		public List<Employee>? Subordinates { get; set; }
 
+		public Employee() : this(default, default, default, default, default, default, default, default, default, default, default)
+		{ }
 		public Employee(string firstName = "Unknown", string lastName = "UNKNOWN",
 			int socialSecurityNumber = 0, DateTime? birthday = null, string address = "",
 			string email = "", string phoneNumber = "",

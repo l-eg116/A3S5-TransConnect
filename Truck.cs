@@ -6,6 +6,8 @@ namespace A3S5_TransConnect
 		public uint Capacity { get; set; }
 		public string CapacityUnit { get; set; }
 
+		public Truck() : this(default, default, default, default, default, default, default, default, default)
+		{ }
 		public Truck(string model = "Unknown", string brand = "Unknown", string numberPlate = "00AAA000",
 			DateTime? lastRevision = null, uint kilometerCount = 0, string fuelType = "Unknown",
 			string payloadType = "Generic", uint capacity = 0, string capacityUnit = "kg")

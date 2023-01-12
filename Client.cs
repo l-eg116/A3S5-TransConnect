@@ -2,6 +2,8 @@
 {
 	internal class Client : Person
 	{
+		public Client() : this(default, default, default, default, default, default, default)
+		{ }
 		public Client(string firstName = "Unknown", string lastName = "UNKNOWN",
 			int socialSecurityNumber = 0, DateTime? birthday = null, string address = "",
 			string email = "", string phoneNumber = "")

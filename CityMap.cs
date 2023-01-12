@@ -7,6 +7,8 @@ namespace A3S5_TransConnect
 		public HashSet<City> Cities { get; private set; }
 		public HashSet<Road> Roads { get; private set; }
 
+		public CityMap() : this(default, default)
+		{ }
 		public CityMap(HashSet<City>? cities = null, HashSet<Road>? roads = null)
 		{
 			this.Cities = cities is null ? new HashSet<City>() : cities;

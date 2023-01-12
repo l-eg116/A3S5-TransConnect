@@ -3,14 +3,15 @@
 	internal abstract class Person : IComparable
 	{
 		public string FirstName { get; set; }
-		private string _lastName;
-		public string LastName { get => this._lastName; set => this._lastName = value.ToUpper(); }
+		public string LastName { get; set; }
 		public int SocialSecurityNumber { get; init; }
 		public DateTime? Birthday { get; set; }
 		public string Address { get; set; }
 		public string Email { get; set; }
 		public string PhoneNumber { get; set; }
 
+		public Person() : this(default, default, default, default, default, default, default)
+		{ }
 		public Person(string firstName = "Unknown", string lastName = "UNKNOWN",
 			int socialSecurityNumber = 0, DateTime? birthday = null, string address = "",
 			string email = "", string phoneNumber = "")
