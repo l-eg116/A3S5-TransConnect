@@ -15,7 +15,17 @@ namespace A3S5_TransConnect
 		}
 		public string Origin { get; set; }
 		public string Destination { get; set; }
-		public Employee Driver { get; set; }
+		private Employee? _driver;
+		public Employee? Driver
+		{
+			get => this._driver;
+			set
+			{
+				if (!(this._driver is null)) this._driver.LinkedTickets.Remove(this);
+				if (!(value is null)) value.LinkedTickets.Add(this);
+				this._driver = value;
+			}
+		}
 		public Vehicle Vehicle { get; set; }
 		public DateTime Date { get; set; }
 		private double _cost;
@@ -39,7 +49,7 @@ namespace A3S5_TransConnect
 
 		public override string ToString()  // * Make better ToString method taking into account the possiblity of null instances
 			=> $"Ticket | Client: #{this.Client}, {this.Origin} -> {this.Destination}, " +
-				$"Driver: #{this.Driver.SocialSecurityNumber}, Vehicle: #{this.Vehicle.NumberPlate}, Date: {this.Date}, " +
+				$"Driver: #{this.Driver}, Vehicle: #{this.Vehicle.NumberPlate}, Date: {this.Date}, " +
 				$"Cost: {this.Cost}€, Payed: {this.Payed}";
 		public override int GetHashCode()
 			=> (this.Origin, this.Destination, this.Date, this.Cost).GetHashCode();
