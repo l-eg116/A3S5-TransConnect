@@ -2,7 +2,17 @@ namespace A3S5_TransConnect
 {
 	class Ticket
 	{
-		public Client Client { get; set; }
+		private Client? _client;
+		public Client? Client
+		{
+			get => this._client;
+			set
+			{
+				if (!(this._client is null)) this._client.LinkedTickets.Remove(this);
+				if (!(value is null)) value.LinkedTickets.Add(this);
+				this._client = value;
+			}
+		}
 		public string Origin { get; set; }
 		public string Destination { get; set; }
 		public Employee Driver { get; set; }
@@ -17,7 +27,7 @@ namespace A3S5_TransConnect
 		public Ticket(Client? client = null, string origin = "Unknown", string destination = "Unknown",
 			Employee? driver = null, Vehicle? vehicle = null, DateTime? date = null, double cost = 0, bool payed = false)
 		{
-			this.Client = client is null ? new Client() : client;
+			this.Client = client;
 			this.Origin = origin;
 			this.Destination = destination;
 			this.Driver = driver is null ? new Employee() : driver;
@@ -27,8 +37,8 @@ namespace A3S5_TransConnect
 			this.Payed = payed;
 		}
 
-		public override string ToString()
-			=> $"Ticket | Client: #{this.Client.SocialSecurityNumber}, {this.Origin} -> {this.Destination}, " +
+		public override string ToString()  // * Make better ToString method taking into account the possiblity of null instances
+			=> $"Ticket | Client: #{this.Client}, {this.Origin} -> {this.Destination}, " +
 				$"Driver: #{this.Driver.SocialSecurityNumber}, Vehicle: #{this.Vehicle.NumberPlate}, Date: {this.Date}, " +
 				$"Cost: {this.Cost}€, Payed: {this.Payed}";
 		public override int GetHashCode()
