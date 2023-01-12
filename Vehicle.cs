@@ -1,6 +1,6 @@
 namespace A3S5_TransConnect
 {
-	class Vehicle  // ? Make abstract but this causes issues for the default value in Ticket constructor
+	class Vehicle : ITicketLinkable  // ? Make abstract but this causes issues for the default value in Ticket constructor
 	{
 		public string Model { get; set; }
 		public string Brand { get; set; }

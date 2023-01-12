@@ -67,4 +67,10 @@ namespace A3S5_TransConnect
 		public bool IsPast()
 			=> this.Date.CompareTo(DateTime.Now) < 0;
 	}
+	interface ITicketLinkable
+	{
+		public HashSet<Ticket> LinkedTickets { get; set; }
+		public void AddLinkedTicket(Ticket tkt);
+		public void RemoveLinkedTicket(Ticket tkt);
+	}
 }
