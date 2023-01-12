@@ -1,0 +1,217 @@
+﻿{
+  "Name": "TransConnect",
+  "Root": {
+    "JoinDate": "0001-01-01T00:00:00",
+    "JobTitle": "Directeur G\u00E9n\u00E9ral",
+    "Salary": 0,
+    "Subordinates": [
+      {
+        "JoinDate": "0001-01-01T00:00:00",
+        "JobTitle": "Directrice Commerciale",
+        "Salary": 0,
+        "Subordinates": [
+          {
+            "JoinDate": "0001-01-01T00:00:00",
+            "JobTitle": "Commercial",
+            "Salary": 0,
+            "Subordinates": null,
+            "FirstName": "Mr",
+            "LastName": "Forge",
+            "SocialSecurityNumber": 0,
+            "Birthday": null,
+            "Address": "",
+            "Email": "",
+            "PhoneNumber": ""
+          },
+          {
+            "JoinDate": "0001-01-01T00:00:00",
+            "JobTitle": "Commerciale",
+            "Salary": 0,
+            "Subordinates": null,
+            "FirstName": "Mme",
+            "LastName": "Fermi",
+            "SocialSecurityNumber": 0,
+            "Birthday": null,
+            "Address": "",
+            "Email": "",
+            "PhoneNumber": ""
+          }
+        ],
+        "FirstName": "Mme",
+        "LastName": "Fiesta",
+        "SocialSecurityNumber": 0,
+        "Birthday": null,
+        "Address": "",
+        "Email": "",
+        "PhoneNumber": ""
+      },
+      {
+        "JoinDate": "0001-01-01T00:00:00",
+        "JobTitle": "Directeur des op\u00E9rations",
+        "Salary": 0,
+        "Subordinates": [
+          {
+            "JoinDate": "0001-01-01T00:00:00",
+            "JobTitle": "Chef d\u0027\u00E9quipe",
+            "Salary": 0,
+            "Subordinates": [
+              {
+                "JoinDate": "0001-01-01T00:00:00",
+                "JobTitle": "Chauffeur",
+                "Salary": 0,
+                "Subordinates": null,
+                "FirstName": "Mr",
+                "LastName": "Romu",
+                "SocialSecurityNumber": 0,
+                "Birthday": null,
+                "Address": "",
+                "Email": "",
+                "PhoneNumber": ""
+              },
+              {
+                "JoinDate": "0001-01-01T00:00:00",
+                "JobTitle": "Chauffeuse",
+                "Salary": 0,
+                "Subordinates": null,
+                "FirstName": "Mme",
+                "LastName": "Romi",
+                "SocialSecurityNumber": 0,
+                "Birthday": null,
+                "Address": "",
+                "Email": "",
+                "PhoneNumber": ""
+              },
+              {
+                "JoinDate": "0001-01-01T00:00:00",
+                "JobTitle": "Chauffeur",
+                "Salary": 0,
+                "Subordinates": null,
+                "FirstName": "Mr",
+                "LastName": "Roma",
+                "SocialSecurityNumber": 0,
+                "Birthday": null,
+                "Address": "",
+                "Email": "",
+                "PhoneNumber": ""
+              }
+            ],
+            "FirstName": "Mr",
+            "LastName": "Royal",
+            "SocialSecurityNumber": 0,
+            "Birthday": null,
+            "Address": "",
+            "Email": "",
+            "PhoneNumber": ""
+          },
+          {
+            "JoinDate": "0001-01-01T00:00:00",
+            "JobTitle": "Cheffe d\u0027\u00E9quipe",
+            "Salary": 0,
+            "Subordinates": [
+              {
+                "JoinDate": "0001-01-01T00:00:00",
+                "JobTitle": "Chauffeuse",
+                "Salary": 0,
+                "Subordinates": null,
+                "FirstName": "Mme",
+                "LastName": "Rome",
+                "SocialSecurityNumber": 0,
+                "Birthday": null,
+                "Address": "",
+                "Email": "",
+                "PhoneNumber": ""
+              },
+              {
+                "JoinDate": "0001-01-01T00:00:00",
+                "JobTitle": "Chauffeuse",
+                "Salary": 0,
+                "Subordinates": null,
+                "FirstName": "Mme",
+                "LastName": "Rimou",
+                "SocialSecurityNumber": 0,
+                "Birthday": null,
+                "Address": "",
+                "Email": "",
+                "PhoneNumber": ""
+              }
+            ],
+            "FirstName": "Mme",
+            "LastName": "Prince",
+            "SocialSecurityNumber": 0,
+            "Birthday": null,
+            "Address": "",
+            "Email": "",
+            "PhoneNumber": ""
+          }
+        ],
+        "FirstName": "Mr",
+        "LastName": "Fetard",
+        "SocialSecurityNumber": 0,
+        "Birthday": null,
+        "Address": "",
+        "Email": "",
+        "PhoneNumber": ""
+      },
+      {
+        "JoinDate": "0001-01-01T00:00:00",
+        "JobTitle": "Directrice des RH",
+        "Salary": 0,
+        "Subordinates": [
+          {
+            "JoinDate": "0001-01-01T00:00:00",
+            "JobTitle": "Formation",
+            "Salary": 0,
+            "Subordinates": null,
+            "FirstName": "Mme",
+            "LastName": "Couleur",
+            "SocialSecurityNumber": 0,
+            "Birthday": null,
+            "Address": "",
+            "Email": "",
+            "PhoneNumber": ""
+          },
+          {
+            "JoinDate": "0001-01-01T00:00:00",
+            "JobTitle": "Contrats",
+            "Salary": 0,
+            "Subordinates": null,
+            "FirstName": "Mme",
+            "LastName": "ToutleMonde",
+            "SocialSecurityNumber": 0,
+            "Birthday": null,
+            "Address": "",
+            "Email": "",
+            "PhoneNumber": ""
+          }
+        ],
+        "FirstName": "Mme",
+        "LastName": "Joyeuse",
+        "SocialSecurityNumber": 0,
+        "Birthday": null,
+        "Address": "",
+        "Email": "",
+        "PhoneNumber": ""
+      },
+      {
+        "JoinDate": "0001-01-01T00:00:00",
+        "JobTitle": "Directeur Financier",
+        "Salary": 0,
+        "Subordinates": null,
+        "FirstName": "Mr",
+        "LastName": "GripSous",
+        "SocialSecurityNumber": 0,
+        "Birthday": null,
+        "Address": "",
+        "Email": "",
+        "PhoneNumber": ""
+      }
+    ],
+    "FirstName": "Mr",
+    "LastName": "DUPOND",
+    "SocialSecurityNumber": 0,
+    "Birthday": null,
+    "Address": "",
+    "Email": "",
+    "PhoneNumber": ""
+  }
+}
