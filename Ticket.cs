@@ -71,6 +71,19 @@ namespace A3S5_TransConnect
 
 		public bool IsPast()
 			=> this.Date.CompareTo(DateTime.Now) < 0;
+		
+		static public IEnumerable<Ticket> PastTickets(ITicketLinkable thing)
+			=> thing.LinkedTickets.Where(ticket => ticket.IsPast());
+		static public int PastCount(ITicketLinkable thing)
+			=> PastTickets(thing).Count();
+		static public double TotalCost(ITicketLinkable thing)
+			=> thing.LinkedTickets.Sum(ticket => ticket.Cost);
+		static public double MeanCost(ITicketLinkable thing)
+			=> thing.LinkedTickets.Average(ticket => ticket.Cost);
+		static public double PastTotalCost(ITicketLinkable thing)
+			=> PastTickets(thing).Sum(ticket => ticket.Cost);
+		static public double PastMeanCost(ITicketLinkable thing)
+			=> PastTickets(thing).Average(ticket => ticket.Cost);
 	}
 	interface ITicketLinkable
 	{
