@@ -2,6 +2,7 @@ namespace A3S5_TransConnect
 {
 	class Ticket
 	{
+		private static uint nextTicketNumber = 0;
 		private Client? _client;
 		public Client? Client
 		{
@@ -41,6 +42,16 @@ namespace A3S5_TransConnect
 		private double _cost;
 		public double Cost { get => this._cost; set => this._cost = Math.Max(0, value); }
 		public bool Payed { get; set; }
+		private readonly uint _ticketNumber;
+		public uint TicketNumber
+		{
+			get => this._ticketNumber;
+			init
+			{
+				Ticket.nextTicketNumber = Math.Max(Ticket.nextTicketNumber, value + 1);
+				this._ticketNumber = value;
+			}
+		}
 
 		public Ticket() : this(default, default, default, default, default, default, default, default)
 		{ }
@@ -55,6 +66,7 @@ namespace A3S5_TransConnect
 			this.Date = date is null ? new DateTime() : (DateTime)date;
 			this.Cost = cost;
 			this.Payed = payed;
+			this.TicketNumber = Ticket.nextTicketNumber;
 		}
 
 		public override string ToString()
@@ -62,7 +74,7 @@ namespace A3S5_TransConnect
 			string strClient = this.Client is null ? "[null]" : $"#{this.Client.SocialSecurityNumber}";
 			string strDriver = this.Driver is null ? "[null]" : $"#{this.Driver.SocialSecurityNumber}";
 			string strVehicle = this.Vehicle is null ? "[null]" : $"#{this.Vehicle.NumberPlate}";
-			return $"Ticket | Client: {strClient}, {this.Origin} -> {this.Destination}, " +
+			return $"Ticket #{this.TicketNumber} | {this.Origin} -> {this.Destination}, Client: {strClient}, " +
 				$"Driver: {strDriver}, Vehicle: {strVehicle}, Date: {this.Date}, " +
 				$"Cost: {this.Cost}€, Payed: {this.Payed}";
 		}
@@ -71,7 +83,7 @@ namespace A3S5_TransConnect
 
 		public bool IsPast()
 			=> this.Date.CompareTo(DateTime.Now) < 0;
-		
+
 		static public IEnumerable<Ticket> PastTickets(ITicketLinkable thing)
 			=> thing.LinkedTickets.Where(ticket => ticket.IsPast());
 		static public int PastCount(ITicketLinkable thing)
