@@ -57,10 +57,15 @@ namespace A3S5_TransConnect
 			this.Payed = payed;
 		}
 
-		public override string ToString()  // * Make better ToString method taking into account the possiblity of null instances
-			=> $"Ticket | Client: #{this.Client}, {this.Origin} -> {this.Destination}, " +
-				$"Driver: #{this.Driver}, Vehicle: #{this.Vehicle}, Date: {this.Date}, " +
+		public override string ToString()
+		{
+			string strClient = this.Client is null ? "[null]" : $"#{this.Client.SocialSecurityNumber}";
+			string strDriver = this.Driver is null ? "[null]" : $"#{this.Driver.SocialSecurityNumber}";
+			string strVehicle = this.Vehicle is null ? "[null]" : $"#{this.Vehicle.NumberPlate}";
+			return $"Ticket | Client: {strClient}, {this.Origin} -> {this.Destination}, " +
+				$"Driver: {strDriver}, Vehicle: {strVehicle}, Date: {this.Date}, " +
 				$"Cost: {this.Cost}€, Payed: {this.Payed}";
+		}
 		public override int GetHashCode()
 			=> (this.Origin, this.Destination, this.Date, this.Cost).GetHashCode();
 
