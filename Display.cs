@@ -19,7 +19,18 @@ namespace A3S5_TransConnect
 		public static ConsoleColor TextColor { get; set; } = ConsoleColor.White;
 		public static ConsoleColor DefaultBackgroundColor { get; } = Console.BackgroundColor;
 		public static ConsoleColor DefaultForegroundColor { get; } = Console.ForegroundColor;
+		public enum Alignement
+		{
+			Left,
+			Center,
+			Right
+		}
 
+		public static void ApplyColor(bool negative = false)
+		{
+			Console.BackgroundColor = negative ? TextColor : BackgroundColor;
+			Console.ForegroundColor = negative ? BackgroundColor : TextColor;
+		}
 		public static void RestoreColor()
 		{
 			Console.BackgroundColor = DefaultBackgroundColor;
@@ -31,35 +42,46 @@ namespace A3S5_TransConnect
 			if (!active) RestoreColor();
 			Console.Clear();
 		}
+		public static void WriteAligned(object? obj, Alignement aligned = Alignement.Left, int line = -1)
+		{
+			string text = obj is null ? "" : obj.ToString() + "";
+			if (line < 0) line = Console.CursorTop;
+			switch(aligned){
+				case (Alignement.Left): Console.SetCursorPosition(0, line); break;
+				case (Alignement.Center): Console.SetCursorPosition((Console.BufferWidth - text.Length) / 2, line); break;
+				case (Alignement.Right): Console.SetCursorPosition(Console.BufferWidth - text.Length, line); break;
+			}
+			Console.Write(text);
+		}
 
 		public static void PrintTitle()
 		{
 			Console.SetCursorPosition(0, 0);
-			if(Title.Length == 0) return;
-			Console.BackgroundColor = TitleNegative ? TextColor : BackgroundColor;
-			Console.ForegroundColor = TitleNegative ? BackgroundColor : TextColor;
+			if (Title.Length == 0) return;
+			ApplyColor(TitleNegative);
 			foreach (string line in Title.Split('\n'))
 				Console.WriteLine(CenterString(line, Console.WindowWidth, true));
-		} 
+			RestoreColor();
+		}
 		public static void PrintHeader(string headerLeft = "", string headerCenter = "", string headerRight = "", bool negative = true, bool atCursor = false)
 		{
-			if(!atCursor) Console.SetCursorPosition(0, TitleHeight);
-			Console.BackgroundColor = negative ? TextColor : BackgroundColor;
-			Console.ForegroundColor = negative ? BackgroundColor : TextColor;
+			if (!atCursor) Console.SetCursorPosition(0, TitleHeight);
+			ApplyColor(negative);
 			string header = CenterString(headerCenter, Console.WindowWidth, true);
 			header = header.Substring(0, header.Length - headerRight.Length) + headerRight;
 			header = headerLeft + header.Substring(headerLeft.Length);
 			Console.WriteLine(header);
+			RestoreColor();
 		}
 		public static void PrintFooter(string footerLeft = "", string footerCenter = "", string footerRight = "", bool negative = true)
 		{
 			Console.SetCursorPosition(0, Console.WindowHeight - 1);
-			Console.BackgroundColor = negative ? TextColor : BackgroundColor;
-			Console.ForegroundColor = negative ? BackgroundColor : TextColor;
+			ApplyColor(negative);
 			string footer = CenterString(footerCenter, Console.WindowWidth, true);
 			footer = footer.Substring(0, footer.Length - footerRight.Length) + footerRight;
 			footer = footerLeft + footer.Substring(footerLeft.Length);
 			Console.Write(footer);
+			RestoreColor();
 		}
 
 		public static void DisplayText(IEnumerable<string> lines, (string, string, string)? header = null, (string, string, string)? footer = null, bool truncate = true)
@@ -69,22 +91,22 @@ namespace A3S5_TransConnect
 			if (footer is null) footer = ("", "", "");
 			(string, string, string) footer_ = ((string, string, string))footer;
 			int maxLength = 0;
-			foreach(string line in lines) maxLength = Math.Max(maxLength, line.Length);
-			if(truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
+			foreach (string line in lines) maxLength = Math.Max(maxLength, line.Length);
+			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
 
 			PrintTitle();
 			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
 			PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
 
-			Console.BackgroundColor = BackgroundColor;
-			Console.ForegroundColor = TextColor;
+			ApplyColor();
 			int i = TitleHeight + 1;
-			foreach(string line in lines)
+			foreach (string line in lines)
 			{
 				Console.SetCursorPosition(0, i++);
 				Console.Write(line.PadRight(maxLength).Substring(0, maxLength));
-				if(truncate && i >= Console.WindowHeight - 1) break;
+				if (truncate && i >= Console.WindowHeight - 1) break;
 			}
+			RestoreColor();
 		}
 
 		public static string CenterString(string str, int size, bool truncate = false)
