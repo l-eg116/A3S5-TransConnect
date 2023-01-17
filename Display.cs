@@ -32,6 +32,36 @@ namespace A3S5_TransConnect
 			Console.Clear();
 		}
 
+		public static void DisplayTitle()
+		{
+			Console.SetCursorPosition(0, 0);
+			if(Title.Length == 0) return;
+			Console.BackgroundColor = TitleNegative ? TextColor : BackgroundColor;
+			Console.ForegroundColor = TitleNegative ? BackgroundColor : TextColor;
+			foreach (string line in Title.Split('\n'))
+				Console.WriteLine(CenterString(line, Console.WindowWidth, true));
+		}
+		public static void DisplayHeader(string headerLeft = "", string headerCenter = "", string headerRight = "", bool negative = true, bool atCursor = false)
+		{
+			if(!atCursor) Console.SetCursorPosition(0, TitleHeight);
+			Console.BackgroundColor = negative ? TextColor : BackgroundColor;
+			Console.ForegroundColor = negative ? BackgroundColor : TextColor;
+			string header = CenterString(headerCenter, Console.WindowWidth, true);
+			header = header.Substring(0, header.Length - headerRight.Length) + headerRight;
+			header = headerLeft + header.Substring(headerLeft.Length);
+			Console.WriteLine(header);
+		}
+		public static void DisplayFooter(string footerLeft = "", string footerCenter = "", string footerRight = "", bool negative = true)
+		{
+			Console.SetCursorPosition(0, Console.WindowHeight - 1);
+			Console.BackgroundColor = negative ? TextColor : BackgroundColor;
+			Console.ForegroundColor = negative ? BackgroundColor : TextColor;
+			string footer = CenterString(footerCenter, Console.WindowWidth, true);
+			footer = footer.Substring(0, footer.Length - footerRight.Length) + footerRight;
+			footer = footerLeft + footer.Substring(footerLeft.Length);
+			Console.Write(footer);
+		}
+
 		public static string CenterString(string str, int size, bool truncate = false)
 		{
 			int padding = (size - str.Length) / 2;
