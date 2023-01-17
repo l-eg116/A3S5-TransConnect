@@ -62,6 +62,31 @@ namespace A3S5_TransConnect
 			Console.Write(footer);
 		}
 
+		public static void DisplayText(IEnumerable<string> lines, (string, string, string)? header = null, (string, string, string)? footer = null, bool truncate = true)
+		{
+			if (header is null) header = ("", "", "");
+			(string, string, string) header_ = ((string, string, string))header;
+			if (footer is null) footer = ("", "", "");
+			(string, string, string) footer_ = ((string, string, string))footer;
+			int maxLength = 0;
+			foreach(string line in lines) maxLength = Math.Max(maxLength, line.Length);
+			if(truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
+
+			PrintTitle();
+			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
+			PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+
+			Console.BackgroundColor = BackgroundColor;
+			Console.ForegroundColor = TextColor;
+			int i = TitleHeight + 1;
+			foreach(string line in lines)
+			{
+				Console.SetCursorPosition(0, i++);
+				Console.Write(line.PadRight(maxLength).Substring(0, maxLength));
+				if(truncate && i >= Console.WindowHeight - 1) break;
+			}
+		}
+
 		public static string CenterString(string str, int size, bool truncate = false)
 		{
 			int padding = (size - str.Length) / 2;
