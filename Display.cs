@@ -219,8 +219,6 @@ namespace A3S5_TransConnect
 			while (true)
 			{
 				cursor = Math.Max(0, Math.Min(cursor, objects.Count - 1));
-				if(cursor < top) top--;
-				if(cursor > bottom()) top++;
 				if (cursor < top) top--;
 				if (cursor > bottom()) top++;
 
@@ -245,6 +243,14 @@ namespace A3S5_TransConnect
 			}
 			RestoreColor();
 			return selected;
+		}
+		public static int DisplayTransformedSelector<T>(List<T> objects, Func<T, string> transformer,
+		(string, string, string)? header = null, (string, string, string)? footer = null,
+		Alignement aligned = Alignement.Left, bool truncate = true)
+		{
+			List<string> objectStrings = new List<string>();
+			foreach(T obj in objects) objectStrings.Add(transformer(obj));
+			return DisplaySimpleSelector(objectStrings, header, footer, aligned, truncate);
 		}
 	}
 }
