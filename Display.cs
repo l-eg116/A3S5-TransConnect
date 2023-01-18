@@ -261,5 +261,66 @@ namespace A3S5_TransConnect
 			int selected = DisplayTransformedSelector(labeledActions, tpl => transformer(tpl.Item1), header, footer, aligned, truncate);
 			if (selected >= 0) labeledActions[selected].Item2();
 		}
+		public static void DisplayControlledSelector<T>(List<T> objects,
+		Dictionary<ConsoleKey, Action<T>> controls, Func<T, string>? transformer = null,
+		(string, string, string)? header = null, (string, string, string)? footer = null,
+		Alignement aligned = Alignement.Left, bool truncate = true)
+		{
+			if (transformer is null) transformer = obj => obj + "";
+			if (header is null) header = ("", "", "");
+			(string, string, string) header_ = ((string, string, string))header;
+			if (footer is null) footer = ("", "[W|Z|↑/S|↓] Selection up/down   [Esc] Go back", "");
+			(string, string, string) footer_ = ((string, string, string))footer;
+
+			int maxLength = objects.Count > 0 ? objects.Max(obj => transformer(obj).Length) : 0;
+			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
+
+			int top = 0;
+			Func<int> bottom = () => Console.WindowHeight - TitleHeight - 5 + top;
+			int cursor = 0;
+			bool fullRefresh = true;
+
+
+			while (true)
+			{
+				if (fullRefresh)
+				{
+					PrintTitle();
+					PrintHeader(header_.Item1, header_.Item2, header_.Item3);
+					PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+					ClearContentArea();
+					fullRefresh = false;
+				}
+				ApplyColor();
+				for (int i = top, line = TitleHeight + 2; i <= bottom() && i < objects.Count; i++, line++)
+					if (i == cursor)
+					{
+						ApplyColor(true);
+						WriteAligned(AlignString(transformer(objects[i]) + "", maxLength, aligned, truncate), aligned, line);
+						ApplyColor(false);
+					}
+					else
+						WriteAligned(AlignString(transformer(objects[i]) + "", maxLength, aligned, truncate), aligned, line);
+				ClearLine(TitleHeight + 1); ClearLine(Console.WindowHeight - 2); ApplyColor();
+				if (top != 0) WriteAligned($" ↑  ↑  ↑  +{top}", aligned, TitleHeight + 1);
+				if (bottom() < objects.Count - 1) WriteAligned($" ↓  ↓  ↓  +{objects.Count - bottom() - 1}", aligned, Console.WindowHeight - 2);
+
+				ConsoleKey action = Console.ReadKey(true).Key;
+				if (KeyBundles["Up"].Contains(action)) cursor--;
+				else if (KeyBundles["Down"].Contains(action)) cursor++;
+				else if (KeyBundles["Back"].Contains(action)) break;
+
+				cursor = Math.Max(0, Math.Min(cursor, objects.Count - 1));
+				if (cursor < top) top--;
+				if (cursor > bottom()) top++;
+
+				if (controls.ContainsKey(action))
+				{
+					controls[action](objects[cursor]);
+					fullRefresh = true;
+				}
+			}
+			RestoreColor();
+		}
 	}
 }
