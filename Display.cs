@@ -56,12 +56,13 @@ namespace A3S5_TransConnect
 		{
 			string text = obj is null ? "" : obj.ToString() + "";
 			if (line < 0) line = Console.CursorTop;
-			switch (aligned)
-			{
-				case (Alignement.Left): Console.SetCursorPosition(0, line); break;
-				case (Alignement.Center): Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, line); break;
-				case (Alignement.Right): Console.SetCursorPosition(Console.WindowWidth - text.Length, line); break;
-			}
+			if (text.Length < Console.WindowWidth) switch (aligned)
+				{
+					case (Alignement.Left): Console.SetCursorPosition(0, line); break;
+					case (Alignement.Center): Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, line); break;
+					case (Alignement.Right): Console.SetCursorPosition(Console.WindowWidth - text.Length, line); break;
+				}
+			else Console.SetCursorPosition(0, line);
 			Console.Write(text);
 		}
 		public static string AlignString(string str, int size, Alignement aligned = Alignement.Left, bool truncate = false)
@@ -220,6 +221,8 @@ namespace A3S5_TransConnect
 				cursor = Math.Max(0, Math.Min(cursor, objects.Count - 1));
 				if(cursor < top) top--;
 				if(cursor > bottom()) top++;
+				if (cursor < top) top--;
+				if (cursor > bottom()) top++;
 
 				for (int i = top, line = TitleHeight + 2; i <= bottom() && i < objects.Count; i++, line++)
 					if (i == cursor)
