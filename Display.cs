@@ -25,6 +25,15 @@ namespace A3S5_TransConnect
 			Center,
 			Right
 		}
+		public static Dictionary<string, IEnumerable<ConsoleKey>> KeyBundles { get; } =
+		new Dictionary<string, IEnumerable<ConsoleKey>>
+		{
+			{"Back", new ConsoleKey[] { ConsoleKey.Escape, ConsoleKey.BrowserBack } },
+			{"Up", new ConsoleKey[] { ConsoleKey.W, ConsoleKey.Z, ConsoleKey.UpArrow } },
+			{"Left", new ConsoleKey[] { ConsoleKey.A, ConsoleKey.Q, ConsoleKey.LeftArrow } },
+			{"Down", new ConsoleKey[] { ConsoleKey.S, ConsoleKey.DownArrow } },
+			{"Right", new ConsoleKey[] { ConsoleKey.D, ConsoleKey.RightArrow } },
+		};
 
 		public static void ApplyColor(bool negative = false)
 		{
@@ -142,6 +151,42 @@ namespace A3S5_TransConnect
 			{
 				WriteAligned(AlignString(line, maxLength, aligned, truncate), aligned, i++);
 				if (truncate && i >= Console.WindowHeight - 1) break;
+			}
+			RestoreColor();
+		}
+		public static void DisplayScrollableText(IEnumerable<string> lines,
+		(string, string, string)? header = null, (string, string, string)? footer = null,
+		Alignement aligned = Alignement.Left, bool truncate = true)
+		{
+			if (header is null) header = ("", "", "");
+			(string, string, string) header_ = ((string, string, string))header;
+			if (footer is null) footer = ("", "[W|Z|↑] Scroll up   [S|↓] Scroll down   [Esc] Go back", "");
+			(string, string, string) footer_ = ((string, string, string))footer;
+
+			int maxLength = lines.Count() > 0 ? lines.Max(s => s.Length) : 0;
+			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
+
+			List<string> linesList = lines.ToList();
+			int top = 0, bottom = Console.WindowHeight - TitleHeight - 5;
+
+			PrintTitle();
+			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
+			PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+			ClearContentArea();
+
+			ApplyColor();
+			while (true)
+			{
+				for (int i = top, line = TitleHeight + 2; i <= bottom && i < linesList.Count; i++, line++)
+					WriteAligned(AlignString(linesList[i], maxLength, aligned, truncate), aligned, line);
+				ClearLine(TitleHeight + 1); ClearLine(Console.WindowHeight - 2); ApplyColor();
+				if (top != 0) WriteAligned($" ↑  ↑  ↑  +{top}", aligned, TitleHeight + 1);
+				if (bottom < linesList.Count - 1) WriteAligned($" ↓  ↓  ↓  +{linesList.Count - bottom - 1}", aligned, Console.WindowHeight - 2);
+
+				ConsoleKey action = Console.ReadKey(true).Key;
+				if (KeyBundles["Up"].Contains(action) && top > 0) { top--; bottom--; }
+				else if (KeyBundles["Down"].Contains(action) && bottom < linesList.Count - 1) { top++; bottom++; }
+				else if (KeyBundles["Back"].Contains(action)) break;
 			}
 			RestoreColor();
 		}
