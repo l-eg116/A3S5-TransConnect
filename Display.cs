@@ -137,7 +137,7 @@ namespace A3S5_TransConnect
 		{
 			if (header is null) header = ("", "", "");
 			(string, string, string) header_ = ((string, string, string))header;
-			if (footer is null) footer = ("", "", "");
+			if (footer is null) footer = ("", "Press any key to go back", "");
 			(string, string, string) footer_ = ((string, string, string))footer;
 			int maxLength = lines.Count() > 0 ? lines.Max(s => s.Length) : 0;
 			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
@@ -154,6 +154,7 @@ namespace A3S5_TransConnect
 				WriteAligned(AlignString(line, maxLength, aligned, truncate), aligned, i++);
 				if (truncate && i >= Console.WindowHeight - 1) break;
 			}
+			Console.ReadKey(true);
 			RestoreColor();
 		}
 		public static void DisplayScrollableText(IEnumerable<string> lines,
