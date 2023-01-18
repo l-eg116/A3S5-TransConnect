@@ -250,8 +250,16 @@ namespace A3S5_TransConnect
 		Alignement aligned = Alignement.Left, bool truncate = true)
 		{
 			List<string> objectStrings = new List<string>();
-			foreach(T obj in objects) objectStrings.Add(transformer(obj));
+			foreach (T obj in objects) objectStrings.Add(transformer(obj));
 			return DisplaySimpleSelector(objectStrings, header, footer, aligned, truncate);
+		}
+		public static void DisplayActionSelector<T>(List<(T, Action)> labeledActions, Func<T, string>? transformer = null,
+		(string, string, string)? header = null, (string, string, string)? footer = null,
+		Alignement aligned = Alignement.Left, bool truncate = true)
+		{
+			if (transformer is null) transformer = obj => obj + "";
+			int selected = DisplayTransformedSelector(labeledActions, tpl => transformer(tpl.Item1), header, footer, aligned, truncate);
+			if (selected >= 0) labeledActions[selected].Item2();
 		}
 	}
 }
