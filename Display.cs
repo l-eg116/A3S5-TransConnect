@@ -49,8 +49,8 @@ namespace A3S5_TransConnect
 			switch (aligned)
 			{
 				case (Alignement.Left): Console.SetCursorPosition(0, line); break;
-				case (Alignement.Center): Console.SetCursorPosition((Console.BufferWidth - text.Length) / 2, line); break;
-				case (Alignement.Right): Console.SetCursorPosition(Console.BufferWidth - text.Length, line); break;
+				case (Alignement.Center): Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, line); break;
+				case (Alignement.Right): Console.SetCursorPosition(Console.WindowWidth - text.Length, line); break;
 			}
 			Console.Write(text);
 		}
@@ -104,6 +104,21 @@ namespace A3S5_TransConnect
 			Console.Write(footer);
 			RestoreColor();
 		}
+		public static void ClearLine(int line, bool applyBackground = false)
+		{
+			if (applyBackground) ApplyColor();
+			else RestoreColor();
+			WriteAligned("".PadRight(Console.WindowWidth), default, line);
+			RestoreColor();
+		}
+		public static void ClearContentArea(bool applyBackground = false)
+		{
+			if (applyBackground) ApplyColor();
+			else RestoreColor();
+			for (int i = TitleHeight + 1; i < Console.WindowHeight - 1; i++)
+				WriteAligned("".PadRight(Console.WindowWidth), default, i);
+			RestoreColor();
+		}
 
 		public static void DisplayText(IEnumerable<string> lines,
 		(string, string, string)? header = null, (string, string, string)? footer = null,
@@ -113,13 +128,13 @@ namespace A3S5_TransConnect
 			(string, string, string) header_ = ((string, string, string))header;
 			if (footer is null) footer = ("", "", "");
 			(string, string, string) footer_ = ((string, string, string))footer;
-			int maxLength = 0;
-			foreach (string line in lines) maxLength = Math.Max(maxLength, line.Length);
+			int maxLength = lines.Count() > 0 ? lines.Max(s => s.Length) : 0;
 			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
 
 			PrintTitle();
 			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
 			PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+			ClearContentArea();
 
 			ApplyColor();
 			int i = TitleHeight + 1;
