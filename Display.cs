@@ -29,6 +29,7 @@ namespace A3S5_TransConnect
 		new Dictionary<string, IEnumerable<ConsoleKey>>
 		{
 			{"Back", new ConsoleKey[] { ConsoleKey.Escape, ConsoleKey.BrowserBack } },
+			{"Select", new ConsoleKey[] { ConsoleKey.Enter, ConsoleKey.Spacebar } },
 			{"Up", new ConsoleKey[] { ConsoleKey.W, ConsoleKey.Z, ConsoleKey.UpArrow } },
 			{"Left", new ConsoleKey[] { ConsoleKey.A, ConsoleKey.Q, ConsoleKey.LeftArrow } },
 			{"Down", new ConsoleKey[] { ConsoleKey.S, ConsoleKey.DownArrow } },
@@ -167,7 +168,8 @@ namespace A3S5_TransConnect
 			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
 
 			List<string> linesList = lines.ToList();
-			int top = 0, bottom = Console.WindowHeight - TitleHeight - 5;
+			int top = 0;
+			Func<int> bottom = () => Console.WindowHeight - TitleHeight - 5 + top;
 
 			PrintTitle();
 			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
@@ -177,18 +179,69 @@ namespace A3S5_TransConnect
 			ApplyColor();
 			while (true)
 			{
-				for (int i = top, line = TitleHeight + 2; i <= bottom && i < linesList.Count; i++, line++)
+				for (int i = top, line = TitleHeight + 2; i <= bottom() && i < linesList.Count; i++, line++)
 					WriteAligned(AlignString(linesList[i], maxLength, aligned, truncate), aligned, line);
 				ClearLine(TitleHeight + 1); ClearLine(Console.WindowHeight - 2); ApplyColor();
 				if (top != 0) WriteAligned($" ↑  ↑  ↑  +{top}", aligned, TitleHeight + 1);
-				if (bottom < linesList.Count - 1) WriteAligned($" ↓  ↓  ↓  +{linesList.Count - bottom - 1}", aligned, Console.WindowHeight - 2);
+				if (bottom() < linesList.Count - 1) WriteAligned($" ↓  ↓  ↓  +{linesList.Count - bottom() - 1}", aligned, Console.WindowHeight - 2);
 
 				ConsoleKey action = Console.ReadKey(true).Key;
-				if (KeyBundles["Up"].Contains(action) && top > 0) { top--; bottom--; }
-				else if (KeyBundles["Down"].Contains(action) && bottom < linesList.Count - 1) { top++; bottom++; }
+				if (KeyBundles["Up"].Contains(action) && top > 0) top--;
+				else if (KeyBundles["Down"].Contains(action) && bottom() < linesList.Count - 1) top++;
 				else if (KeyBundles["Back"].Contains(action)) break;
 			}
 			RestoreColor();
+		}
+		public static int DisplaySimpleSelector<T>(List<T> objects,
+		(string, string, string)? header = null, (string, string, string)? footer = null,
+		Alignement aligned = Alignement.Left, bool truncate = true)
+		{
+			if (header is null) header = ("", "", "");
+			(string, string, string) header_ = ((string, string, string))header;
+			if (footer is null) footer = ("", "[Space|Enter] Select   [W|Z|↑] Selection up   [S|↓] Selection down   [Esc] Go back", "");
+			(string, string, string) footer_ = ((string, string, string))footer;
+
+			int maxLength = objects.Count > 0 ? objects.Max(obj => (obj + "").Length) : 0;
+			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
+
+			int selected = -1;
+			int top = 0;
+			Func<int> bottom = () => Console.WindowHeight - TitleHeight - 5 + top;
+			int cursor = 0;
+
+			PrintTitle();
+			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
+			PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+			ClearContentArea();
+
+			ApplyColor();
+			while (true)
+			{
+				cursor = Math.Max(0, Math.Min(cursor, objects.Count - 1));
+				if(cursor < top) top--;
+				if(cursor > bottom()) top++;
+
+				for (int i = top, line = TitleHeight + 2; i <= bottom() && i < objects.Count; i++, line++)
+					if (i == cursor)
+					{
+						ApplyColor(true);
+						WriteAligned(AlignString(objects[i] + "", maxLength, aligned, truncate), aligned, line);
+						ApplyColor(false);
+					}
+					else
+						WriteAligned(AlignString(objects[i] + "", maxLength, aligned, truncate), aligned, line);
+				ClearLine(TitleHeight + 1); ClearLine(Console.WindowHeight - 2); ApplyColor();
+				if (top != 0) WriteAligned($" ↑  ↑  ↑  +{top}", aligned, TitleHeight + 1);
+				if (bottom() < objects.Count - 1) WriteAligned($" ↓  ↓  ↓  +{objects.Count - bottom() - 1}", aligned, Console.WindowHeight - 2);
+
+				ConsoleKey action = Console.ReadKey(true).Key;
+				if (KeyBundles["Up"].Contains(action)) cursor--;
+				else if (KeyBundles["Down"].Contains(action)) cursor++;
+				else if (KeyBundles["Select"].Contains(action)) { selected = cursor; break; }
+				else if (KeyBundles["Back"].Contains(action)) break;
+			}
+			RestoreColor();
+			return selected;
 		}
 	}
 }
