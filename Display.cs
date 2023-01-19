@@ -132,8 +132,8 @@ namespace A3S5_TransConnect
 		}
 
 		public static void DisplayText(IEnumerable<string> lines,
-		(string, string, string)? header = null, (string, string, string)? footer = null,
-		Alignement aligned = Alignement.Left, bool truncate = true)
+			(string, string, string)? header = null, (string, string, string)? footer = null,
+			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
 			if (header is null) header = ("", "", "");
 			(string, string, string) header_ = ((string, string, string))header;
@@ -158,8 +158,8 @@ namespace A3S5_TransConnect
 			RestoreColor();
 		}
 		public static void DisplayScrollableText(IEnumerable<string> lines,
-		(string, string, string)? header = null, (string, string, string)? footer = null,
-		Alignement aligned = Alignement.Left, bool truncate = true)
+			(string, string, string)? header = null, (string, string, string)? footer = null,
+			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
 			if (header is null) header = ("", "", "");
 			(string, string, string) header_ = ((string, string, string))header;
@@ -195,8 +195,8 @@ namespace A3S5_TransConnect
 			RestoreColor();
 		}
 		public static int DisplaySimpleSelector<T>(List<T> objects,
-		(string, string, string)? header = null, (string, string, string)? footer = null,
-		Alignement aligned = Alignement.Left, bool truncate = true)
+			(string, string, string)? header = null, (string, string, string)? footer = null,
+			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
 			if (header is null) header = ("", "", "");
 			(string, string, string) header_ = ((string, string, string))header;
@@ -246,25 +246,25 @@ namespace A3S5_TransConnect
 			return selected;
 		}
 		public static int DisplayTransformedSelector<T>(List<T> objects, Func<T, string> transformer,
-		(string, string, string)? header = null, (string, string, string)? footer = null,
-		Alignement aligned = Alignement.Left, bool truncate = true)
+			(string, string, string)? header = null, (string, string, string)? footer = null,
+			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
 			List<string> objectStrings = new List<string>();
 			foreach (T obj in objects) objectStrings.Add(transformer(obj));
 			return DisplaySimpleSelector(objectStrings, header, footer, aligned, truncate);
 		}
 		public static void DisplayActionSelector<T>(List<(T, Action)> labeledActions, Func<T, string>? transformer = null,
-		(string, string, string)? header = null, (string, string, string)? footer = null,
-		Alignement aligned = Alignement.Left, bool truncate = true)
+			(string, string, string)? header = null, (string, string, string)? footer = null,
+			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
 			if (transformer is null) transformer = obj => obj + "";
 			int selected = DisplayTransformedSelector(labeledActions, tpl => transformer(tpl.Item1), header, footer, aligned, truncate);
 			if (selected >= 0) labeledActions[selected].Item2();
 		}
-		public static void DisplayControlledSelector<T>(List<T> objects,
-		Dictionary<ConsoleKey, Action<T>> controls, Func<T, string>? transformer = null,
-		(string, string, string)? header = null, (string, string, string)? footer = null,
-		Alignement aligned = Alignement.Left, bool truncate = true)
+		public static void DisplayController<T>(List<T> objects,
+			Dictionary<ConsoleKey, Action<T>> controls, Func<T, string>? transformer = null,
+			(string, string, string)? header = null, (string, string, string)? footer = null,
+			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
 			if (transformer is null) transformer = obj => obj + "";
 			if (header is null) header = ("", "", "");
@@ -321,6 +321,16 @@ namespace A3S5_TransConnect
 				}
 			}
 			RestoreColor();
+		}
+		public static void DisplayLabeledControler<T>(List<(T, string)> labeledObjects, Dictionary<ConsoleKey, Action<T>> controls,
+			(string, string, string)? header = null, (string, string, string)? footer = null,
+			Alignement aligned = Alignement.Left, bool truncate = true)
+		{
+			Dictionary<ConsoleKey, Action<(T, string)>> tweakedControls = new Dictionary<ConsoleKey, Action<(T, string)>>();
+			foreach (KeyValuePair<ConsoleKey, Action<T>> control in controls)
+				tweakedControls.Add(control.Key, lblObj => control.Value(lblObj.Item1));
+			Func<(T, string), string> tranformer = lblObj => lblObj.Item2;
+			DisplayController(labeledObjects, tweakedControls, tranformer, header, footer, aligned, truncate);
 		}
 	}
 }
