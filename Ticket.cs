@@ -9,8 +9,8 @@ namespace A3S5_TransConnect
 			get => this._client;
 			set
 			{
-				if (!(this._client is null)) this._client.LinkedTickets.Remove(this);
-				if (!(value is null)) value.LinkedTickets.Add(this);
+				this._client?.LinkedTickets.Remove(this);
+				value?.LinkedTickets.Add(this);
 				this._client = value;
 			}
 		}
@@ -22,8 +22,8 @@ namespace A3S5_TransConnect
 			get => this._driver;
 			set
 			{
-				if (!(this._driver is null)) this._driver.LinkedTickets.Remove(this);
-				if (!(value is null)) value.LinkedTickets.Add(this);
+				this._driver?.LinkedTickets.Remove(this);
+				value?.LinkedTickets.Add(this);
 				this._driver = value;
 			}
 		}
@@ -33,8 +33,8 @@ namespace A3S5_TransConnect
 			get => this._vehicle;
 			set
 			{
-				if (!(this._vehicle is null)) this._vehicle.LinkedTickets.Remove(this);
-				if (!(value is null)) value.LinkedTickets.Add(this);
+				this._vehicle?.LinkedTickets.Remove(this);
+				value?.LinkedTickets.Add(this);
 				this._vehicle = value;
 			}
 		}
@@ -63,7 +63,7 @@ namespace A3S5_TransConnect
 			this.Destination = destination;
 			this.Driver = driver;
 			this.Vehicle = vehicle;
-			this.Date = date is null ? new DateTime() : (DateTime)date;
+			this.Date = date ?? new DateTime();
 			this.Cost = cost;
 			this.Payed = payed;
 			this.TicketNumber = Ticket.nextTicketNumber;
@@ -71,11 +71,8 @@ namespace A3S5_TransConnect
 
 		public override string ToString()
 		{
-			string strClient = this.Client is null ? "[null]" : $"#{this.Client.SocialSecurityNumber}";
-			string strDriver = this.Driver is null ? "[null]" : $"#{this.Driver.SocialSecurityNumber}";
-			string strVehicle = this.Vehicle is null ? "[null]" : $"#{this.Vehicle.NumberPlate}";
-			return $"Ticket #{this.TicketNumber} | {this.Origin} -> {this.Destination}, Client: {strClient}, " +
-				$"Driver: {strDriver}, Vehicle: {strVehicle}, Date: {this.Date}, " +
+			return $"Ticket #{this.TicketNumber} | {this.Origin} -> {this.Destination}, Client: #{this.Client?.SocialSecurityNumber}, " +
+				$"Driver: #{this.Driver?.SocialSecurityNumber}, Vehicle: #{this.Vehicle?.NumberPlate}, Date: {this.Date}, " +
 				$"Cost: {this.Cost}€, Payed: {this.Payed}";
 		}
 		public override int GetHashCode()

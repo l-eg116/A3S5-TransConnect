@@ -11,8 +11,8 @@ namespace A3S5_TransConnect
 		{ }
 		public CityMap(HashSet<City>? cities = null, HashSet<Road>? roads = null)
 		{
-			this.Cities = cities is null ? new HashSet<City>() : cities;
-			this.Roads = roads is null ? new HashSet<Road>() : roads;
+			this.Cities = cities ?? new HashSet<City>();
+			this.Roads = roads ?? new HashSet<Road>();
 			foreach (Road road in this.Roads)
 				if (!this.Cities.Contains(road.Black) || !this.Cities.Contains(road.White))
 					throw new ArgumentException("Roads passed should all connect cities in the passed cities.");
@@ -20,7 +20,7 @@ namespace A3S5_TransConnect
 		public CityMap(HashSet<Road>? roads = null)
 		{
 			this.Cities = new HashSet<City>();
-			this.Roads = roads is null ? new HashSet<Road>() : roads;
+			this.Roads = roads ?? new HashSet<Road>();
 			foreach (Road road in this.Roads)
 			{
 				this.Cities.Add(road.Black);
@@ -48,7 +48,7 @@ namespace A3S5_TransConnect
 				else throw ex;
 			}
 			foreach (string[]? csvLine in csvTable)
-				if (csvLine != null && csvLine.Length >= 3)
+				if (csvLine?.Length >= 3)
 				{
 					uint d = uint.TryParse(csvLine[2], out uint x) ? x : 0;
 					roads.Add(new Road(new City(csvLine[0]), new City(csvLine[1]), d));
@@ -97,7 +97,7 @@ namespace A3S5_TransConnect
 		{
 			List<Road> path = new List<Road>();
 			Dictionary<City, (uint, City?, bool)> map = this.Dijkstra(from);
-			for (City? current = to; current != from; current = map[current].Item2)
+			for (City? current = to; from != current; current = map[current].Item2)
 				if (current is null || map[current].Item2 is null) return null;
 				else path.Add(this.Roads.Where(r => r.Links(current, map[current].Item2)).Single());
 			path.Reverse();

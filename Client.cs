@@ -19,7 +19,7 @@
 			string email = "", string phoneNumber = "", HashSet<Ticket>? linkedTickets = null)
 			: base(firstName, lastName, socialSecurityNumber, birthday, address, email, phoneNumber)
 		{
-			this.LinkedTickets = linkedTickets == null ? new HashSet<Ticket>() : linkedTickets;
+			this.LinkedTickets = linkedTickets ?? new HashSet<Ticket>();
 		}
 
 		public override string ToString()

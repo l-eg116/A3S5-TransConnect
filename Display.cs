@@ -54,7 +54,7 @@ namespace A3S5_TransConnect
 		}
 		public static void WriteAligned(object? obj, Alignement aligned = Alignement.Left, int line = -1)
 		{
-			string text = obj is null ? "" : obj.ToString() + "";
+			string text = obj?.ToString() ?? "";
 			if (line < 0) line = Console.CursorTop;
 			if (text.Length < Console.WindowWidth) switch (aligned)
 				{
@@ -132,19 +132,17 @@ namespace A3S5_TransConnect
 		}
 
 		public static void DisplayText(IEnumerable<string> lines,
-			(string, string, string)? header = null, (string, string, string)? footer = null,
+			(string, string, string)? header_ = null, (string, string, string)? footer_ = null,
 			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
-			if (header is null) header = ("", "", "");
-			(string, string, string) header_ = ((string, string, string))header;
-			if (footer is null) footer = ("", "Press any key to go back", "");
-			(string, string, string) footer_ = ((string, string, string))footer;
+			(string, string, string) header = header_ ?? ("", "", "");
+			(string, string, string) footer = footer_ ?? ("", "Press any key to go back", "");
 			int maxLength = lines.Count() > 0 ? lines.Max(s => s.Length) : 0;
 			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
 
 			PrintTitle();
-			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
-			PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+			PrintHeader(header.Item1, header.Item2, header.Item3);
+			PrintFooter(footer.Item1, footer.Item2, footer.Item3);
 			ClearContentArea();
 
 			ApplyColor();
@@ -158,13 +156,11 @@ namespace A3S5_TransConnect
 			RestoreColor();
 		}
 		public static void DisplayScrollableText(IEnumerable<string> lines,
-			(string, string, string)? header = null, (string, string, string)? footer = null,
+			(string, string, string)? header_ = null, (string, string, string)? footer_ = null,
 			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
-			if (header is null) header = ("", "", "");
-			(string, string, string) header_ = ((string, string, string))header;
-			if (footer is null) footer = ("", "[W|Z|↑] Scroll up   [S|↓] Scroll down   [Esc] Go back", "");
-			(string, string, string) footer_ = ((string, string, string))footer;
+			(string, string, string) header = header_ ?? ("", "", "");
+			(string, string, string) footer = footer_ ?? ("", "[W|Z|↑] Scroll up   [S|↓] Scroll down   [Esc] Go back", "");
 
 			int maxLength = lines.Count() > 0 ? lines.Max(s => s.Length) : 0;
 			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
@@ -174,8 +170,8 @@ namespace A3S5_TransConnect
 			Func<int> bottom = () => Console.WindowHeight - TitleHeight - 5 + top;
 
 			PrintTitle();
-			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
-			PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+			PrintHeader(header.Item1, header.Item2, header.Item3);
+			PrintFooter(footer.Item1, footer.Item2, footer.Item3);
 			ClearContentArea();
 
 			ApplyColor();
@@ -195,13 +191,11 @@ namespace A3S5_TransConnect
 			RestoreColor();
 		}
 		public static int DisplaySimpleSelector<T>(List<T> objects,
-			(string, string, string)? header = null, (string, string, string)? footer = null,
+			(string, string, string)? header_ = null, (string, string, string)? footer_ = null,
 			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
-			if (header is null) header = ("", "", "");
-			(string, string, string) header_ = ((string, string, string))header;
-			if (footer is null) footer = ("", "[Space|Enter] Select   [W|Z|↑] Selection up   [S|↓] Selection down   [Esc] Go back", "");
-			(string, string, string) footer_ = ((string, string, string))footer;
+			(string, string, string) header = header_ ?? ("", "", "");
+			(string, string, string) footer = footer_ ?? ("", "[Space|Enter] Select   [W|Z|↑] Selection up   [S|↓] Selection down   [Esc] Go back", "");
 
 			int maxLength = objects.Count > 0 ? objects.Max(obj => (obj + "").Length) : 0;
 			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
@@ -212,8 +206,8 @@ namespace A3S5_TransConnect
 			int cursor = 0;
 
 			PrintTitle();
-			PrintHeader(header_.Item1, header_.Item2, header_.Item3);
-			PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+			PrintHeader(header.Item1, header.Item2, header.Item3);
+			PrintFooter(footer.Item1, footer.Item2, footer.Item3);
 			ClearContentArea();
 
 			ApplyColor();
@@ -257,20 +251,18 @@ namespace A3S5_TransConnect
 			(string, string, string)? header = null, (string, string, string)? footer = null,
 			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
-			if (transformer is null) transformer = obj => obj + "";
+			transformer ??= obj => obj + "";
 			int selected = DisplayTransformedSelector(labeledActions, tpl => transformer(tpl.Item1), header, footer, aligned, truncate);
 			if (selected >= 0) labeledActions[selected].Item2();
 		}
 		public static void DisplayController<T>(List<T> objects,
 			Dictionary<ConsoleKey, Action<T>> controls, Func<T, string>? transformer = null,
-			(string, string, string)? header = null, (string, string, string)? footer = null,
+			(string, string, string)? header_ = null, (string, string, string)? footer_ = null,
 			Alignement aligned = Alignement.Left, bool truncate = true)
 		{
-			if (transformer is null) transformer = obj => obj + "";
-			if (header is null) header = ("", "", "");
-			(string, string, string) header_ = ((string, string, string))header;
-			if (footer is null) footer = ("", "[W|Z|↑/S|↓] Selection up/down   [Esc] Go back", "");
-			(string, string, string) footer_ = ((string, string, string))footer;
+			transformer ??= obj => obj + "";
+			(string, string, string) header = header_ ?? ("", "", "");
+			(string, string, string) footer = footer_ ?? ("", "[W|Z|↑/S|↓] Selection up/down   [Esc] Go back", "");
 
 			int maxLength = objects.Count > 0 ? objects.Max(obj => transformer(obj).Length) : 0;
 			if (truncate) maxLength = Math.Min(maxLength, Console.WindowWidth);
@@ -286,8 +278,8 @@ namespace A3S5_TransConnect
 				if (fullRefresh)
 				{
 					PrintTitle();
-					PrintHeader(header_.Item1, header_.Item2, header_.Item3);
-					PrintFooter(footer_.Item1, footer_.Item2, footer_.Item3);
+					PrintHeader(header.Item1, header.Item2, header.Item3);
+					PrintFooter(footer.Item1, footer.Item2, footer.Item3);
 					ClearContentArea();
 					fullRefresh = false;
 				}

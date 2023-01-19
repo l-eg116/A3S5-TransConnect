@@ -26,21 +26,21 @@
 			HashSet<Ticket>? linkedTickets = null)
 			: base(firstName, lastName, socialSecurityNumber, birthday, address, email, phoneNumber)
 		{
-			this.JoinDate = joinDate is null ? new DateTime() : (DateTime)joinDate;
+			this.JoinDate = joinDate ?? new DateTime();
 			this.JobTitle = jobTitle;
 			this.Salary = salary;
 			this.Subordinates = subordinates;
-			this.LinkedTickets = linkedTickets == null ? new HashSet<Ticket>() : linkedTickets;
+			this.LinkedTickets = linkedTickets ?? new HashSet<Ticket>();
 		}
 
 		public override string ToString()
 		{
 			return base.ToString() + $", JoinDate: {this.JoinDate}, JobTitle: {this.JobTitle}, " +
-				$"Salary: {this.Salary}, " + (this.HasSubordinates() ? this.Subordinates.Count : 0) + " subordinate(s)";
+				$"Salary: {this.Salary}, {this.Subordinates?.Count ?? 0} subordinate(s)";
 		}
 
 		public bool HasSubordinates()
-			=> !(this.Subordinates is null) && this.Subordinates.Count != 0;
+			=> this.Subordinates?.Count > 0;
 
 		public void AddLinkedTicket(Ticket tkt)
 			=> tkt.Driver = this;

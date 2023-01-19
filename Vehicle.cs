@@ -27,10 +27,10 @@ namespace A3S5_TransConnect
 			this.Model = model;
 			this.Brand = brand;
 			this.NumberPlate = numberPlate;
-			this.LastRevision = lastRevision is null ? new DateTime() : (DateTime)lastRevision;
+			this.LastRevision = lastRevision ?? new DateTime();
 			this.KilometerCount = kilometerCount;
 			this.FuelType = fuelType;
-			this.LinkedTickets = linkedTickets == null ? new HashSet<Ticket>() : linkedTickets;
+			this.LinkedTickets = linkedTickets ?? new HashSet<Ticket>();
 		}
 
 		public override string ToString()
