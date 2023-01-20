@@ -10,7 +10,7 @@ namespace A3S5_TransConnect
 		}
 
 		public override string ToString()
-			=> $"{this.Name} City";
+			=> this.Name;
 
 		public override int GetHashCode()
 			=> this.Name.ToUpper().GetHashCode();

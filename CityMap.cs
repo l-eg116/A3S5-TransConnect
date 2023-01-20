@@ -2,7 +2,7 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace A3S5_TransConnect
 {
-	class CityMap
+	class CityMap : IDisplayEditable<CityMap>
 	{
 		public HashSet<City> Cities { get; private set; }
 		public HashSet<Road> Roads { get; private set; }
@@ -26,6 +26,12 @@ namespace A3S5_TransConnect
 				this.Cities.Add(road.Black);
 				this.Cities.Add(road.White);
 			}
+		}
+		public void Add(Road road)
+		{
+			this.Cities.Add(road.Black);
+			this.Cities.Add(road.White);
+			this.Roads.Add(road);
 		}
 
 		public static CityMap? LoadCSV(string path, bool ignoreErrors = false)
@@ -102,6 +108,24 @@ namespace A3S5_TransConnect
 				else path.Add(this.Roads.Where(r => r.Links(current, map[current].Item2)).Single());
 			path.Reverse();
 			return path;
+		}
+
+		public List<PropertyCapsule> PropertyCapsules
+		{
+			get
+			{
+				List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
+				{ new PropertyCapsule("> Map has ", () => $"{this.Cities.Count} city(ies) and {this.Roads.Count} road(s) <") };
+				foreach(Road road in this.Roads)
+					propertyCapsules.Add(new PropertyCapsule($"{road.Black} ←→ {road.White} > ",
+						() => $"{road.DistanceKm} km", () => this.Roads.Remove(road),
+						l => road.DistanceKm = Display.CleanRead<uint>("New road length > ", l)));  // ? Bug inducing ?? (:
+				propertyCapsules.Add(new PropertyCapsule("+ Add new Road", () => "", null,
+					l => this.Add(new Road(new City(Display.CleanRead<string>("First city > ", l)),
+						new City(Display.CleanRead<string>("Second city > ", l)),
+						Display.CleanRead<uint>("Distance > ", l)))));
+				return propertyCapsules;
+			}
 		}
 	}
 }
