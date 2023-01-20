@@ -29,11 +29,12 @@ namespace A3S5_TransConnect
 		new Dictionary<string, IEnumerable<ConsoleKey>>
 		{
 			{"Back", new ConsoleKey[] { ConsoleKey.Escape, ConsoleKey.BrowserBack } },
-			{"Select", new ConsoleKey[] { ConsoleKey.Enter, ConsoleKey.Spacebar } },
 			{"Up", new ConsoleKey[] { ConsoleKey.W, ConsoleKey.Z, ConsoleKey.UpArrow } },
 			{"Left", new ConsoleKey[] { ConsoleKey.A, ConsoleKey.Q, ConsoleKey.LeftArrow } },
 			{"Down", new ConsoleKey[] { ConsoleKey.S, ConsoleKey.DownArrow } },
 			{"Right", new ConsoleKey[] { ConsoleKey.D, ConsoleKey.RightArrow } },
+			{"Select", new ConsoleKey[] { ConsoleKey.Enter, ConsoleKey.Spacebar } },
+			{"Delete", new ConsoleKey[] { ConsoleKey.Delete, ConsoleKey.Backspace } },
 		};
 
 		public static void ApplyColor(bool negative = false)
@@ -64,6 +65,30 @@ namespace A3S5_TransConnect
 				}
 			else Console.SetCursorPosition(0, line);
 			Console.Write(text);
+		}
+		public static T CleanRead<T>(string? label = null, int line = -1) where T : IConvertible
+		{
+			bool prevCursorVisible = Console.CursorVisible;
+			label ??= $"{typeof(T)} > ";
+			if (line < 0) line = Console.CursorTop;
+			T result;
+
+			while(true)
+			{
+				ClearLine(line, true, true);
+				Console.SetCursorPosition(0, line);
+				ApplyColor(true);
+				Console.Write(label);
+				Console.CursorVisible = true;
+				string read = Console.ReadLine() ?? "";
+				Console.CursorVisible = false;
+				try { result = (T)Convert.ChangeType(read, typeof(T)); }
+				catch { Console.Write("\a"); continue; }
+				break;
+			}
+			RestoreColor();
+			Console.CursorVisible = prevCursorVisible;
+			return result;
 		}
 		public static string AlignString(string str, int size, Alignement aligned = Alignement.Left, bool truncate = false)
 		{
@@ -115,9 +140,9 @@ namespace A3S5_TransConnect
 			Console.Write(footer);
 			RestoreColor();
 		}
-		public static void ClearLine(int line, bool applyBackground = false)
+		public static void ClearLine(int line, bool applyBackground = false, bool bgNegative = false)
 		{
-			if (applyBackground) ApplyColor();
+			if (applyBackground) ApplyColor(bgNegative);
 			else RestoreColor();
 			WriteAligned("".PadRight(Console.WindowWidth), default, line);
 			RestoreColor();
