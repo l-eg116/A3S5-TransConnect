@@ -4,7 +4,7 @@ namespace A3S5_TransConnect
 	{
 		public string Model { get; set; }
 		public string Brand { get; set; }
-		public string NumberPlate { get; init; }
+		public string NumberPlate { get; set; }
 		public DateTime LastRevision { get; set; }
 		public uint KilometerCount { get; set; }
 		public string FuelType { get; set; }
@@ -42,22 +42,23 @@ namespace A3S5_TransConnect
 		public void RemoveLinkedTicket(Ticket tkt)
 			=> tkt.Vehicle = null;
 
-		public List<PropertyCapsule> PropertyCapsules
+		public virtual List<PropertyCapsule> PropertyCapsules
 		{
 			get => new List<PropertyCapsule>
 			{
+				new PropertyCapsule($"Vehicule type : {this.GetType().Name}"),
 				new PropertyCapsule("Model : ", () => this.Model,
 					() => this.Model = "Unknown", l => this.Model = Display.CleanRead<string>("Model : ", l)),
 				new PropertyCapsule("Brand : ", () => this.Brand,
 					() => this.Brand = "Unknown", l => this.Brand = Display.CleanRead<string>("Brand : ", l)),
-				new PropertyCapsule("Number Plate : #", () => this.NumberPlate, null, null),
+				new PropertyCapsule("Number Plate : #", () => this.NumberPlate,
+					() => this.NumberPlate = "00AAA000", l => this.NumberPlate = Display.CleanRead<string>("Number plate : #", l)),
 				new PropertyCapsule("Last Revision : ", () => this.LastRevision.ToString(),
 					() => this.LastRevision = new DateTime(), l => this.LastRevision = Display.CleanRead<DateTime>("Last Revision : ", l)),
 				new PropertyCapsule("Kilometer Count : ", () => this.KilometerCount + "",
 					() => this.KilometerCount = 0, l => this.KilometerCount = Display.CleanRead<uint>("Kilometer Count : ", l)),
 				new PropertyCapsule("Fuel Type : ", () => this.FuelType,
 					() => this.FuelType = "Unknown", l => this.FuelType = Display.CleanRead<string>("Fuel Type : ", l)),
-				// new PropertyCapsule("Fuel Type : "),
 			};
 		}
 	}

@@ -15,5 +15,14 @@ namespace A3S5_TransConnect
 
 		public override string ToString()
 			=> base.ToString() + $", Type: {this.Type}";
+
+		public override List<PropertyCapsule> PropertyCapsules
+		{
+			get => base.PropertyCapsules.Concat(new List<PropertyCapsule>
+			{
+				new PropertyCapsule("Van Type : ", () => this.Type,
+					() => this.Type = "Utility", l => this.Type = Display.CleanRead<string>("Van Type : ", l)),
+			}).ToList();
+		}
 	}
 }
