@@ -21,7 +21,7 @@ namespace A3S5_TransConnect
 			get => base.PropertyCapsules.Concat(new List<PropertyCapsule>
 			{
 				new PropertyCapsule("Van Type : ", () => this.Type,
-					() => this.Type = "Utility", l => this.Type = Display.CleanRead<string>("Van Type : ", l)),
+					() => this.Type = "Utility", l => this.Type = Display.CleanRead<string>("Van Type > ", l)),
 			}).ToList();
 		}
 	}

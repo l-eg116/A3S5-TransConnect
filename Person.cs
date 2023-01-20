@@ -1,10 +1,10 @@
 ﻿namespace A3S5_TransConnect
 {
-	internal abstract class Person : IComparable
+	internal abstract class Person : IComparable, IDisplayEditable<Person>
 	{
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
-		public int SocialSecurityNumber { get; init; }
+		public int SocialSecurityNumber { get; set; }
 		public DateTime? Birthday { get; set; }
 		public string Address { get; set; }
 		public string Email { get; set; }
@@ -34,6 +34,27 @@
 		public int CompareTo(object? obj)
 		{
 			return obj is Person ? this.ToString().CompareTo(obj.ToString()) : 1;
+		}
+
+		public virtual List<PropertyCapsule> PropertyCapsules
+		{
+			get => new List<PropertyCapsule>
+			{
+				new PropertyCapsule("First Name : ", () => this.FirstName,
+					() => this.FirstName = "Unknown", l => this.FirstName = Display.CleanRead<string>("First Name > ", l)),
+				new PropertyCapsule("Last Name : ", () => this.LastName,
+					() => this.LastName = "UNKNOWN", l => this.LastName = Display.CleanRead<string>("Last Name > ", l)),
+				new PropertyCapsule("Social Security Number : ", () => this.SocialSecurityNumber + "",
+					() => this.SocialSecurityNumber = 0, l => this.SocialSecurityNumber = Display.CleanRead<int>("Social Security Number > ", l)),
+				new PropertyCapsule("Birthday : ", () => this.Birthday?.ToString() ?? "??",
+					() => this.Birthday = null, l => this.Birthday = Display.CleanRead<DateTime>("Birthday > ", l)),
+				new PropertyCapsule("Address : ", () => this.Address,
+					() => this.Address = "", l => this.Address = Display.CleanRead<string>("Address > ", l)),
+				new PropertyCapsule("Email : ", () => this.Email,
+					() => this.Email = "", l => this.Email = Display.CleanRead<string>("Email > ", l)),
+				new PropertyCapsule("PhoneNumber : ", () => this.PhoneNumber,
+					() => this.PhoneNumber = "", l => this.PhoneNumber = Display.CleanRead<string>("PhoneNumber > ", l)),
+			};
 		}
 	}
 }

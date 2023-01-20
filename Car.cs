@@ -21,7 +21,7 @@ namespace A3S5_TransConnect
 			get => base.PropertyCapsules.Concat(new List<PropertyCapsule>
 			{
 				new PropertyCapsule("Capacity : ", () => $"{this.CapacityPassengers} passenger(s)",
-					() => this.CapacityPassengers = 0, l => this.CapacityPassengers = Display.CleanRead<uint>("Capacity : ", l)),
+					() => this.CapacityPassengers = 0, l => this.CapacityPassengers = Display.CleanRead<uint>("Capacity > ", l)),
 			}).ToList();
 		}
 	}

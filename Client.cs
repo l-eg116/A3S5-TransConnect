@@ -31,5 +31,7 @@
 			=> tkt.Client = this;
 		public void RemoveLinkedTicket(Ticket tkt)
 			=> tkt.Client = null;
+
+		public override List<PropertyCapsule> PropertyCapsules => base.PropertyCapsules;
 	}
 }

@@ -26,11 +26,11 @@ namespace A3S5_TransConnect
 			get => base.PropertyCapsules.Concat(new List<PropertyCapsule>
 			{
 				new PropertyCapsule("Payload Type : ", () => this.PayloadType,
-					() => this.PayloadType = "Generic", l => this.PayloadType = Display.CleanRead<string>("Payload Type : ", l)),
+					() => this.PayloadType = "Generic", l => this.PayloadType = Display.CleanRead<string>("Payload Type > ", l)),
 				new PropertyCapsule("Capacity : ", () => $"{this.Capacity} {this.CapacityUnit}",
-					() => this.Capacity = 0, l => this.Capacity = Display.CleanRead<uint>("Capacity : ", l)),
+					() => this.Capacity = 0, l => this.Capacity = Display.CleanRead<uint>("Capacity > ", l)),
 				new PropertyCapsule("   -→ Unit : ", () =>this.CapacityUnit,
-					() => this.CapacityUnit = "kg", l => this.CapacityUnit = Display.CleanRead<string>("→ New Unit : ", l)),
+					() => this.CapacityUnit = "kg", l => this.CapacityUnit = Display.CleanRead<string>("→ New Unit > ", l)),
 			}).ToList();
 		}
 	}

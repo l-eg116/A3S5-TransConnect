@@ -430,7 +430,7 @@ namespace A3S5_TransConnect
 		public override string ToString()
 			=> this.Label + this.Get();
 	}
-	interface IDisplayEditable<TSelf> where TSelf : new()
+	interface IDisplayEditable<TSelf> //where TSelf : new() // ? does this cause issues ??
 	{
 		List<PropertyCapsule> PropertyCapsules { get; }
 	}
