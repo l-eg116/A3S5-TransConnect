@@ -33,8 +33,8 @@ namespace A3S5_TransConnect
 			{"Left", new ConsoleKey[] { ConsoleKey.A, ConsoleKey.Q, ConsoleKey.LeftArrow } },
 			{"Down", new ConsoleKey[] { ConsoleKey.S, ConsoleKey.DownArrow } },
 			{"Right", new ConsoleKey[] { ConsoleKey.D, ConsoleKey.RightArrow } },
-			{"Select", new ConsoleKey[] { ConsoleKey.Enter, ConsoleKey.Spacebar } },
-			{"Delete", new ConsoleKey[] { ConsoleKey.Delete, ConsoleKey.Backspace } },
+			{"Select", new ConsoleKey[] { ConsoleKey.Enter, ConsoleKey.Spacebar, ConsoleKey.E } },
+			{"Delete", new ConsoleKey[] { ConsoleKey.Delete, ConsoleKey.Backspace, ConsoleKey.R } },
 		};
 
 		public static void ApplyColor(bool negative = false)
@@ -73,7 +73,7 @@ namespace A3S5_TransConnect
 			if (line < 0) line = Console.CursorTop;
 			T result;
 
-			while(true)
+			while (true)
 			{
 				ClearLine(line, true, true);
 				Console.SetCursorPosition(0, line);
@@ -349,5 +349,89 @@ namespace A3S5_TransConnect
 			Func<(T, string), string> tranformer = lblObj => lblObj.Item2;
 			DisplayController(labeledObjects, tweakedControls, tranformer, header, footer, aligned, truncate);
 		}
+		public static void DisplayEditor<T>(IDisplayEditable<T> editedInstance,
+			(string, string, string)? header_ = null, (string, string, string)? footer_ = null,
+			Alignement aligned = Alignement.Left, bool truncate = true) where T : new()
+		{
+			(string, string, string) header = header_ ?? ("", "", "");
+			(string, string, string) footer = footer_ ?? ("", "[Space|Enter] Edit   [Suppr] Reset   [W|Z|↑/S|↓] Selection up/down   [Esc] Go back", "");
+
+			int maxLength;
+			void updateMaxLength()
+				=> maxLength = Math.Min(editedInstance.PropertyCapsules.Max(pc => pc.ToString().Length),
+										truncate ? Console.WindowWidth : int.MaxValue);
+			updateMaxLength();
+
+			int top = 0;
+			Func<int> bottom = () => Console.WindowHeight - TitleHeight - 5 + top;
+			int cursor = 0;
+			bool fullRefresh = true;
+
+
+			while (true)
+			{
+				if (fullRefresh)
+				{
+					updateMaxLength();
+					PrintTitle();
+					PrintHeader(header.Item1, header.Item2, header.Item3);
+					PrintFooter(footer.Item1, footer.Item2, footer.Item3);
+					ClearContentArea();
+					fullRefresh = false;
+				}
+				ApplyColor();
+				for (int i = top, line = TitleHeight + 2; i <= bottom() && i < editedInstance.PropertyCapsules.Count; i++, line++)
+					if (i == cursor)
+					{
+						ApplyColor(true);
+						WriteAligned(AlignString(editedInstance.PropertyCapsules[i].ToString(), maxLength, aligned, truncate), aligned, line);
+						ApplyColor(false);
+					}
+					else
+						WriteAligned(AlignString(editedInstance.PropertyCapsules[i].ToString(), maxLength, aligned, truncate), aligned, line);
+				ClearLine(TitleHeight + 1); ClearLine(Console.WindowHeight - 2); ApplyColor();
+				if (top != 0)
+					WriteAligned($" ↑  ↑  ↑  +{top}", aligned, TitleHeight + 1);
+				if (bottom() < editedInstance.PropertyCapsules.Count - 1)
+					WriteAligned($" ↓  ↓  ↓  +{editedInstance.PropertyCapsules.Count - bottom() - 1}", aligned, Console.WindowHeight - 2);
+
+				ConsoleKey action = Console.ReadKey(true).Key;
+				if (KeyBundles["Back"].Contains(action)) break;
+				else if (KeyBundles["Up"].Contains(action)) cursor--;
+				else if (KeyBundles["Down"].Contains(action)) cursor++;
+				else if (KeyBundles["Delete"].Contains(action))
+				{ editedInstance.PropertyCapsules[cursor].Reset?.Invoke(); fullRefresh = true; }
+				else if (KeyBundles["Select"].Contains(action))
+				{ editedInstance.PropertyCapsules[cursor].Editor?.Invoke(TitleHeight + 2 + cursor - top); fullRefresh = true; }
+
+				cursor = Math.Max(0, Math.Min(cursor, editedInstance.PropertyCapsules.Count - 1));
+				if (cursor < top) top--;
+				if (cursor > bottom()) top++;
+			}
+			RestoreColor();
+		}
+	}
+
+	struct PropertyCapsule
+	{
+		public string Label { get; set; }
+		public Func<string> Get { get; set; }
+		public Action? Reset { get; set; }
+		public Action<int>? Editor { get; set; }
+
+		public PropertyCapsule(string label = "", Func<string>? get = null, Action? reset = null, Action<int>? editor = null)
+		{
+			this.Label = label;
+			this.Get = get ?? (() => "");
+			this.Reset = reset;
+			this.Editor = editor;
+		}
+
+		public override string ToString()
+			=> this.Label + this.Get();
+	}
+	interface IDisplayEditable<TSelf> where TSelf : new()
+	{
+		List<PropertyCapsule> PropertyCapsules { get; }
 	}
 }
