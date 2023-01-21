@@ -1,6 +1,6 @@
 ﻿namespace A3S5_TransConnect
 {
-	internal abstract class Person : IComparable  //, IDisplayEditable<Person>
+	internal abstract class Person : IComparable, IDisplayEditable<Person>
 	{
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
