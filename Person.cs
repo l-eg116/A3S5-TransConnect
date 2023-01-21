@@ -30,6 +30,8 @@
 			return $"{this.FirstName} {this.LastName} #{this.SocialSecurityNumber} | " +
 				$"Birthday: {this.Birthday}, Address: {this.Address}, Email: {this.Email}, PhoneNumber: {this.PhoneNumber}";
 		}
+		public virtual string PrettyString()
+			=> $"{this.FirstName} {this.LastName} (#{this.SocialSecurityNumber})";
 
 		public int CompareTo(object? obj)
 		{

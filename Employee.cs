@@ -38,6 +38,8 @@
 			return base.ToString() + $", JoinDate: {this.JoinDate}, JobTitle: {this.JobTitle}, " +
 				$"Salary: {this.Salary}, {this.Subordinates?.Count ?? 0} subordinate(s)";
 		}
+		public override string PrettyString()
+			=> base.PrettyString() + $" - {this.JobTitle}";
 
 		public bool HasSubordinates()
 			=> this.Subordinates?.Count > 0;

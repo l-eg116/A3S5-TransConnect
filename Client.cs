@@ -28,6 +28,8 @@
 		{
 			return base.ToString() + $", Company : {this.Company}, {this.LinkedTickets.Count} LinkedTicket(s)";
 		}
+		public override string PrettyString()
+			=> base.PrettyString() + $" - {this.Company}";
 
 		public void AddLinkedTicket(Ticket tkt)
 			=> tkt.Client = this;
