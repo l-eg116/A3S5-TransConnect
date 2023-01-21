@@ -73,6 +73,18 @@ namespace A3S5_TransConnect
 			if (!this.IsEmpty()) Renderer(this.Root, "", "");
 			return tree;
 		}
+		public Employee? FindSuperior(Employee employee)
+		{
+			Employee? superior = null;
+			void Finder(Employee? e)
+			{
+				if(e?.Subordinates?.Contains(employee) ?? false) superior = e;
+				else e?.Subordinates?.ForEach(Finder);
+			}
+
+			Finder(this.Root);
+			return superior;
+		}
 
 		public Employee? DisplaySelector()
 		{
