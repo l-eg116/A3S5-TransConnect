@@ -410,6 +410,14 @@ namespace A3S5_TransConnect
 			}
 			RestoreColor();
 		}
+		public static T DisplayConstructor<T>((string, string, string)? header = null,
+			(string, string, string)? footer = null, Alignement aligned = Alignement.Left,
+			bool truncate = true) where T : IDisplayEditable<T>, new()
+		{
+			T newInstance = new T();
+			DisplayEditor(newInstance, header, footer, aligned, truncate);
+			return newInstance;
+		}
 	}
 
 	struct PropertyCapsule
