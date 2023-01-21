@@ -43,6 +43,12 @@
 
 		public bool HasSubordinates()
 			=> this.Subordinates?.Count > 0;
+		public void TransferSubordinates(Employee other)
+		{
+			if(other.Subordinates is not null) this.Subordinates?.ForEach(other.Subordinates.Add);
+			else other.Subordinates = this.Subordinates;
+			this.Subordinates = null;
+		}
 
 		public void AddLinkedTicket(Ticket tkt)
 			=> tkt.Driver = this;
