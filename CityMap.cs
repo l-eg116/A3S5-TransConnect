@@ -2,7 +2,7 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace A3S5_TransConnect
 {
-	class CityMap : IDisplayEditable<CityMap>
+	class CityMap : IDisplayEditable<CityMap>, IDisplaySelector<City>
 	{
 		public HashSet<City> Cities { get; private set; }
 		public HashSet<Road> Roads { get; private set; }
@@ -116,7 +116,7 @@ namespace A3S5_TransConnect
 			{
 				List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
 				{ new PropertyCapsule("> Map has ", () => $"{this.Cities.Count} city(ies) and {this.Roads.Count} road(s) <") };
-				foreach(Road road in this.Roads)
+				foreach (Road road in this.Roads)
 					propertyCapsules.Add(new PropertyCapsule($"{road.Black} ←→ {road.White} > ",
 						() => $"{road.DistanceKm} km", () => this.Roads.Remove(road),
 						l => road.DistanceKm = Display.CleanRead<uint>("New road length > ", l)));  // ? Bug inducing ?? (:
@@ -126,6 +126,12 @@ namespace A3S5_TransConnect
 						Display.CleanRead<uint>("Distance > ", l)))));
 				return propertyCapsules;
 			}
+		}
+		public City? DisplaySelector()
+		{
+			List<City> citiesList = this.Cities.ToList();
+			int selected = Display.DisplayTransformedSelector(citiesList, city => city.ToString(), (" Select an Employee", "", ""));
+			return selected >= 0 ? citiesList[selected] : null;
 		}
 	}
 }
