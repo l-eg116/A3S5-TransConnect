@@ -12,11 +12,11 @@ namespace A3S5_TransConnect
 				void Counter(Employee emp)
 				{
 					count++;
-					if(emp.HasSubordinates())
+					if (emp.HasSubordinates())
 						emp.Subordinates.ForEach(Counter);
 				}
 
-				if(!this.IsEmpty()) Counter(this.Root);
+				if (!this.IsEmpty()) Counter(this.Root);
 				return count;
 			}
 		}
@@ -51,5 +51,27 @@ namespace A3S5_TransConnect
 
 		public bool IsEmpty()
 			=> this.Root is null;
+		public List<(string, Employee)> MakeTree()
+		{
+			const string IBRANCH = "│   ";
+			const string TBRANCH = "├───";
+			const string LBRANCH = "└───";
+			const string SPACER = "·   ";
+			List<(string, Employee)> tree = new List<(string, Employee)>();
+			void Renderer(Employee employee, string stack = "", string branch = "")
+			{
+				tree.Add(($"{stack}{branch}{employee.PrettyString()}", employee));
+				stack += branch == "" ? "" : branch == TBRANCH ? IBRANCH : SPACER;
+				if (employee.HasSubordinates())
+				{
+					for (int i = 0; i < employee.Subordinates.Count - 1; i++)
+						Renderer(employee.Subordinates[i], stack, TBRANCH);
+					Renderer(employee.Subordinates[^1], stack, LBRANCH);
+				}
+			}
+
+			if (!this.IsEmpty()) Renderer(this.Root, "", "");
+			return tree;
+		}
 	}
 }
