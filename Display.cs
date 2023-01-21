@@ -442,4 +442,8 @@ namespace A3S5_TransConnect
 	{
 		List<PropertyCapsule> PropertyCapsules { get; }
 	}
+	interface IDisplaySelector<T>
+	{
+		T? DisplaySelector();
+	}
 }

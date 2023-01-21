@@ -1,6 +1,6 @@
 namespace A3S5_TransConnect
 {
-	class CompanyTree
+	class CompanyTree : IDisplaySelector<Employee>
 	{
 		public string Name { get; set; }
 		public Employee? Root { get; init; }
@@ -72,6 +72,13 @@ namespace A3S5_TransConnect
 
 			if (!this.IsEmpty()) Renderer(this.Root, "", "");
 			return tree;
+		}
+
+		public Employee? DisplaySelector()
+		{
+			List<(string, Employee)> tree = this.MakeTree();
+			int selected = Display.DisplayTransformedSelector(tree, branch => branch.Item1, (" Select an Employee", "", ""));
+			return selected >= 0 ? tree[selected].Item2 : null;
 		}
 	}
 }
