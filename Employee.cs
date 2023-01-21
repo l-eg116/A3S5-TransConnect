@@ -1,6 +1,6 @@
 ﻿namespace A3S5_TransConnect
 {
-	class Employee : Person, ITicketLinkable
+	class Employee : Person, ITicketLinkable, IDisplayEditable<Employee>
 	{
 		public DateTime JoinDate { get; set; }
 		public string JobTitle { get; set; }

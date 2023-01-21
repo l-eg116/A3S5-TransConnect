@@ -1,6 +1,6 @@
 ﻿namespace A3S5_TransConnect
 {
-	class Client : Person, ITicketLinkable
+	class Client : Person, ITicketLinkable, IDisplayEditable<Client>
 	{
 		public string Company { get; set; }
 		private HashSet<Ticket> _linkedTickets;
