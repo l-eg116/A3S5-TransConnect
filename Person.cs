@@ -25,6 +25,14 @@
 			this.PhoneNumber = phoneNumber;
 		}
 
+		public override int GetHashCode()
+			=> this.ToString().GetHashCode();
+		public override bool Equals(object? obj)
+			=> obj?.GetHashCode() == this.GetHashCode();
+		public static bool operator ==(Person person, object? obj)
+			=> person.Equals(obj);
+		public static bool operator !=(Person person, object? obj)
+			=> !person.Equals(obj);
 		public override string ToString()
 		{
 			return $"{this.FirstName} {this.LastName} #{this.SocialSecurityNumber} | " +

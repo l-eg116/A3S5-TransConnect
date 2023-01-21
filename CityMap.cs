@@ -119,7 +119,7 @@ namespace A3S5_TransConnect
 				foreach (Road road in this.Roads)
 					propertyCapsules.Add(new PropertyCapsule($"{road.Black} ←→ {road.White} > ",
 						() => $"{road.DistanceKm} km", () => this.Roads.Remove(road),
-						l => road.DistanceKm = Display.CleanRead<uint>("New road length > ", l)));  // ? Bug inducing ?? (:
+						l => road.DistanceKm = Display.CleanRead<uint>("New road length > ", l)));
 				propertyCapsules.Add(new PropertyCapsule("+ Add new Road", () => "", null,
 					l => this.Add(new Road(new City(Display.CleanRead<string>("First city > ", l)),
 						new City(Display.CleanRead<string>("Second city > ", l)),
