@@ -1,9 +1,9 @@
 namespace A3S5_TransConnect
 {
-	class CompanyTree : IDisplaySelector<Employee>
+	class CompanyTree : IDisplaySelector<Employee>, IDisplayEditable<CompanyTree>
 	{
 		public string Name { get; set; }
-		public Employee? Root { get; init; }
+		public Employee? Root { get; set; }
 		public int Count
 		{
 			get
@@ -86,11 +86,58 @@ namespace A3S5_TransConnect
 			return superior;
 		}
 
-		public Employee? DisplaySelector()
+		public List<(string, Employee)> InstanceSelector()
+			=> this.MakeTree();
+
+		private void PC_RemoveEmployee(Employee employee)
 		{
-			List<(string, Employee)> tree = this.MakeTree();
-			int selected = Display.DisplayTransformedSelector(tree, branch => branch.Item1, (" Select an Employee", "", ""));
-			return selected >= 0 ? tree[selected].Item2 : null;
+			if (employee.HasSubordinates())
+				switch (Display.DisplaySimpleSelector(
+					new List<string> { " ¤ Delete subordinate(s)", " ↑ Give subordinate(s) to superior", " → Give subordinate(s) to other employee" },
+					(" What will happen to this employee's subordinate(s)", "", "")))
+				{
+					case 0: break;
+					case 1: employee.TransferSubordinates(FindSuperior(employee) ?? new Employee()); break;
+					case 2:
+						PC_MoveEmployee(employee);
+						employee.TransferSubordinates(FindSuperior(employee) ?? new Employee());
+						break;
+					default: return;
+				}
+
+			FindSuperior(employee)?.Subordinates?.Remove(employee);
+		}
+		private void PC_MoveEmployee(Employee? employee)
+		{
+			if(employee is null) return;
+			Employee? exSuperior = FindSuperior(employee);
+			exSuperior?.Subordinates?.Remove(employee);
+			Employee? newSuperior = Display.DisplayInstanceSelector(this, (" Select new superior", "", ""));
+			(newSuperior ?? exSuperior)?.AddSubordinate(employee);
+		}
+		private void PC_AddEmployee()
+		{
+			Employee newCommer = Display.DisplayConstructor<Employee>((" Creating new employee", "", ""));
+			if(this.IsEmpty()) this.Root = newCommer;
+			else Display.DisplayInstanceSelector(this, (" Choose new employee's superior", "", ""))?.AddSubordinate(newCommer);
+		}
+		public List<PropertyCapsule> PropertyCapsules
+		{
+			get
+			{
+				List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
+				{ new PropertyCapsule("> Company has ", () => $"{this.Count} employee(s) on {this.Height} level(s) <") };
+				foreach ((string, Employee) branch in this.MakeTree())
+					propertyCapsules.Add(new PropertyCapsule(branch.Item1, null,
+						() => PC_RemoveEmployee(branch.Item2),
+						_ => Display.DisplayEditor<Employee>(branch.Item2, (" Editing Company employee", "", ""))));
+				if (!this.IsEmpty())
+					propertyCapsules.Add(new PropertyCapsule(" → Move an employee", null, null,
+					_ => PC_MoveEmployee(Display.DisplayInstanceSelector(this, (" Select employee to move", "", "")))));
+				propertyCapsules.Add(new PropertyCapsule(" + Add new employee", null, null, _ => PC_AddEmployee()));
+
+				return propertyCapsules;
+			}
 		}
 	}
 }
