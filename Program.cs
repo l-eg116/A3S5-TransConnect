@@ -88,7 +88,7 @@
 			Display.DisplayEditor(flash, ("Okay you can change your becane here :))", "= = = = =", "vroum vroum"), null, Display.Alignement.Left);
 		}
 	}
-	struct InteractiveList<T> : IDisplayEditable<InteractiveList<T>>
+	struct InteractiveList<T> : IDisplayEditable<InteractiveList<T>>, IDisplaySelector<T>
 	{
 		public List<T> List { get; set; }
 		public Func<T, string>? Get { get; set; }
@@ -106,6 +106,16 @@
 			}
 			if(this.New is not null) capsules.Add((PropertyCapsule)this.New);
 			return capsules;
+		}
+		public List<(string, T)> InstanceSelector()
+		{
+			List<(string, T)> selector = new List<(string, T)>();
+			foreach (T t in this.List)
+			{
+				InteractiveList<T> copy = this;
+				selector.Add((copy.Get?.Invoke(t) ?? t + "", t));
+			}
+			return selector;
 		}
 	}
 }
