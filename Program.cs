@@ -43,6 +43,7 @@
 		public static CityMap map = new CityMap();
 		static void Main()
 		{
+			LoadVariables();
 			InitializeDisplay();
 		}
 		static void InitializeDisplay()
@@ -58,6 +59,45 @@
 			Display.TitleNegative = false;
 			Display.BackgroundColor = Options.BackgroundColor;
 			Display.TextColor = Options.TextColor;
+		}
+		static void LoadVariables()
+		{
+			void Loader<T>(string path, Action<T> load)
+			{
+				T? loaded = Saver.Load<T>(path, true);
+				if (loaded is null) Console.WriteLine($"! Failed to load '{path}'");
+				else
+				{
+					load((T)loaded);
+					Console.WriteLine($"Succesfully loaded '{path}'");
+				}
+			}
+			void MapLoader()
+			{
+				CityMap? loaded = CityMap.LoadCSV(Options.DistancesSavePath, true);
+				if (loaded is null) Console.WriteLine($"! Failed to load '{Options.DistancesSavePath}'");
+				else
+				{
+					map = (CityMap)loaded;
+					Console.WriteLine($"Succesfully loaded '{Options.DistancesSavePath}'");
+				}
+			}
+
+			List<Thread> loaders = new List<Thread>()
+			{
+				new Thread(() => Loader<List<Vehicle>>(Options.FleetSavePath, loaded => fleet.List = loaded)),
+				new Thread(() => Loader<List<Client>>(Options.ClientsSavePath, loaded => clients.List = loaded)),
+				new Thread(() => Loader<List<Ticket>>(Options.TicketsSavePath, loaded => tickets.List = loaded)),
+				new Thread(() => Loader<CompanyTree>(Options.CompanySavePath, loaded => company = loaded)),
+				new Thread(MapLoader),
+			};
+			loaders.ForEach(loader => loader.Start());
+			loaders.ForEach(loader => loader.Join());
+
+			Console.Write("Loading done");
+			System.Threading.Thread.Sleep(1000);
+			for(int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(1000); }
+			Console.WriteLine();
 		}
 	}
 }
