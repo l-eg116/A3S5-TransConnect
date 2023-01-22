@@ -36,8 +36,8 @@
 		public void RemoveLinkedTicket(Ticket tkt)
 			=> tkt.Client = null;
 
-		public override List<PropertyCapsule> PropertyCapsules
-			=> base.PropertyCapsules.Concat(new List<PropertyCapsule>() {
+		public override List<PropertyCapsule> PropertyCapsules()
+			=> base.PropertyCapsules().Concat(new List<PropertyCapsule>() {
 				new PropertyCapsule("Company : ", () => this.Company, () => this.Company = "",
 					l => this.Company = Display.CleanRead<string>("Company : ", l))
 			}).ToList();

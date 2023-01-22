@@ -50,7 +50,7 @@
 		}
 		public void TransferSubordinates(Employee other)
 		{
-			if(other.Subordinates is not null) this.Subordinates?.ForEach(other.Subordinates.Add);
+			if (other.Subordinates is not null) this.Subordinates?.ForEach(other.Subordinates.Add);
 			else other.Subordinates = this.Subordinates;
 			this.Subordinates = null;
 		}
@@ -60,9 +60,8 @@
 		public void RemoveLinkedTicket(Ticket tkt)
 			=> tkt.Driver = null;
 
-		public override List<PropertyCapsule> PropertyCapsules
-		{
-			get => base.PropertyCapsules.Concat(new List<PropertyCapsule>
+		public override List<PropertyCapsule> PropertyCapsules()
+			=> base.PropertyCapsules().Concat(new List<PropertyCapsule>
 			{
 				new PropertyCapsule(),  // For a nice empty line :)
 				new PropertyCapsule("Join Date : ", () => this.JoinDate + "",
@@ -75,6 +74,5 @@
 					null, l => Display.DisplayScrollableText(this.Subordinates?.ConvertAll(sub => sub.ToString()) ?? new List<string>(),
 					($" Viewing subordinates of {this.FirstName} {this.LastName}", "", ""))),
 			}).ToList();
-		}
 	}
 }

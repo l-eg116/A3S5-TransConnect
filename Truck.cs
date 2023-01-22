@@ -21,9 +21,8 @@ namespace A3S5_TransConnect
 		public override string ToString()
 			=> base.ToString() + $", PayloadType: {this.PayloadType}, Capacity: {this.PayloadType}{this.CapacityUnit}";
 
-		public override List<PropertyCapsule> PropertyCapsules
-		{
-			get => base.PropertyCapsules.Concat(new List<PropertyCapsule>
+		public override List<PropertyCapsule> PropertyCapsules()
+			=> base.PropertyCapsules().Concat(new List<PropertyCapsule>
 			{
 				new PropertyCapsule("Payload Type : ", () => this.PayloadType,
 					() => this.PayloadType = "Generic", l => this.PayloadType = Display.CleanRead<string>("Payload Type > ", l)),
@@ -32,6 +31,5 @@ namespace A3S5_TransConnect
 				new PropertyCapsule("   -→ Unit : ", () =>this.CapacityUnit,
 					() => this.CapacityUnit = "kg", l => this.CapacityUnit = Display.CleanRead<string>("→ New Unit > ", l)),
 			}).ToList();
-		}
 	}
 }

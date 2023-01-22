@@ -367,7 +367,7 @@ namespace A3S5_TransConnect
 
 			int maxLength;
 			void updateMaxLength()
-				=> maxLength = Math.Min(editedInstance.PropertyCapsules.Max(pc => pc.ToString().Length),
+				=> maxLength = Math.Min(editedInstance.PropertyCapsules().Max(pc => pc.ToString().Length),
 										truncate ? Console.WindowWidth : int.MaxValue);
 			updateMaxLength();
 
@@ -389,31 +389,31 @@ namespace A3S5_TransConnect
 					fullRefresh = false;
 				}
 				ApplyColor();
-				for (int i = top, line = TitleHeight + 2; i <= bottom() && i < editedInstance.PropertyCapsules.Count; i++, line++)
+				for (int i = top, line = TitleHeight + 2; i <= bottom() && i < editedInstance.PropertyCapsules().Count; i++, line++)
 					if (i == cursor)
 					{
 						ApplyColor(true);
-						WriteAligned(AlignString(editedInstance.PropertyCapsules[i].ToString(), maxLength, aligned, truncate), aligned, line);
+						WriteAligned(AlignString(editedInstance.PropertyCapsules()[i].ToString(), maxLength, aligned, truncate), aligned, line);
 						ApplyColor(false);
 					}
 					else
-						WriteAligned(AlignString(editedInstance.PropertyCapsules[i].ToString(), maxLength, aligned, truncate), aligned, line);
+						WriteAligned(AlignString(editedInstance.PropertyCapsules()[i].ToString(), maxLength, aligned, truncate), aligned, line);
 				ClearLine(TitleHeight + 1); ClearLine(Console.WindowHeight - 2); ApplyColor();
 				if (top != 0)
 					WriteAligned($" ↑  ↑  ↑  +{top}", aligned, TitleHeight + 1);
-				if (bottom() < editedInstance.PropertyCapsules.Count - 1)
-					WriteAligned($" ↓  ↓  ↓  +{editedInstance.PropertyCapsules.Count - bottom() - 1}", aligned, Console.WindowHeight - 2);
+				if (bottom() < editedInstance.PropertyCapsules().Count - 1)
+					WriteAligned($" ↓  ↓  ↓  +{editedInstance.PropertyCapsules().Count - bottom() - 1}", aligned, Console.WindowHeight - 2);
 
 				ConsoleKey action = Console.ReadKey(true).Key;
 				if (KeyBundles["Back"].Contains(action)) break;
 				else if (KeyBundles["Up"].Contains(action)) cursor--;
 				else if (KeyBundles["Down"].Contains(action)) cursor++;
 				else if (KeyBundles["Delete"].Contains(action))
-				{ editedInstance.PropertyCapsules[cursor].Reset?.Invoke(); fullRefresh = true; }
+				{ editedInstance.PropertyCapsules()[cursor].Reset?.Invoke(); fullRefresh = true; }
 				else if (KeyBundles["Select"].Contains(action))
-				{ editedInstance.PropertyCapsules[cursor].Editor?.Invoke(TitleHeight + 2 + cursor - top); fullRefresh = true; }
+				{ editedInstance.PropertyCapsules()[cursor].Editor?.Invoke(TitleHeight + 2 + cursor - top); fullRefresh = true; }
 
-				cursor = Math.Max(0, Math.Min(cursor, editedInstance.PropertyCapsules.Count - 1));
+				cursor = Math.Max(0, Math.Min(cursor, editedInstance.PropertyCapsules().Count - 1));
 				if (cursor < top) top--;
 				if (cursor > bottom()) top++;
 			}
@@ -449,7 +449,7 @@ namespace A3S5_TransConnect
 	}
 	interface IDisplayEditable<TSelf>
 	{
-		List<PropertyCapsule> PropertyCapsules { get; }
+		public List<PropertyCapsule> PropertyCapsules();
 	}
 	interface IDisplaySelector<T>
 	{

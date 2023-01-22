@@ -110,22 +110,19 @@ namespace A3S5_TransConnect
 			return path;
 		}
 
-		public List<PropertyCapsule> PropertyCapsules
+		public List<PropertyCapsule> PropertyCapsules()
 		{
-			get
-			{
-				List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
+			List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
 				{ new PropertyCapsule("> Map has ", () => $"{this.Cities.Count} city(ies) and {this.Roads.Count} road(s) <") };
-				foreach (Road road in this.Roads)
-					propertyCapsules.Add(new PropertyCapsule($"{road.Black} ←→ {road.White} > ",
-						() => $"{road.DistanceKm} km", () => this.Roads.Remove(road),
-						l => road.DistanceKm = Display.CleanRead<uint>("New road length > ", l)));
-				propertyCapsules.Add(new PropertyCapsule("+ Add new Road", () => "", null,
-					l => this.Add(new Road(new City(Display.CleanRead<string>("First city > ", l)),
-						new City(Display.CleanRead<string>("Second city > ", l)),
-						Display.CleanRead<uint>("Distance > ", l)))));
-				return propertyCapsules;
-			}
+			foreach (Road road in this.Roads)
+				propertyCapsules.Add(new PropertyCapsule($"{road.Black} ←→ {road.White} > ",
+					() => $"{road.DistanceKm} km", () => this.Roads.Remove(road),
+					l => road.DistanceKm = Display.CleanRead<uint>("New road length > ", l)));
+			propertyCapsules.Add(new PropertyCapsule("+ Add new Road", () => "", null,
+				l => this.Add(new Road(new City(Display.CleanRead<string>("First city > ", l)),
+					new City(Display.CleanRead<string>("Second city > ", l)),
+					Display.CleanRead<uint>("Distance > ", l)))));
+			return propertyCapsules;
 		}
 		public List<(string, City)> InstanceSelector()
 		{

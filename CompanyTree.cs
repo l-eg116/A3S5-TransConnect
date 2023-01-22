@@ -109,7 +109,7 @@ namespace A3S5_TransConnect
 		}
 		private void PC_MoveEmployee(Employee? employee)
 		{
-			if(employee is null) return;
+			if (employee is null) return;
 			Employee? exSuperior = FindSuperior(employee);
 			exSuperior?.Subordinates?.Remove(employee);
 			Employee? newSuperior = Display.DisplayInstanceSelector(this, (" Select new superior", "", ""));
@@ -118,26 +118,23 @@ namespace A3S5_TransConnect
 		private void PC_AddEmployee()
 		{
 			Employee newCommer = Display.DisplayConstructor<Employee>((" Creating new employee", "", ""));
-			if(this.IsEmpty()) this.Root = newCommer;
+			if (this.IsEmpty()) this.Root = newCommer;
 			else Display.DisplayInstanceSelector(this, (" Choose new employee's superior", "", ""))?.AddSubordinate(newCommer);
 		}
-		public List<PropertyCapsule> PropertyCapsules
+		public List<PropertyCapsule> PropertyCapsules()
 		{
-			get
-			{
-				List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
+			List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
 				{ new PropertyCapsule("> Company has ", () => $"{this.Count} employee(s) on {this.Height} level(s) <") };
-				foreach ((string, Employee) branch in this.MakeTree())
-					propertyCapsules.Add(new PropertyCapsule(branch.Item1, null,
-						() => PC_RemoveEmployee(branch.Item2),
-						_ => Display.DisplayEditor<Employee>(branch.Item2, (" Editing Company employee", "", ""))));
-				if (!this.IsEmpty())
-					propertyCapsules.Add(new PropertyCapsule(" → Move an employee", null, null,
-					_ => PC_MoveEmployee(Display.DisplayInstanceSelector(this, (" Select employee to move", "", "")))));
-				propertyCapsules.Add(new PropertyCapsule(" + Add new employee", null, null, _ => PC_AddEmployee()));
+			foreach ((string, Employee) branch in this.MakeTree())
+				propertyCapsules.Add(new PropertyCapsule(branch.Item1, null,
+					() => PC_RemoveEmployee(branch.Item2),
+					_ => Display.DisplayEditor<Employee>(branch.Item2, (" Editing Company employee", "", ""))));
+			if (!this.IsEmpty())
+				propertyCapsules.Add(new PropertyCapsule(" → Move an employee", null, null,
+				_ => PC_MoveEmployee(Display.DisplayInstanceSelector(this, (" Select employee to move", "", "")))));
+			propertyCapsules.Add(new PropertyCapsule(" + Add new employee", null, null, _ => PC_AddEmployee()));
 
-				return propertyCapsules;
-			}
+			return propertyCapsules;
 		}
 	}
 }

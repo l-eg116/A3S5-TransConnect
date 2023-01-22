@@ -42,9 +42,8 @@ namespace A3S5_TransConnect
 		public void RemoveLinkedTicket(Ticket tkt)
 			=> tkt.Vehicle = null;
 
-		public virtual List<PropertyCapsule> PropertyCapsules
-		{
-			get => new List<PropertyCapsule>
+		public virtual List<PropertyCapsule> PropertyCapsules()
+			=> new List<PropertyCapsule>
 			{
 				new PropertyCapsule($"Vehicule type : {this.GetType().Name}"),
 				new PropertyCapsule("Model : ", () => this.Model,
@@ -60,6 +59,5 @@ namespace A3S5_TransConnect
 				new PropertyCapsule("Fuel Type : ", () => this.FuelType,
 					() => this.FuelType = "Unknown", l => this.FuelType = Display.CleanRead<string>("Fuel Type > ", l)),
 			};
-		}
 	}
 }

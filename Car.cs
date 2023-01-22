@@ -16,13 +16,11 @@ namespace A3S5_TransConnect
 		public override string ToString()
 			=> base.ToString() + $", Capacity: {this.CapacityPassengers}";
 
-		public override List<PropertyCapsule> PropertyCapsules
-		{
-			get => base.PropertyCapsules.Concat(new List<PropertyCapsule>
+		public override List<PropertyCapsule> PropertyCapsules()
+			=> base.PropertyCapsules().Concat(new List<PropertyCapsule>
 			{
 				new PropertyCapsule("Capacity : ", () => $"{this.CapacityPassengers} passenger(s)",
 					() => this.CapacityPassengers = 0, l => this.CapacityPassengers = Display.CleanRead<uint>("Capacity > ", l)),
 			}).ToList();
-		}
 	}
 }

@@ -46,9 +46,8 @@
 			return obj is Person ? this.ToString().CompareTo(obj.ToString()) : 1;
 		}
 
-		public virtual List<PropertyCapsule> PropertyCapsules
-		{
-			get => new List<PropertyCapsule>
+		public virtual List<PropertyCapsule> PropertyCapsules()
+			=> new List<PropertyCapsule>
 			{
 				new PropertyCapsule("First Name : ", () => this.FirstName,
 					() => this.FirstName = "Unknown", l => this.FirstName = Display.CleanRead<string>("First Name > ", l)),
@@ -65,6 +64,5 @@
 				new PropertyCapsule("PhoneNumber : ", () => this.PhoneNumber,
 					() => this.PhoneNumber = "", l => this.PhoneNumber = Display.CleanRead<string>("PhoneNumber > ", l)),
 			};
-		}
 	}
 }
