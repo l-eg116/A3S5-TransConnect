@@ -61,12 +61,12 @@
 			{
 				new PropertyCapsule(),  // For a nice empty line :)
 				new PropertyCapsule("Join Date : ", () => this.JoinDate + "",
-					() => this.JoinDate = new DateTime(), l => this.JoinDate = Display.CleanRead<DateTime>("JoinDate > ", l)),
+					() => this.JoinDate = new DateTime(), l => this.JoinDate = Display.CleanRead<DateTime>("Join Date > ", l)),
 				new PropertyCapsule("Job Title : ", () => this.JobTitle,
-					() => this.JobTitle = "", l => this.JobTitle = Display.CleanRead<string>("JobTitle > ", l)),
+					() => this.JobTitle = "", l => this.JobTitle = Display.CleanRead<string>("Job Title > ", l)),
 				new PropertyCapsule("Salary : ", () => $"{this.Salary} €/mth",
 					() => this.Salary = 0, l => this.Salary = Display.CleanRead<uint>("Salary > ", l)),
-				new PropertyCapsule("Suborninates : ", () => this.Subordinates?.Count.ToString() ?? "0",
+				new PropertyCapsule("Subordinates : ", () => this.Subordinates?.Count.ToString() ?? "0",
 					null, l => Display.DisplayScrollableText(this.Subordinates?.ConvertAll(sub => sub.ToString()) ?? new List<string>(),
 					($" Viewing subordinates of {this.FirstName} {this.LastName}", "", ""))),
 			}).ToList();

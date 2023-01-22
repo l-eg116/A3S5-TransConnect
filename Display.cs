@@ -49,7 +49,8 @@ namespace A3S5_TransConnect
 		}
 		public static void ScreenMode(bool active = false)
 		{
-			Console.CursorVisible = !active;
+			try { Console.CursorVisible = !active; }
+			catch (System.IO.IOException) { }
 			if (!active) RestoreColor();
 			Console.Clear();
 		}
@@ -272,6 +273,14 @@ namespace A3S5_TransConnect
 			foreach (T obj in objects) objectStrings.Add(transformer(obj));
 			return DisplaySimpleSelector(objectStrings, header, footer, aligned, truncate);
 		}
+		public static T? DisplayInstanceSelector<T>(IDisplaySelector<T> selector,
+			(string, string, string)? header = null, (string, string, string)? footer = null,
+			Alignement aligned = Alignement.Left, bool truncate = true)
+		{
+			List<(string, T)> selectList = selector.InstanceSelector();
+			int selected = Display.DisplayTransformedSelector(selectList, branch => branch.Item1, header, footer, aligned, truncate);
+			return selected >= 0 ? selectList[selected].Item2 : default(T);
+		}
 		public static void DisplayActionSelector<T>(List<(T, Action)> labeledActions, Func<T, string>? transformer = null,
 			(string, string, string)? header = null, (string, string, string)? footer = null,
 			Alignement aligned = Alignement.Left, bool truncate = true)
@@ -422,8 +431,8 @@ namespace A3S5_TransConnect
 
 	struct PropertyCapsule
 	{
-		public string Label { get; set; }
-		public Func<string> Get { get; set; }
+		public string Label { get; set; } = "";
+		public Func<string> Get { get; set; } = () => "";
 		public Action? Reset { get; set; }
 		public Action<int>? Editor { get; set; }
 
@@ -436,7 +445,7 @@ namespace A3S5_TransConnect
 		}
 
 		public override string ToString()
-			=> this.Label + this.Get();
+			=> this.Label + (this.Get ?? (() => ""))();
 	}
 	interface IDisplayEditable<TSelf>
 	{
@@ -444,6 +453,6 @@ namespace A3S5_TransConnect
 	}
 	interface IDisplaySelector<T>
 	{
-		T? DisplaySelector();
+		public List<(string, T)> InstanceSelector();
 	}
 }

@@ -78,7 +78,7 @@ namespace A3S5_TransConnect
 			Employee? superior = null;
 			void Finder(Employee? e)
 			{
-				if(e?.Subordinates?.Contains(employee) ?? false) superior = e;
+				if (e?.Subordinates?.Contains(employee) ?? false) superior = e;
 				else e?.Subordinates?.ForEach(Finder);
 			}
 

@@ -127,11 +127,11 @@ namespace A3S5_TransConnect
 				return propertyCapsules;
 			}
 		}
-		public City? DisplaySelector()
+		public List<(string, City)> InstanceSelector()
 		{
-			List<City> citiesList = this.Cities.ToList();
-			int selected = Display.DisplayTransformedSelector(citiesList, city => city.ToString(), (" Select an Employee", "", ""));
-			return selected >= 0 ? citiesList[selected] : null;
+			List<(string, City)> selector = new List<(string, City)>();
+			this.Cities.ToList().ForEach(c => selector.Add((c.Name, c)));
+			return selector;
 		}
 	}
 }
