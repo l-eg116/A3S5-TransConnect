@@ -33,6 +33,10 @@
 		public static CityMap map = new CityMap();
 		static void Main()
 		{
+			InitializeDisplay();
+		}
+		static void InitializeDisplay()
+		{
 			Display.ScreenMode(true);
 			Display.Title =
 			@"  ______                      ______                            __ " + "\n" +
@@ -44,12 +48,6 @@
 			Display.TitleNegative = false;
 			Display.BackgroundColor = ConsoleColor.DarkGray;
 			Display.TextColor = ConsoleColor.White;
-
-
-
-			// Console.ReadKey();
-			Display.ScreenMode(false);
-			// Console.WriteLine(returned);
 		}
 	}
 }
