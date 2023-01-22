@@ -3,6 +3,7 @@ namespace A3S5_TransConnect
 	class Ticket
 	{
 		private static uint nextTicketNumber = 0;
+		public string Name { get; set; }
 		private Client? _client;
 		public Client? Client
 		{
@@ -53,11 +54,12 @@ namespace A3S5_TransConnect
 			}
 		}
 
-		public Ticket() : this(default, default, default, default, default, default, default, default)
+		public Ticket() : this(default, default, default, default, default, default, default, default, default)
 		{ }
-		public Ticket(Client? client = null, string origin = "Unknown", string destination = "Unknown",
+		public Ticket(string name = "", Client? client = null, string origin = "Unknown", string destination = "Unknown",
 			Employee? driver = null, Vehicle? vehicle = null, DateTime? date = null, double cost = 0, bool payed = false)
 		{
+			this.Name = name;
 			this.Client = client;
 			this.Origin = origin;
 			this.Destination = destination;
@@ -71,12 +73,14 @@ namespace A3S5_TransConnect
 
 		public override string ToString()
 		{
-			return $"Ticket #{this.TicketNumber} | {this.Origin} -> {this.Destination}, Client: #{this.Client?.SocialSecurityNumber}, " +
+			return $"Ticket #{this.TicketNumber} - {this.Name} | {this.Origin} → {this.Destination}, Client: #{this.Client?.SocialSecurityNumber}, " +
 				$"Driver: #{this.Driver?.SocialSecurityNumber}, Vehicle: #{this.Vehicle?.NumberPlate}, Date: {this.Date}, " +
 				$"Cost: {this.Cost}€, Payed: {this.Payed}";
 		}
+		public string PrettyString()
+			=> $"{this.Name} #{this.TicketNumber} on {this.Date} | {this.Origin} → {this.Destination}";
 		public override int GetHashCode()
-			=> (this.Origin, this.Destination, this.Date, this.Cost).GetHashCode();
+			=> (this.Name, this.Origin, this.Destination, this.Date, this.Cost).GetHashCode();
 
 		public bool IsPast()
 			=> this.Date.CompareTo(DateTime.Now) < 0;
