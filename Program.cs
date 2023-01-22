@@ -2,9 +2,25 @@
 {
 	class Program
 	{
-		public static List<Vehicle> fleet = new List<Vehicle>();
+		public static InteractiveList<Vehicle> fleet = new InteractiveList<Vehicle>()
+		{
+			List = new List<Vehicle>(),
+			Get = v => v.PrettyString(),
+			Reset = v => fleet.List.Remove(v),
+			Editor = (v, l) => Display.DisplayEditor(v, (" Editing vehicle", "", "")),
+			New = new PropertyCapsule(" + Add new vehicle", null, null,
+				_ => fleet.List.Add(Display.DisplayConstructor<Vehicle>((" Adding new vehicle", "", ""))))
+		};
+		public static InteractiveList<Client> clients = new InteractiveList<Client>()
+		{
+			List = new List<Client>(),
+			Get = c => c.PrettyString(),
+			Reset = c => clients.List.Remove(c),
+			Editor = (c, l) => Display.DisplayEditor<Client>(c, (" Editing client", "", "")),
+			New = new PropertyCapsule(" + Add new client", null, null,
+				_ => clients.List.Add(Display.DisplayConstructor<Client>((" Adding new client", "", ""))))
+		};
 		public static List<Ticket> tickets = new List<Ticket>();
-		public static List<Client> clients = new List<Client>();
 		public static CompanyTree company = new CompanyTree();
 		public static CityMap map = new CityMap();
 		static void Main()
@@ -78,6 +94,7 @@
 		public Func<T, string>? Get { get; set; }
 		public Action<T>? Reset { get; set; }
 		public Action<T, int>? Editor { get; set; }
+		public PropertyCapsule? New { get; set; }
 		public List<PropertyCapsule> PropertyCapsules()
 		{
 			List<PropertyCapsule> capsules = new List<PropertyCapsule>();
@@ -87,6 +104,7 @@
 				capsules.Add(new PropertyCapsule("", () => copy.Get?.Invoke(t) ?? "",
 					() => copy.Reset?.Invoke(t), l => copy.Editor?.Invoke(t, l)));
 			}
+			if(this.New is not null) capsules.Add((PropertyCapsule)this.New);
 			return capsules;
 		}
 	}
