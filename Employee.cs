@@ -43,6 +43,11 @@
 
 		public bool HasSubordinates()
 			=> this.Subordinates?.Count > 0;
+		public void AddSubordinate(Employee newSubordinate)
+		{
+			this.Subordinates ??= new List<Employee>();
+			this.Subordinates.Add(newSubordinate);
+		}
 		public void TransferSubordinates(Employee other)
 		{
 			if(other.Subordinates is not null) this.Subordinates?.ForEach(other.Subordinates.Add);
