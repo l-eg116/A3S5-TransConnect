@@ -72,4 +72,22 @@
 			Display.DisplayEditor(flash, ("Okay you can change your becane here :))", "= = = = =", "vroum vroum"), null, Display.Alignement.Left);
 		}
 	}
+	struct InteractiveList<T> : IDisplayEditable<InteractiveList<T>>
+	{
+		public List<T> List { get; set; }
+		public Func<T, string>? Get { get; set; }
+		public Action<T>? Reset { get; set; }
+		public Action<T, int>? Editor { get; set; }
+		public List<PropertyCapsule> PropertyCapsules()
+		{
+			List<PropertyCapsule> capsules = new List<PropertyCapsule>();
+			foreach (T t in this.List)
+			{
+				InteractiveList<T> copy = this;
+				capsules.Add(new PropertyCapsule("", () => copy.Get?.Invoke(t) ?? "",
+					() => copy.Reset?.Invoke(t), l => copy.Editor?.Invoke(t, l)));
+			}
+			return capsules;
+		}
+	}
 }
