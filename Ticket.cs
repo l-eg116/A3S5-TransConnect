@@ -15,8 +15,8 @@ namespace A3S5_TransConnect
 				this._client = value;
 			}
 		}
-		public string Origin { get; set; }
-		public string Destination { get; set; }
+		public City? Origin { get; set; }
+		public City? Destination { get; set; }
 		private Employee? _driver;
 		public Employee? Driver
 		{
@@ -56,7 +56,7 @@ namespace A3S5_TransConnect
 
 		public Ticket() : this(default, default, default, default, default, default, default, default, default)
 		{ }
-		public Ticket(string name = "", Client? client = null, string origin = "Unknown", string destination = "Unknown",
+		public Ticket(string name = "", Client? client = null, City? origin = null, City? destination = null,
 			Employee? driver = null, Vehicle? vehicle = null, DateTime? date = null, double cost = 0, bool payed = false)
 		{
 			this.Name = name;
