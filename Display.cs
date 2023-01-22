@@ -447,6 +447,36 @@ namespace A3S5_TransConnect
 		public override string ToString()
 			=> this.Label + (this.Get ?? (() => ""))();
 	}
+	struct InteractiveList<T> : IDisplayEditable<InteractiveList<T>>, IDisplaySelector<T>
+	{
+		public List<T> List { get; set; }
+		public Func<T, string>? Get { get; set; }
+		public Action<T>? Reset { get; set; }
+		public Action<T, int>? Editor { get; set; }
+		public PropertyCapsule? New { get; set; }
+		public List<PropertyCapsule> PropertyCapsules()
+		{
+			List<PropertyCapsule> capsules = new List<PropertyCapsule>();
+			foreach (T t in this.List)
+			{
+				InteractiveList<T> copy = this;
+				capsules.Add(new PropertyCapsule("", () => copy.Get?.Invoke(t) ?? "",
+					() => copy.Reset?.Invoke(t), l => copy.Editor?.Invoke(t, l)));
+			}
+			if(this.New is not null) capsules.Add((PropertyCapsule)this.New);
+			return capsules;
+		}
+		public List<(string, T)> InstanceSelector()
+		{
+			List<(string, T)> selector = new List<(string, T)>();
+			foreach (T t in this.List)
+			{
+				InteractiveList<T> copy = this;
+				selector.Add((copy.Get?.Invoke(t) ?? t + "", t));
+			}
+			return selector;
+		}
+	}
 	interface IDisplayEditable<TSelf>
 	{
 		public List<PropertyCapsule> PropertyCapsules();
