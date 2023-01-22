@@ -20,7 +20,15 @@
 			New = new PropertyCapsule(" + Add new client", null, null,
 				_ => clients.List.Add(Display.DisplayConstructor<Client>((" Adding new client", "", ""))))
 		};
-		public static List<Ticket> tickets = new List<Ticket>();
+		public static InteractiveList<Ticket> tickets = new InteractiveList<Ticket>()
+		{
+			List = new List<Ticket>(),
+			Get = t => t.PrettyString(),
+			Reset = t => tickets.List.Remove(t),
+			Editor = (t, l) => Display.DisplayEditor(t, (" Editing ticket", "", "")),
+			New = new PropertyCapsule(" + Add new ticket", null, null,
+				_ => tickets.List.Add(Display.DisplayConstructor<Ticket>((" Adding new ticket", "", ""))))
+		};
 		public static CompanyTree company = new CompanyTree();
 		public static CityMap map = new CityMap();
 		static void Main()

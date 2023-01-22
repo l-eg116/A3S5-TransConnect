@@ -1,6 +1,6 @@
 namespace A3S5_TransConnect
 {
-	class Ticket
+	class Ticket : IDisplayEditable<Ticket>
 	{
 		private static uint nextTicketNumber = 0;
 		public string Name { get; set; }
@@ -97,6 +97,29 @@ namespace A3S5_TransConnect
 			=> PastTickets(thing).Sum(ticket => ticket.Cost);
 		static public double PastMeanCost(ITicketLinkable thing)
 			=> PastTickets(thing).Average(ticket => ticket.Cost);
+
+		public List<PropertyCapsule> PropertyCapsules()
+			=> new List<PropertyCapsule>()
+			{
+				new PropertyCapsule("Ticket ", () => $"n°{this.TicketNumber} - {this.Name}", () => this.Name = "",
+					l => this.Name = Display.CleanRead<string>("Ticket name > ", l) ),
+				new PropertyCapsule("Client : ", () => this.Client?.PrettyString() + "", () => this.Client = null,
+					_ => this.Client = Display.DisplayInstanceSelector(Program.clients, (" Select a client", "", "")) ?? this.Client),
+				new PropertyCapsule("Origin : ", () => this.Origin + "", () => this.Origin = null,
+					_ => this.Origin = Display.DisplayInstanceSelector(Program.map, (" Select an origin", "", "")) ?? this.Origin),
+				new PropertyCapsule("Destination : ", () => this.Destination + "", () => this.Destination = null,
+					_ => this.Destination = Display.DisplayInstanceSelector(Program.map, (" Select a destination", "", "")) ?? this.Destination),
+				new PropertyCapsule("Driver : ", () => this.Driver?.PrettyString() + "", () => this.Driver = null,
+					_ => this.Driver = Display.DisplayInstanceSelector(Program.company, (" Select a driver", "", "")) ?? this.Driver),
+				new PropertyCapsule("Vehicle : ", () => this.Vehicle?.PrettyString() + "", () => this.Vehicle = null,
+					_ => this.Vehicle = Display.DisplayInstanceSelector(Program.fleet, (" Select a vehicle", "", "")) ?? this.Vehicle),
+				new PropertyCapsule("Date : ", () => this.Date + "", () => this.Date = new DateTime(),
+					l => this.Date = Display.CleanRead<DateTime>("Date > ", l)),
+				new PropertyCapsule("Cost : ", () => $"{this.Cost:.2f} €", () => this.Cost = 0,
+					l => this.Cost = Display.CleanRead<double>("Cost > ", l)),
+				new PropertyCapsule("Payed : ", () => this.Payed ? "Yes" : "No", null,
+					l => this.Payed ^= this.Payed),
+			};
 	}
 	interface ITicketLinkable
 	{
