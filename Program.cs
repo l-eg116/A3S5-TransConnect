@@ -2,6 +2,16 @@
 {
 	class Program
 	{
+		public static class Options
+		{
+			public static readonly string FleetSavePath = "data/fleet.json";
+			public static readonly string ClientsSavePath = "data/clients.json";
+			public static readonly string TicketsSavePath = "data/tickets.json";
+			public static readonly string CompanySavePath = "data/company.json";
+			public static readonly string DistancesSavePath = "data/distances.csv";
+			public static readonly ConsoleColor BackgroundColor = ConsoleColor.Black;
+			public static readonly ConsoleColor TextColor = ConsoleColor.White;
+		}
 		public static InteractiveList<Vehicle> fleet = new InteractiveList<Vehicle>()
 		{
 			List = new List<Vehicle>(),
@@ -46,8 +56,8 @@
 			@"/_/ /_/   \__,_/_/ /_/____/\____/\____/_/ /_/_/ /_/\___/\___/\__/  " + "\n" +
 			@"                                                           by Emile";
 			Display.TitleNegative = false;
-			Display.BackgroundColor = ConsoleColor.DarkGray;
-			Display.TextColor = ConsoleColor.White;
+			Display.BackgroundColor = Options.BackgroundColor;
+			Display.TextColor = Options.TextColor;
 		}
 	}
 }
