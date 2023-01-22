@@ -36,6 +36,8 @@ namespace A3S5_TransConnect
 		public override string ToString()
 			=> $"{this.GetType().Name} {this.Model} ({this.Brand}) #{this.NumberPlate} | LastRevision: {this.LastRevision}, " +
 			$"KilometerCount: {this.KilometerCount}km, FuelType: {this.FuelType}";
+		public virtual string PrettyString()
+			=> $"{this.GetType().Name} {this.Model} ({this.Brand}) #{this.NumberPlate}";
 
 		public void AddLinkedTicket(Ticket tkt)
 			=> tkt.Vehicle = this;
