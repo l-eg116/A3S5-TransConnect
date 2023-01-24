@@ -46,7 +46,11 @@
 			LoadVariables();
 			InitializeDisplay();
 
+			DisableDisplay();
 			SaveVariables();
+
+			Console.WriteLine("\n\nProgram ended, press any key to exit...");
+			Console.ReadKey(true);
 		}
 
 		static void InitializeDisplay()
@@ -62,6 +66,10 @@
 			Display.TitleNegative = false;
 			Display.BackgroundColor = Options.BackgroundColor;
 			Display.TextColor = Options.TextColor;
+		}
+		static void DisableDisplay()
+		{
+			Display.ScreenMode(true);
 		}
 		static void LoadVariables()
 		{
