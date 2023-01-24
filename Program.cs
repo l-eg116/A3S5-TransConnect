@@ -75,18 +75,19 @@
 			while (loop)
 			{
 				Display.DisplayActionSelector(new List<(string, Action)>()
-				{
-					("> Employees  ", PlaceHolder),
-					("> Clients    ", PlaceHolder),
-					("> Vehicles   ", PlaceHolder),
-					("> Tickets    ", PlaceHolder),
-					("> Map        ", PlaceHolder),
-					("", () => { }),
-					(") Settings   ", PlaceHolder),
-					(") Credits    ", PlaceHolder),
-					("→ Exit & Save", () => loop = false),
+				{    
+					(" > Employees       ", PlaceHolder),
+					(" > Clients         ", PlaceHolder),
+					(" > Vehicles        ", PlaceHolder),
+					(" > Tickets         ", PlaceHolder),
+					(" > Map             ", PlaceHolder),
+					(" ", () => { }),
+					(" ) Settings        ", PlaceHolder),
+					(" ) Credits & Infos ", PlaceHolder),
+					(" → Exit & Save     ", () => loop = false),
 				}, null,
-				("", "Main Menu", ""), ("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
+				("", " = =   Main Menu   = = ", ""),
+				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
 				Display.Alignement.Center, true);
 			}
 		}
