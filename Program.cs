@@ -45,7 +45,10 @@
 		{
 			LoadVariables();
 			InitializeDisplay();
+
+			SaveVariables();
 		}
+
 		static void InitializeDisplay()
 		{
 			Display.ScreenMode(true);
@@ -96,7 +99,33 @@
 
 			Console.Write("Loading done");
 			System.Threading.Thread.Sleep(1000);
-			for(int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(1000); }
+			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(1000); }
+			Console.WriteLine();
+		}
+		static void SaveVariables()
+		{
+			void Saverer(object? obj, string path)
+			{
+				if (Saver.Save(obj, path, true))
+					Console.WriteLine($"Successfully saved '{path}'");
+				else Console.WriteLine($"! Failled to save '{path}'");
+			}
+
+			List<Thread> savers = new List<Thread>()
+			{
+				new Thread(() => Saverer(fleet.List, Options.FleetSavePath)),
+				new Thread(() => Saverer(clients.List, Options.ClientsSavePath)),
+				new Thread(() => Saverer(tickets.List, Options.TicketsSavePath)),
+				new Thread(() => Saverer(company, Options.CompanySavePath)),
+				// Program.map is not saved
+			};
+
+			savers.ForEach(saverer => saverer.Start());
+			savers.ForEach(saverer => saverer.Join());
+
+			Console.Write("Saving done");
+			System.Threading.Thread.Sleep(1000);
+			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(1000); }
 			Console.WriteLine();
 		}
 	}
