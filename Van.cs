@@ -1,6 +1,6 @@
 namespace A3S5_TransConnect
 {
-	class Van : Vehicle
+	class Van : Vehicle, IDisplayEditable<Van>
 	{
 		public string Type { get; set; }
 

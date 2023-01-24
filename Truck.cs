@@ -1,6 +1,6 @@
 namespace A3S5_TransConnect
 {
-	class Truck : Vehicle
+	class Truck : Vehicle, IDisplayEditable<Truck>
 	{
 		public string PayloadType { get; set; }
 		public uint Capacity { get; set; }

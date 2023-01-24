@@ -1,1 +1,38 @@
-﻿[]
+﻿[
+  {
+    "Model": "550 XT",
+    "Brand": "Arctic Cat",
+    "NumberPlate": "C4T550XT",
+    "LastRevision": "2013-10-06T00:00:00",
+    "KilometerCount": 15423,
+    "FuelType": "SuperEthanol",
+    "LinkedTickets": []
+  },
+  {
+    "Model": "Flash Mc Queen",
+    "Brand": "Rusteez",
+    "NumberPlate": "14MSP33D",
+    "LastRevision": "0001-01-01T00:00:00",
+    "KilometerCount": 99999,
+    "FuelType": "Diesel",
+    "LinkedTickets": []
+  },
+  {
+    "Model": "CyberTruck",
+    "Brand": "Tesla",
+    "NumberPlate": "CYBRTRK",
+    "LastRevision": "2023-01-24T00:00:00",
+    "KilometerCount": 126,
+    "FuelType": "Electric",
+    "LinkedTickets": []
+  },
+  {
+    "Model": "Generic Van",
+    "Brand": "Minibus",
+    "NumberPlate": "151665",
+    "LastRevision": "0001-01-01T00:00:00",
+    "KilometerCount": 4384,
+    "FuelType": "SP98",
+    "LinkedTickets": []
+  }
+]

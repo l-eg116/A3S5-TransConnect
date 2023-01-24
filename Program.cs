@@ -18,8 +18,7 @@
 			Get = v => v.PrettyString(),
 			Reset = v => fleet.List.Remove(v),
 			Editor = (v, l) => Display.DisplayEditor(v, (" Editing vehicle", "", "")),
-			New = new PropertyCapsule(" + Add new vehicle", null, null,
-				_ => fleet.List.Add(Display.DisplayConstructor<Vehicle>((" Adding new vehicle", "", ""))))
+			New = new PropertyCapsule(" + Add new vehicle", null, null, _ => NewVehicle())
 		};
 		public static InteractiveList<Client> clients = new InteractiveList<Client>()
 		{
@@ -78,7 +77,7 @@
 				{
 					(" > Employees       ", Employees),
 					(" > Clients         ", Clients),
-					(" > Vehicles        ", PlaceHolder),
+					(" > Vehicles        ", Vehicles),
 					(" > Tickets         ", PlaceHolder),
 					(" > Map             ", PlaceHolder),
 					(" ", () => { }),
@@ -162,6 +161,20 @@
 			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(500); }
 			Console.WriteLine();
 		}
+		static void NewVehicle()
+		{
+			Vehicle? vehicle = null;
+			Display.DisplayActionSelector(new List<(string, Action)>()
+				{
+					(" Create a Car   ", () => vehicle = Display.DisplayConstructor<Car>()),
+					(" Create a Truck ", () => vehicle = Display.DisplayConstructor<Truck>()),
+					(" Create a Van   ", () => vehicle = Display.DisplayConstructor<Van>()),
+				}, null,
+				("", ">  Client sorting mode  <", ""),
+				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
+				Display.Alignement.Center, true);
+			if(vehicle is not null) fleet.List.Add(vehicle);
+		}
 
 		static void Employees()
 		{
@@ -191,10 +204,19 @@
 				("", ">  Client sorting mode  <", ""),
 				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
 				Display.Alignement.Center, true);
-			
+
 			Display.DisplayEditor(clients,
 				("  Managing clients", "", ""),
 				("", "[Space|Enter] Edit   [Suppr] Remove client   [W|Z|↑/S|↓] Selection up/down   [Esc] Leave", ""),
+				Display.Alignement.Left
+			);
+		}
+		static void Vehicles()
+		{
+			fleet.List.Sort((v1, v2) => v1.ToString().CompareTo(v2.ToString()));
+			Display.DisplayEditor(fleet,
+				("  Managing fleet", "", ""),
+				("", "[Space|Enter] Edit   [Suppr] Remove vehicle   [W|Z|↑/S|↓] Selection up/down   [Esc] Leave", ""),
 				Display.Alignement.Left
 			);
 		}
