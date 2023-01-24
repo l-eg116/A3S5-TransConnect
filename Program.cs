@@ -46,6 +46,8 @@
 			LoadVariables();
 			InitializeDisplay();
 
+			MainMenu();
+
 			DisableDisplay();
 			SaveVariables();
 
@@ -66,6 +68,27 @@
 			Display.TitleNegative = false;
 			Display.BackgroundColor = Options.BackgroundColor;
 			Display.TextColor = Options.TextColor;
+		}
+		static void MainMenu()
+		{
+			bool loop = true;
+			while (loop)
+			{
+				Display.DisplayActionSelector(new List<(string, Action)>()
+				{
+					("> Employees  ", PlaceHolder),
+					("> Clients    ", PlaceHolder),
+					("> Vehicles   ", PlaceHolder),
+					("> Tickets    ", PlaceHolder),
+					("> Map        ", PlaceHolder),
+					("", () => { }),
+					(") Settings   ", PlaceHolder),
+					(") Credits    ", PlaceHolder),
+					("→ Exit & Save", () => loop = false),
+				}, null,
+				("", "Main Menu", ""), ("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
+				Display.Alignement.Center, true);
+			}
 		}
 		static void DisableDisplay()
 		{
@@ -106,8 +129,8 @@
 			loaders.ForEach(loader => loader.Join());
 
 			Console.Write("Loading done");
-			System.Threading.Thread.Sleep(1000);
-			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(1000); }
+			System.Threading.Thread.Sleep(500);
+			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(500); }
 			Console.WriteLine();
 		}
 		static void SaveVariables()
@@ -132,9 +155,11 @@
 			savers.ForEach(saverer => saverer.Join());
 
 			Console.Write("Saving done");
-			System.Threading.Thread.Sleep(1000);
-			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(1000); }
+			System.Threading.Thread.Sleep(500);
+			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(500); }
 			Console.WriteLine();
 		}
+
+		static void PlaceHolder() => throw new NotImplementedException();
 	}
 }
