@@ -76,7 +76,7 @@
 			{
 				Display.DisplayActionSelector(new List<(string, Action)>()
 				{
-					(" > Employees       ", PlaceHolder),
+					(" > Employees       ", Employees),
 					(" > Clients         ", PlaceHolder),
 					(" > Vehicles        ", PlaceHolder),
 					(" > Tickets         ", PlaceHolder),
@@ -161,6 +161,14 @@
 			Console.WriteLine();
 		}
 
+		static void Employees()
+		{
+			Display.DisplayEditor(company,
+				("  Managing company", "", ""),
+				("", "[Space|Enter] Edit   [Suppr] Remove employee   [W|Z|↑/S|↓] Selection up/down   [Esc] Back", ""),
+				Display.Alignement.Left
+			);
+		}
 		static void Settings()
 		{
 			Display.DisplayText(new string[]

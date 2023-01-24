@@ -125,14 +125,14 @@ namespace A3S5_TransConnect
 		{
 			List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
 				{ new PropertyCapsule("> Company has ", () => $"{this.Count} employee(s) on {this.Height} level(s) <") };
+			propertyCapsules.Add(new PropertyCapsule(" + Add new employee", null, null, _ => PC_AddEmployee()));
+			if (!this.IsEmpty())
+				propertyCapsules.Add(new PropertyCapsule(" → Move an employee", null, null,
+				_ => PC_MoveEmployee(Display.DisplayInstanceSelector(this, (" Select employee to move", "", "")))));
 			foreach ((string, Employee) branch in this.MakeTree())
 				propertyCapsules.Add(new PropertyCapsule(branch.Item1, null,
 					() => PC_RemoveEmployee(branch.Item2),
 					_ => Display.DisplayEditor<Employee>(branch.Item2, (" Editing Company employee", "", ""))));
-			if (!this.IsEmpty())
-				propertyCapsules.Add(new PropertyCapsule(" → Move an employee", null, null,
-				_ => PC_MoveEmployee(Display.DisplayInstanceSelector(this, (" Select employee to move", "", "")))));
-			propertyCapsules.Add(new PropertyCapsule(" + Add new employee", null, null, _ => PC_AddEmployee()));
 
 			return propertyCapsules;
 		}
