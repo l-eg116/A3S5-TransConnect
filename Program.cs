@@ -84,7 +84,9 @@
 					(" ", () => { }),
 					(" ) Settings        ", Settings),
 					(" ) Credits & Infos ", CreditsInfos),
-					(" → Exit & Save     ", () => loop = false),
+					(" ", () => { }),
+					(" → Save            ", ManualSave),
+					(" → Save & Exit     ", () => loop = false),
 				}, null,
 				("", " = =   Main Menu   = = ", ""),
 				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
@@ -205,6 +207,14 @@
 			("", " >  Credits & Infos  < ", ""),
 			("", "[Press ESC to go back]", ""),
 			Display.Alignement.Center);
+		}
+		static void ManualSave()
+		{
+			Display.ClearContentArea();
+			Display.PrintFooter("", "", "");
+			Display.PrintTitle();
+			Display.PrintHeader("  Saving...", "", "");
+			SaveVariables();
 		}
 
 		static void PlaceHolder() => throw new NotImplementedException();
