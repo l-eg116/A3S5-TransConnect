@@ -83,7 +83,7 @@
 					(" > Map             ", PlaceHolder),
 					(" ", () => { }),
 					(" ) Settings        ", Settings),
-					(" ) Credits & Infos ", PlaceHolder),
+					(" ) Credits & Infos ", CreditsInfos),
 					(" → Exit & Save     ", () => loop = false),
 				}, null,
 				("", " = =   Main Menu   = = ", ""),
@@ -173,6 +173,29 @@
 			},
 			("", " >  Settings  < ", ""),
 			("", "", ""),
+			Display.Alignement.Center);
+		}
+		static void CreditsInfos()
+		{
+			Display.DisplayScrollableText(new string[]
+			{
+				"<=> INFOS <=>",
+				"App made as an academic project : ESILV-A3-S5",
+				"This app is build to simplify the management of employees, clients and tickets",
+				"of the company 'TransConnect', and follows certain specifications.",
+				"There are 4 functionalities of this app that where creative liberties :",
+				"---1---, ---2---, ---3---, ---4---", // ! TODO
+				"", "",
+				"<=> CREDITS <=>",
+				"~ Programming ~", "Emile GATIGNON", "",
+				"~ User Interface ~", "Emile GATIGNON", "",
+				"~ User Experience ~", "Emile GATIGNON", "",
+				"~ App Concept ~", "Aline ELLUL", "",
+				"~ Music & Sound Design ~", "Emile GATIGNON", "",
+				"~ Testers ~", "None as of yet", "",  // TODO
+			},
+			("", " >  Credits & Infos  < ", ""),
+			("", "[Press ESC to go back]", ""),
 			Display.Alignement.Center);
 		}
 
