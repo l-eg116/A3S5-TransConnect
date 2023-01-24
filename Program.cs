@@ -77,7 +77,7 @@
 				Display.DisplayActionSelector(new List<(string, Action)>()
 				{
 					(" > Employees       ", Employees),
-					(" > Clients         ", PlaceHolder),
+					(" > Clients         ", Clients),
 					(" > Vehicles        ", PlaceHolder),
 					(" > Tickets         ", PlaceHolder),
 					(" > Map             ", PlaceHolder),
@@ -167,7 +167,34 @@
 		{
 			Display.DisplayEditor(company,
 				("  Managing company", "", ""),
-				("", "[Space|Enter] Edit   [Suppr] Remove employee   [W|Z|↑/S|↓] Selection up/down   [Esc] Back", ""),
+				("", "[Space|Enter] Edit   [Suppr] Remove employee   [W|Z|↑/S|↓] Selection up/down   [Esc] Leave", ""),
+				Display.Alignement.Left
+			);
+		}
+		static void Clients()
+		{
+			void SortAlphaName() => clients.List.Sort((c1, c2) => c1.PrettyString().CompareTo(c2.PrettyString()));
+			void SortAlphaCity() => clients.List.Sort((c1, c2) => c1.City?.CompareTo(c2.City) ?? -1);
+			void SortTotalHist() => clients.List.Sort((c1, c2) => (int)(Ticket.TotalCost(c1) - Ticket.TotalCost(c2)));
+			void SortTotalLost() => clients.List.Sort((c1, c2) => (int)(Ticket.TotalCost(c2) - Ticket.TotalCost(c1)));
+			void SortCountHist() => clients.List.Sort((c1, c2) => (int)(Ticket.PastCount(c1) - Ticket.PastCount(c2)));
+			void SortCountLost() => clients.List.Sort((c1, c2) => (int)(Ticket.PastCount(c2) - Ticket.PastCount(c1)));
+			Display.DisplayActionSelector(new List<(string, Action)>()
+				{
+					(" Alphabetical (Name | A → Z)       ", SortAlphaName),
+					(" Alphabetical (City | A → Z)       ", SortAlphaCity),
+					(" Total spent (Highest first)       ", SortTotalHist),
+					(" Total spent (Lowest first)        ", SortTotalLost),
+					(" Number of tickets (Highest first) ", SortCountHist),
+					(" Number of tickets (Lowest first)  ", SortCountLost),
+				}, null,
+				("", ">  Client sorting mode  <", ""),
+				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
+				Display.Alignement.Center, true);
+			
+			Display.DisplayEditor(clients,
+				("  Managing clients", "", ""),
+				("", "[Space|Enter] Edit   [Suppr] Remove client   [W|Z|↑/S|↓] Selection up/down   [Esc] Leave", ""),
 				Display.Alignement.Left
 			);
 		}

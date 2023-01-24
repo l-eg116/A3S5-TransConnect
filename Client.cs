@@ -43,7 +43,7 @@
 				new PropertyCapsule("Company : ", () => this.Company, () => this.Company = "",
 					l => this.Company = Display.CleanRead<string>("Company : ", l)),
 				new PropertyCapsule("City : ", () => this.City + "", () => this.City = null,
-					l => this.City = Display.DisplayInstanceSelector(Program.map, ("  Select a city", "", ""))),
+					l => this.City = Display.DisplayInstanceSelector(Program.map, ("  Select a city", "", "")) ?? this.City),
 			}).ToList();
 	}
 }
