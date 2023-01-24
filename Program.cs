@@ -51,8 +51,8 @@
 			DisableDisplay();
 			SaveVariables();
 
-			Console.WriteLine("\n\nProgram ended, press any key to exit...");
-			Console.ReadKey(true);
+			// Console.WriteLine("\n\nProgram ended, press any key to exit...");
+			// Console.ReadKey(true);
 		}
 
 		static void InitializeDisplay()
@@ -75,14 +75,14 @@
 			while (loop)
 			{
 				Display.DisplayActionSelector(new List<(string, Action)>()
-				{    
+				{
 					(" > Employees       ", PlaceHolder),
 					(" > Clients         ", PlaceHolder),
 					(" > Vehicles        ", PlaceHolder),
 					(" > Tickets         ", PlaceHolder),
 					(" > Map             ", PlaceHolder),
 					(" ", () => { }),
-					(" ) Settings        ", PlaceHolder),
+					(" ) Settings        ", Settings),
 					(" ) Credits & Infos ", PlaceHolder),
 					(" → Exit & Save     ", () => loop = false),
 				}, null,
@@ -159,6 +159,21 @@
 			System.Threading.Thread.Sleep(500);
 			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(500); }
 			Console.WriteLine();
+		}
+
+		static void Settings()
+		{
+			Display.DisplayText(new string[]
+			{
+				"", "", "",
+				"Your settings are in",
+				"another castle      ",
+				"", "", "",
+				"[Press any key to go back]"
+			},
+			("", " >  Settings  < ", ""),
+			("", "", ""),
+			Display.Alignement.Center);
 		}
 
 		static void PlaceHolder() => throw new NotImplementedException();
