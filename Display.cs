@@ -457,13 +457,13 @@ namespace A3S5_TransConnect
 		public List<PropertyCapsule> PropertyCapsules()
 		{
 			List<PropertyCapsule> capsules = new List<PropertyCapsule>();
+			if(this.New is not null) capsules.Add((PropertyCapsule)this.New);
 			foreach (T t in this.List)
 			{
 				InteractiveList<T> copy = this;
 				capsules.Add(new PropertyCapsule("", () => copy.Get?.Invoke(t) ?? "",
 					() => copy.Reset?.Invoke(t), l => copy.Editor?.Invoke(t, l)));
 			}
-			if(this.New is not null) capsules.Add((PropertyCapsule)this.New);
 			return capsules;
 		}
 		public List<(string, T)> InstanceSelector()
