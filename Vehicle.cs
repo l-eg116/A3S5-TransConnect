@@ -13,6 +13,7 @@ namespace A3S5_TransConnect
 		public uint KilometerCount { get; set; }
 		public string FuelType { get; set; }
 		private HashSet<Ticket> _linkedTickets;
+		[System.Text.Json.Serialization.JsonIgnore]
 		public HashSet<Ticket> LinkedTickets
 		{
 			get => this._linkedTickets;

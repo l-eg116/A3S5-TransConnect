@@ -7,6 +7,7 @@
 		public uint Salary { get; set; }
 		public List<Employee>? Subordinates { get; set; }
 		private HashSet<Ticket> _linkedTickets;
+		[System.Text.Json.Serialization.JsonIgnore]
 		public HashSet<Ticket> LinkedTickets
 		{
 			get => this._linkedTickets;

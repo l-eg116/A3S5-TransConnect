@@ -123,6 +123,7 @@ namespace A3S5_TransConnect
 	}
 	interface ITicketLinkable
 	{
+		[System.Text.Json.Serialization.JsonIgnore]
 		public HashSet<Ticket> LinkedTickets { get; set; }
 		public void AddLinkedTicket(Ticket tkt);
 		public void RemoveLinkedTicket(Ticket tkt);

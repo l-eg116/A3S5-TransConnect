@@ -5,6 +5,7 @@
 		public string Company { get; set; }
 		public City? City { get; set; }
 		private HashSet<Ticket> _linkedTickets;
+		[System.Text.Json.Serialization.JsonIgnore]
 		public HashSet<Ticket> LinkedTickets
 		{
 			get => this._linkedTickets;
