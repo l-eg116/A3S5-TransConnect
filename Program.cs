@@ -173,7 +173,7 @@
 				("", ">  Client sorting mode  <", ""),
 				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
 				Display.Alignement.Center, true);
-			if(vehicle is not null) fleet.List.Add(vehicle);
+			if (vehicle is not null) fleet.List.Add(vehicle);
 		}
 
 		static void Employees()

@@ -1,5 +1,9 @@
 namespace A3S5_TransConnect
 {
+	[System.Text.Json.Serialization.JsonDerivedType(typeof(Vehicle), "Vehicle")]
+	[System.Text.Json.Serialization.JsonDerivedType(typeof(Car), "Car")]
+	[System.Text.Json.Serialization.JsonDerivedType(typeof(Truck), "Truck")]
+	[System.Text.Json.Serialization.JsonDerivedType(typeof(Van), "Van")]
 	class Vehicle : ITicketLinkable, IDisplayEditable<Vehicle>  // ? Make abstract but this causes issues for the default value in Ticket constructor
 	{
 		public string Model { get; set; }

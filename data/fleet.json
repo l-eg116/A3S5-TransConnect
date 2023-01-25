@@ -1,5 +1,7 @@
 ﻿[
   {
+    "$type": "Car",
+    "CapacityPassengers": 5,
     "Model": "550 XT",
     "Brand": "Arctic Cat",
     "NumberPlate": "C4T550XT",
@@ -9,6 +11,8 @@
     "LinkedTickets": []
   },
   {
+    "$type": "Car",
+    "CapacityPassengers": 0,
     "Model": "Flash Mc Queen",
     "Brand": "Rusteez",
     "NumberPlate": "14MSP33D",
@@ -18,6 +22,10 @@
     "LinkedTickets": []
   },
   {
+    "$type": "Truck",
+    "PayloadType": "Rich persons",
+    "Capacity": 5,
+    "CapacityUnit": "millionaire(s)",
     "Model": "CyberTruck",
     "Brand": "Tesla",
     "NumberPlate": "CYBRTRK",
@@ -27,6 +35,8 @@
     "LinkedTickets": []
   },
   {
+    "$type": "Van",
+    "Type": "Generic",
     "Model": "Generic Van",
     "Brand": "Minibus",
     "NumberPlate": "151665",
