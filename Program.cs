@@ -221,19 +221,17 @@
 			);
 		}
 		static void Settings()
-		{
-			Display.DisplayText(new string[]
-			{
-				"", "", "",
-				"Your settings are in",
-				"another castle      ",
-				"", "", "",
-				"[Press any key to go back]"
-			},
-			("", " >  Settings  < ", ""),
-			("", "", ""),
-			Display.Alignement.Center);
-		}
+			=> Display.DisplayText(new string[]
+				{
+					"", "", "",
+					"Your settings are in",
+					"another castle      ",
+					"", "", "",
+					"[Press any key to go back]"
+				},
+				("", " >  Settings  < ", ""),
+				("", "", ""),
+				Display.Alignement.Center);
 		static void CreditsInfos()
 		{
 			Display.DisplayScrollableText(new string[]
@@ -266,6 +264,17 @@
 			SaveVariables();
 		}
 
-		static void PlaceHolder() => throw new NotImplementedException();
+		static void PlaceHolder()
+			=> Display.DisplayText(new string[]
+				{
+					"", "", "",
+					"This functionality is in",
+					"another castle          ",
+					"", "", "",
+					"[Press any key to go back]"
+				},
+				("", " [ Not implemented ] ", ""),
+				("", " [ Not implemented ] ", ""),
+				Display.Alignement.Center);
 	}
 }
