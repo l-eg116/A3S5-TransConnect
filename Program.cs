@@ -130,6 +130,14 @@
 			loaders.ForEach(loader => loader.Start());
 			loaders.ForEach(loader => loader.Join());
 
+			void CheckTicketLink(Ticket ticket)
+			{
+				foreach(Client c in clients.List) if(c == ticket.Client) ticket.Client = c;
+				foreach((string, Employee) t in company.MakeTree()) if(t.Item2 == ticket.Driver) ticket.Driver = t.Item2;
+				foreach(Vehicle v in fleet.List) if(v == ticket.Vehicle) ticket.Vehicle = v;
+			}
+			tickets.List.ForEach(CheckTicketLink);
+
 			Console.Write("Loading done");
 			System.Threading.Thread.Sleep(500);
 			for (int i = 0; i < 3; i++) { Console.Write("."); System.Threading.Thread.Sleep(500); }

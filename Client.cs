@@ -29,7 +29,7 @@
 
 		public override string ToString()
 		{
-			return base.ToString() + $", Company : {this.Company}, City : {this.City}, {this.LinkedTickets.Count} LinkedTicket(s)";
+			return base.ToString() + $", Company : {this.Company}, City : {this.City}";
 		}
 		public override string PrettyString()
 			=> base.PrettyString() + $" - {this.Company} in {this.City}";

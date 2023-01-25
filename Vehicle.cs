@@ -46,7 +46,7 @@ namespace A3S5_TransConnect
 		public override int GetHashCode()
 			=> this.ToString().GetHashCode();
 		public override bool Equals(object? obj)
-			=> obj is Vehicle && this.GetHashCode() == obj.GetHashCode();
+			=> obj is Vehicle && this.ToString() == obj.ToString();
 		public static bool operator == (Vehicle v, object? obj)
 			=> v.Equals(obj);
 		public static bool operator != (Vehicle v, object? obj)

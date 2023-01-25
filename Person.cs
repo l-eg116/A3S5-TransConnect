@@ -28,7 +28,7 @@
 		public override int GetHashCode()
 			=> this.ToString().GetHashCode();
 		public override bool Equals(object? obj)
-			=> obj?.GetHashCode() == this.GetHashCode();
+			=> obj?.ToString() == this.ToString();
 		public static bool operator ==(Person person, object? obj)
 			=> person.Equals(obj);
 		public static bool operator !=(Person person, object? obj)
