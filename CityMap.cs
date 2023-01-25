@@ -98,14 +98,16 @@ namespace A3S5_TransConnect
 			return mapState;
 		}
 		public uint DistanceBetween(City from, City to)
-			=> this.Dijkstra(from)[to].Item1;
+			=> this.Dijkstra(from).GetValueOrDefault(to, (uint.MaxValue, null, true)).Item1;
 		public List<Road>? PathFromTo(City from, City to)
 		{
-			List<Road> path = new List<Road>();
 			Dictionary<City, (uint, City?, bool)> map = this.Dijkstra(from);
+			if (!(map.ContainsKey(from) && map.ContainsKey(to)) || map.GetValueOrDefault(to, (uint.MaxValue, null, true)).Item1 == uint.MaxValue) return null;
+
+			List<Road> path = new List<Road>();
 			for (City? current = to; from != current; current = map[current].Item2)
 				if (current is null || map[current].Item2 is null) return null;
-				else path.Add(this.Roads.Where(r => r.Links(current, map[current].Item2)).Single());
+				else path.Add(new Road(map[current].Item2 ?? new City(), current, this.Roads.Where(r => r.Links(current, map[current].Item2)).Single().DistanceKm));
 			path.Reverse();
 			return path;
 		}
@@ -114,14 +116,14 @@ namespace A3S5_TransConnect
 		{
 			List<PropertyCapsule> propertyCapsules = new List<PropertyCapsule>()
 				{ new PropertyCapsule("> Map has ", () => $"{this.Cities.Count} city(ies) and {this.Roads.Count} road(s) <") };
-			foreach (Road road in this.Roads)
-				propertyCapsules.Add(new PropertyCapsule($"{road.Black} ←→ {road.White} > ",
-					() => $"{road.DistanceKm} km", () => this.Roads.Remove(road),
-					l => road.DistanceKm = Display.CleanRead<uint>("New road length > ", l)));
 			propertyCapsules.Add(new PropertyCapsule("+ Add new Road", () => "", null,
 				l => this.Add(new Road(new City(Display.CleanRead<string>("First city > ", l)),
 					new City(Display.CleanRead<string>("Second city > ", l)),
 					Display.CleanRead<uint>("Distance > ", l)))));
+			foreach (Road road in this.Roads)
+				propertyCapsules.Add(new PropertyCapsule($"{road.Black} ←→ {road.White} > ",
+					() => $"{road.DistanceKm} km", () => this.Roads.Remove(road),
+					l => road.DistanceKm = Display.CleanRead<uint>("New road length > ", l)));
 			return propertyCapsules;
 		}
 		public List<(string, City)> InstanceSelector()

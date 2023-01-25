@@ -15,7 +15,7 @@ namespace A3S5_TransConnect
 		}
 
 		public override string ToString()
-			=> $"Road | {this.Black} <=> {this.White} ({this.DistanceKm} km)";
+			=> $"{this.Black} ←→ {this.White} ({this.DistanceKm} km)";
 
 		public override int GetHashCode()
 			=> this.Black.GetHashCode() ^ this.White.GetHashCode();

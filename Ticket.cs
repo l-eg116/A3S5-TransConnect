@@ -113,6 +113,7 @@ namespace A3S5_TransConnect
 					_ => this.Origin = Display.DisplayInstanceSelector(Program.map, (" Select an origin", "", "")) ?? this.Origin),
 				new PropertyCapsule("Destination : ", () => this.Destination + "", () => this.Destination = null,
 					_ => this.Destination = Display.DisplayInstanceSelector(Program.map, (" Select a destination", "", "")) ?? this.Destination),
+				new PropertyCapsule("    → Distance : ", () => Program.map.DistanceBetween(this.Origin ?? new City(), this.Destination ?? new City()) + " km", null, null),
 				new PropertyCapsule("Driver : ", () => this.Driver?.PrettyString() + "", () => this.Driver = null,
 					_ => this.Driver = Display.DisplayInstanceSelector(Program.company, (" Select a driver", "", "")) ?? this.Driver),
 				new PropertyCapsule("Vehicle : ", () => this.Vehicle?.PrettyString() + "", () => this.Vehicle = null,

@@ -79,7 +79,7 @@
 					(" > Clients         ", Clients),
 					(" > Vehicles        ", Vehicles),
 					(" > Tickets         ", Tickets),
-					(" > Map             ", PlaceHolder),
+					(" > Map             ", Map),
 					(" ", () => { }),
 					(" ) Settings        ", Settings),
 					(" ) Credits & Infos ", CreditsInfos),
@@ -131,9 +131,9 @@
 
 			void CheckTicketLink(Ticket ticket)
 			{
-				foreach(Client c in clients.List) if(c == ticket.Client) ticket.Client = c;
-				foreach((string, Employee) t in company.MakeTree()) if(t.Item2 == ticket.Driver) ticket.Driver = t.Item2;
-				foreach(Vehicle v in fleet.List) if(v == ticket.Vehicle) ticket.Vehicle = v;
+				foreach (Client c in clients.List) if (c == ticket.Client) ticket.Client = c;
+				foreach ((string, Employee) t in company.MakeTree()) if (t.Item2 == ticket.Driver) ticket.Driver = t.Item2;
+				foreach (Vehicle v in fleet.List) if (v == ticket.Vehicle) ticket.Vehicle = v;
 			}
 			tickets.List.ForEach(CheckTicketLink);
 
@@ -254,6 +254,13 @@
 				Display.Alignement.Left
 			);
 		}
+		static void Map()
+		{
+			Display.DisplayEditor(new MapViewer(),
+				("  Simulating a route", "", ""),
+				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down   [Esc] Leave", "")
+			);
+		}
 		static void Settings()
 			=> Display.DisplayText(new string[]
 				{
@@ -275,7 +282,9 @@
 				"This app is build to simplify the management of employees, clients and tickets",
 				"of the company 'TransConnect', and follows certain specifications.",
 				"There are 4 functionalities of this app that where creative liberties :",
-				"---1---, ---2---, ---3---, ---4---", // ! TODO
+				"¤ Added a route simulator and map editor",
+				"¤ Ability to easily re-organise employees by changing their superior", // ! TODO
+				"¤ Ability to temporarly change the map to reflect work, weather conditions, etc...", // ! TODO
 				"", "",
 				"<=> CREDITS <=>",
 				"~ Programming ~", "Emile GATIGNON", "",
@@ -298,6 +307,37 @@
 			SaveVariables();
 		}
 
+		private class MapViewer : IDisplayEditable<MapViewer>
+		{
+			public City? City1 { get; set; }
+			public City? City2 { get; set; }
+
+			public List<PropertyCapsule> PropertyCapsules()
+			{
+				uint distance = map.DistanceBetween(this.City1 ?? new City(), this.City2 ?? new City());
+				string distStr = distance == uint.MaxValue ? "[Route not found]" : $"{distance} km";
+				List<Road>? path = map.PathFromTo(this.City1 ?? new City(), this.City2 ?? new City());
+				List<PropertyCapsule> pc = new List<PropertyCapsule>()
+				{
+					new PropertyCapsule(" > Edit map", null, null,
+						_ => Display.DisplayEditor(map, ("  Editing map", "", @"/!\ Changes won't be saved on exit of the app"))),
+					new PropertyCapsule(),
+					new PropertyCapsule("Origin : ", () => this.City1 + "", () => this.City1 = null,
+						_ => this.City1 = Display.DisplayInstanceSelector(Program.map, (" Select an origin", "", "")) ?? this.City1),
+					new PropertyCapsule("Destination : ", () => this.City2 + "", () => this.City2 = null,
+						_ => this.City2 = Display.DisplayInstanceSelector(Program.map, (" Select a destination", "", "")) ?? this.City2),
+					new PropertyCapsule(),
+					new PropertyCapsule(" → Distance : ", () => distStr),
+				};
+				if (path is not null && path.Count > 0)
+				{
+					pc.Add(new PropertyCapsule(" → Route ", () => $"({path.Count} steps) :"));
+					path.ForEach(r => pc.Add(new PropertyCapsule($"   ↓ {r}")));
+				}
+
+				return pc;
+			}
+		}
 		static void PlaceHolder()
 			=> Display.DisplayText(new string[]
 				{
