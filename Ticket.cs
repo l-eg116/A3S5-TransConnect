@@ -78,7 +78,11 @@ namespace A3S5_TransConnect
 				$"Cost: {this.Cost}€, Payed: {this.Payed}";
 		}
 		public string PrettyString()
-			=> $"{this.Name} #{this.TicketNumber} on {this.Date} | {this.Origin} → {this.Destination}";
+		{
+			string payed = this.Payed ? "Payed" : "Due";
+			return $"#{this.TicketNumber} - '{this.Name}' on {this.Date} | {this.Origin?.ToString() ?? "??"} → {this.Destination?.ToString() ?? "??"} " +
+			$"for '{this.Client?.FirstName ?? "?"} {this.Client?.LastName ?? "?"}' at {this.Cost:F2}€ ({payed})";
+		}
 		public override int GetHashCode()
 			=> (this.Name, this.Origin, this.Destination, this.Date, this.Cost).GetHashCode();
 
@@ -115,10 +119,10 @@ namespace A3S5_TransConnect
 					_ => this.Vehicle = Display.DisplayInstanceSelector(Program.fleet, (" Select a vehicle", "", "")) ?? this.Vehicle),
 				new PropertyCapsule("Date : ", () => this.Date + "", () => this.Date = new DateTime(),
 					l => this.Date = Display.CleanRead<DateTime>("Date > ", l)),
-				new PropertyCapsule("Cost : ", () => $"{this.Cost:.2f} €", () => this.Cost = 0,
+				new PropertyCapsule("Cost : ", () => $"{this.Cost:F2} €", () => this.Cost = 0,
 					l => this.Cost = Display.CleanRead<double>("Cost > ", l)),
 				new PropertyCapsule("Payed : ", () => this.Payed ? "Yes" : "No", null,
-					l => this.Payed ^= this.Payed),
+					l => this.Payed = !this.Payed),
 			};
 	}
 	interface ITicketLinkable

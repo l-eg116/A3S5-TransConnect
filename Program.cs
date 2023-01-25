@@ -78,7 +78,7 @@
 					(" > Employees       ", Employees),
 					(" > Clients         ", Clients),
 					(" > Vehicles        ", Vehicles),
-					(" > Tickets         ", PlaceHolder),
+					(" > Tickets         ", Tickets),
 					(" > Map             ", PlaceHolder),
 					(" ", () => { }),
 					(" ) Settings        ", Settings),
@@ -118,7 +118,6 @@
 					Console.WriteLine($"Succesfully loaded '{Options.DistancesSavePath}'");
 				}
 			}
-
 			List<Thread> loaders = new List<Thread>()
 			{
 				new Thread(() => Loader<List<Vehicle>>(Options.FleetSavePath, loaded => fleet.List = loaded)),
@@ -225,6 +224,33 @@
 			Display.DisplayEditor(fleet,
 				("  Managing fleet", "", ""),
 				("", "[Space|Enter] Edit   [Suppr] Remove vehicle   [W|Z|↑/S|↓] Selection up/down   [Esc] Leave", ""),
+				Display.Alignement.Left
+			);
+		}
+		static void Tickets()
+		{
+			void SortNumb() => tickets.List.Sort((c1, c2) => c1.PrettyString().CompareTo(c2.PrettyString()));
+			void SortDate() => tickets.List.Sort((c1, c2) => c1.Date.CompareTo(c2.Date));
+			void SortCost() => tickets.List.Sort((c1, c2) => c1.Cost.CompareTo(c2.Cost));
+			void SortClie() => tickets.List.Sort((c1, c2) => c1.Client?.CompareTo(c2.Client) ?? -1);
+			void SortOrig() => tickets.List.Sort((c1, c2) => c1.Origin?.CompareTo(c2.Origin) ?? -1);
+			void SortDest() => tickets.List.Sort((c1, c2) => c1.Destination?.CompareTo(c2.Destination) ?? -1);
+			Display.DisplayActionSelector(new List<(string, Action)>()
+				{
+					(" Number (Highest first) ", SortNumb),
+					(" Date (Latest first)    ", SortDate),
+					(" Cost (Highest first)   ", SortCost),
+					(" Client (A → Z)         ", SortClie),
+					(" Origin (A → Z)         ", SortOrig),
+					(" Destination (A → Z)    ", SortDest),
+				}, null,
+				("", ">  Ticket sorting mode  <", ""),
+				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down", ""),
+				Display.Alignement.Center, true);
+
+			Display.DisplayEditor(tickets,
+				("  Managing tickets", "", ""),
+				("", "[Space|Enter] Edit   [Suppr] Remove ticket   [W|Z|↑/S|↓] Selection up/down   [Esc] Leave", ""),
 				Display.Alignement.Left
 			);
 		}
