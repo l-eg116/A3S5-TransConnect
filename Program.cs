@@ -79,6 +79,7 @@
 					(" > Clients         ", Clients),
 					(" > Vehicles        ", Vehicles),
 					(" > Tickets         ", Tickets),
+					(" > Statistics      ", Statistics),
 					(" > Map             ", Map),
 					(" ", () => { }),
 					(" ) Settings        ", Settings),
@@ -261,6 +262,41 @@
 				("", "[Space|Enter] Select   [W|Z|↑/S|↓] Selection up/down   [Esc] Leave", "")
 			);
 		}
+		static void Statistics()
+		{
+			bool loop = true;
+			ITicketLinkable? item = null;
+
+			while (loop)
+			{
+				List<(Func<string>, Action)> actions = new List<(Func<string>, Action)>()
+				{
+					(() => $" ↑ Exit ↑ ", () => loop = false),
+					(() => $"→ Select an Employee", () => item = Display.DisplayInstanceSelector(company, (" Select an Employee", "", ""))),
+					(() => $"→ Select a Client", () => item = Display.DisplayInstanceSelector(clients, (" Select a Client", "", ""))),
+					(() => $"→ Select a Vehicle", () => item = Display.DisplayInstanceSelector(fleet, (" Select a Vehicle", "", ""))),
+					(() => "", () => { }),
+					(() => "Selected :", () => { }),
+					(() => $"  > {item?.ToString() ?? "[No item selected]"}", () => { }),
+				};
+				if (item is not null)
+				{
+					int c = item.LinkedTickets.Count;
+					double s = item.LinkedTickets.Sum(t => t.Cost);
+					actions.Add((() => $" ¤ {c} Linked tickets ({Ticket.PastCount(item)} passed)", () => { }));
+					actions.Add((() => $" ¤ Total cost : {s:F2} ({Ticket.PastTotalCost(item):F2} for passed)", () => { }));
+					actions.Add((() => $" ¤ Mean cost : {s / c:F2} ({Ticket.PastMeanCost(item)} for passed)", () => { }));
+					actions.Add((() => $" ¤ Linked tickets :", () => { }));
+					item.LinkedTickets.ToList().ForEach(
+						t => actions.Add((() => "   - " + t.PrettyString(), () => Display.DisplayEditor(t, ("  Editing ticket", "", ""))))
+					);
+				}
+
+				Display.DisplayActionSelector(actions, f => f(),
+					("  Statistics", "", "")
+				);
+			}
+		}
 		static void Settings()
 			=> Display.DisplayText(new string[]
 				{
@@ -283,7 +319,7 @@
 				"of the company 'TransConnect', and follows certain specifications.",
 				"There are 4 functionalities of this app that where creative liberties :",
 				"¤ Added a route simulator and map editor",
-				"¤ Ability to easily re-organise employees by changing their superior", // ! TODO
+				"¤ Ability to easily re-organise employees by changing their superior",
 				"¤ Ability to temporarly change the map to reflect work, weather conditions, etc...", // ! TODO
 				"", "",
 				"<=> CREDITS <=>",

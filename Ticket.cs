@@ -100,7 +100,7 @@ namespace A3S5_TransConnect
 		static public double PastTotalCost(ITicketLinkable thing)
 			=> PastTickets(thing).Sum(ticket => ticket.Cost);
 		static public double PastMeanCost(ITicketLinkable thing)
-			=> PastTickets(thing).Average(ticket => ticket.Cost);
+			=> PastTickets(thing).Count() == 0 ? 0 : PastTickets(thing).Average(ticket => ticket.Cost);
 
 		public List<PropertyCapsule> PropertyCapsules()
 			=> new List<PropertyCapsule>()
