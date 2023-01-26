@@ -105,7 +105,7 @@ namespace A3S5_TransConnect
 			if (!(map.ContainsKey(from) && map.ContainsKey(to)) || map.GetValueOrDefault(to, (uint.MaxValue, null, true)).Item1 == uint.MaxValue) return null;
 
 			List<Road> path = new List<Road>();
-			for (City? current = to; from != current; current = map[current].Item2)
+			for (City? current = to; from != current && path.Count < 128; current = map[current].Item2)
 				if (current is null || map[current].Item2 is null) return null;
 				else path.Add(new Road(map[current].Item2 ?? new City(), current, this.Roads.Where(r => r.Links(current, map[current].Item2)).Single().DistanceKm));
 			path.Reverse();
