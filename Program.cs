@@ -320,7 +320,7 @@
 				"There are 4 functionalities of this app that where creative liberties :",
 				"¤ Added a route simulator and map editor",
 				"¤ Ability to easily re-organise employees by changing their superior",
-				"¤ Ability to temporarly change the map to reflect work, weather conditions, etc...", // ! TODO
+				"¤ Ability to temporarly change the map to reflect work, weather conditions, etc...",
 				"", "",
 				"<=> CREDITS <=>",
 				"~ Programming ~", "Emile GATIGNON", "",
@@ -328,10 +328,10 @@
 				"~ User Experience ~", "Emile GATIGNON", "",
 				"~ App Concept ~", "Aline ELLUL", "",
 				"~ Music & Sound Design ~", "Emile GATIGNON", "",
-				"~ Testers ~", "None as of yet", "",  // TODO
+				"~ Testers ~", "Boyan", "Lenday", "Morgan",
 			},
 			("", " >  Credits & Infos  < ", ""),
-			("", "[Press ESC to go back]", ""),
+			("", "[Press ESC to go back]   [W|Z|↑/S|↓] Scroll up/down", ""),
 			Display.Alignement.Center);
 		}
 		static void ManualSave()
