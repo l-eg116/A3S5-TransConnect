@@ -19,7 +19,7 @@ namespace A3S5_TransConnect
 		}
 
 		public override string ToString()
-			=> base.ToString() + $", PayloadType: {this.PayloadType}, Capacity: {this.PayloadType}{this.CapacityUnit}";
+			=> base.ToString() + $", PayloadType: {this.PayloadType}, Capacity: {this.Capacity} {this.CapacityUnit}";
 
 		public override List<PropertyCapsule> PropertyCapsules()
 			=> base.PropertyCapsules().Concat(new List<PropertyCapsule>
