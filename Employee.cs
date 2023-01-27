@@ -27,7 +27,7 @@
 			HashSet<Ticket>? linkedTickets = null)
 			: base(firstName, lastName, socialSecurityNumber, birthday, address, email, phoneNumber)
 		{
-			this.JoinDate = joinDate ?? new DateTime();
+			this.JoinDate = joinDate ?? DateTime.Today;
 			this.JobTitle = jobTitle;
 			this.Salary = salary;
 			this.Subordinates = subordinates;
@@ -66,7 +66,7 @@
 			{
 				new PropertyCapsule(),  // For a nice empty line :)
 				new PropertyCapsule("Join Date : ", () => this.JoinDate + "",
-					() => this.JoinDate = new DateTime(), l => this.JoinDate = Display.CleanRead<DateTime>("Join Date > ", l)),
+					() => this.JoinDate = DateTime.Today, l => this.JoinDate = Display.CleanRead<DateTime>("Join Date > ", l)),
 				new PropertyCapsule("Job Title : ", () => this.JobTitle,
 					() => this.JobTitle = "", l => this.JobTitle = Display.CleanRead<string>("Job Title > ", l)),
 				new PropertyCapsule("Salary : ", () => $"{this.Salary} €/mth",

@@ -65,7 +65,7 @@ namespace A3S5_TransConnect
 			this.Destination = destination;
 			this.Driver = driver;
 			this.Vehicle = vehicle;
-			this.Date = date ?? new DateTime();
+			this.Date = date ?? DateTime.Today;
 			this.Cost = cost;
 			this.Payed = payed;
 			this.TicketNumber = Ticket.nextTicketNumber;
@@ -118,7 +118,7 @@ namespace A3S5_TransConnect
 					_ => this.Driver = Display.DisplayInstanceSelector(Program.company, (" Select a driver", "", "")) ?? this.Driver),
 				new PropertyCapsule("Vehicle : ", () => this.Vehicle?.PrettyString() + "", () => this.Vehicle = null,
 					_ => this.Vehicle = Display.DisplayInstanceSelector(Program.fleet, (" Select a vehicle", "", "")) ?? this.Vehicle),
-				new PropertyCapsule("Date : ", () => this.Date + "", () => this.Date = new DateTime(),
+				new PropertyCapsule("Date : ", () => this.Date + "", () => this.Date = DateTime.Today,
 					l => this.Date = Display.CleanRead<DateTime>("Date > ", l)),
 				new PropertyCapsule("Cost : ", () => $"{this.Cost:F2} €", () => this.Cost = 0,
 					l => this.Cost = Display.CleanRead<double>("Cost > ", l)),
