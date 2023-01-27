@@ -196,10 +196,10 @@
 		{
 			void SortAlphaName() => clients.List.Sort((c1, c2) => c1.PrettyString().CompareTo(c2.PrettyString()));
 			void SortAlphaCity() => clients.List.Sort((c1, c2) => c1.City?.CompareTo(c2.City) ?? -1);
-			void SortTotalHist() => clients.List.Sort((c1, c2) => (int)(Ticket.TotalCost(c1) - Ticket.TotalCost(c2)));
-			void SortTotalLost() => clients.List.Sort((c1, c2) => (int)(Ticket.TotalCost(c2) - Ticket.TotalCost(c1)));
-			void SortCountHist() => clients.List.Sort((c1, c2) => (int)(Ticket.PastCount(c1) - Ticket.PastCount(c2)));
-			void SortCountLost() => clients.List.Sort((c1, c2) => (int)(Ticket.PastCount(c2) - Ticket.PastCount(c1)));
+			void SortTotalHist() => clients.List.Sort((c1, c2) => (int)(Ticket.TotalCost(c2) - Ticket.TotalCost(c1)));
+			void SortTotalLost() => clients.List.Sort((c1, c2) => (int)(Ticket.TotalCost(c1) - Ticket.TotalCost(c2)));
+			void SortCountHist() => clients.List.Sort((c1, c2) => (int)(c2.LinkedTickets.Count - c1.LinkedTickets.Count));
+			void SortCountLost() => clients.List.Sort((c1, c2) => (int)(c1.LinkedTickets.Count - c2.LinkedTickets.Count));
 			Display.DisplayActionSelector(new List<(string, Action)>()
 				{
 					(" Alphabetical (Name | A → Z)       ", SortAlphaName),
@@ -230,9 +230,9 @@
 		}
 		static void Tickets()
 		{
-			void SortNumb() => tickets.List.Sort((c1, c2) => c1.PrettyString().CompareTo(c2.PrettyString()));
-			void SortDate() => tickets.List.Sort((c1, c2) => c1.Date.CompareTo(c2.Date));
-			void SortCost() => tickets.List.Sort((c1, c2) => c1.Cost.CompareTo(c2.Cost));
+			void SortNumb() => tickets.List.Sort((c1, c2) => -c1.PrettyString().CompareTo(c2.PrettyString()));
+			void SortDate() => tickets.List.Sort((c1, c2) => -c1.Date.CompareTo(c2.Date));
+			void SortCost() => tickets.List.Sort((c1, c2) => -c1.Cost.CompareTo(c2.Cost));
 			void SortClie() => tickets.List.Sort((c1, c2) => c1.Client?.CompareTo(c2.Client) ?? -1);
 			void SortOrig() => tickets.List.Sort((c1, c2) => c1.Origin?.CompareTo(c2.Origin) ?? -1);
 			void SortDest() => tickets.List.Sort((c1, c2) => c1.Destination?.CompareTo(c2.Destination) ?? -1);

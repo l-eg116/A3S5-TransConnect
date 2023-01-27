@@ -32,7 +32,7 @@
 			return base.ToString() + $", Company : {this.Company}, City : {this.City}";
 		}
 		public override string PrettyString()
-			=> base.PrettyString() + $" - {this.Company} in {this.City}";
+			=> base.PrettyString() + $" - {this.Company} in {this.City}, {this.LinkedTickets.Count} ticket(s) ({Ticket.TotalCost(this):F2}€ total)";
 
 		public void AddLinkedTicket(Ticket tkt)
 			=> tkt.Client = this;
