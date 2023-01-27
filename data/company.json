@@ -1,59 +1,59 @@
 ﻿{
   "Name": "TransConnect",
   "Root": {
-    "JoinDate": "0001-01-01T00:00:00",
+    "JoinDate": "2012-03-25T00:00:00",
     "JobTitle": "Directeur G\u00E9n\u00E9ral",
-    "Salary": 0,
+    "Salary": 2400,
     "Subordinates": [
       {
-        "JoinDate": "0001-01-01T00:00:00",
+        "JoinDate": "2019-07-05T00:00:00",
         "JobTitle": "Directrice Commerciale",
-        "Salary": 0,
+        "Salary": 2200,
         "Subordinates": [
           {
-            "JoinDate": "0001-01-01T00:00:00",
+            "JoinDate": "2023-01-27T00:00:00+01:00",
             "JobTitle": "Commercial",
-            "Salary": 0,
+            "Salary": 1900,
             "Subordinates": null,
-            "FirstName": "Mr",
+            "FirstName": "Georges",
             "LastName": "Forge",
-            "SocialSecurityNumber": 0,
+            "SocialSecurityNumber": 16482,
             "Birthday": null,
             "Address": "",
-            "Email": "",
-            "PhoneNumber": ""
+            "Email": "g.forge@transconnect.fr",
+            "PhoneNumber": "\u002B33 6 48 52 95 26"
           },
           {
             "JoinDate": "0001-01-01T00:00:00",
             "JobTitle": "Commerciale",
-            "Salary": 0,
+            "Salary": 1950,
             "Subordinates": null,
-            "FirstName": "Mme",
+            "FirstName": "Nathalie",
             "LastName": "Fermi",
-            "SocialSecurityNumber": 0,
+            "SocialSecurityNumber": 1864359,
             "Birthday": null,
             "Address": "",
-            "Email": "",
+            "Email": "n.fermi@transconnect.fr",
             "PhoneNumber": ""
           }
         ],
-        "FirstName": "Mme",
+        "FirstName": "Melba",
         "LastName": "Fiesta",
-        "SocialSecurityNumber": 0,
+        "SocialSecurityNumber": 68452397,
         "Birthday": null,
-        "Address": "",
-        "Email": "",
-        "PhoneNumber": ""
+        "Address": "24 rue Moufetard, 75005 Paris",
+        "Email": "m.fiesta@transconnect.fr",
+        "PhoneNumber": "\u002B33 7 95 26 34 15"
       },
       {
-        "JoinDate": "0001-01-01T00:00:00",
+        "JoinDate": "2018-11-07T00:00:00",
         "JobTitle": "Directeur des op\u00E9rations",
-        "Salary": 0,
+        "Salary": 2250,
         "Subordinates": [
           {
-            "JoinDate": "0001-01-01T00:00:00",
+            "JoinDate": "2022-09-30T00:00:00",
             "JobTitle": "Chef d\u0027\u00E9quipe",
-            "Salary": 0,
+            "Salary": 1700,
             "Subordinates": [
               {
                 "JoinDate": "0001-01-01T00:00:00",
@@ -95,18 +95,18 @@
                 "PhoneNumber": ""
               }
             ],
-            "FirstName": "Mr",
+            "FirstName": "Perceval",
             "LastName": "Royal",
-            "SocialSecurityNumber": 0,
+            "SocialSecurityNumber": 84952,
             "Birthday": null,
             "Address": "",
-            "Email": "",
-            "PhoneNumber": ""
+            "Email": "p.royal@transconnect.fr",
+            "PhoneNumber": "\u002B33 7 51 85 36 99"
           },
           {
-            "JoinDate": "0001-01-01T00:00:00",
+            "JoinDate": "2023-01-27T00:00:00+01:00",
             "JobTitle": "Cheffe d\u0027\u00E9quipe",
-            "Salary": 0,
+            "Salary": 1650,
             "Subordinates": [
               {
                 "JoinDate": "0001-01-01T00:00:00",
@@ -135,84 +135,84 @@
                 "PhoneNumber": ""
               }
             ],
-            "FirstName": "Mme",
+            "FirstName": "Martince",
             "LastName": "Prince",
-            "SocialSecurityNumber": 0,
+            "SocialSecurityNumber": 76922,
             "Birthday": null,
             "Address": "",
-            "Email": "",
-            "PhoneNumber": ""
+            "Email": "m.prince@transconnect.fr",
+            "PhoneNumber": "\u002B33 6 45 95 26 20"
           }
         ],
-        "FirstName": "Mr",
+        "FirstName": "G\u00E9rard",
         "LastName": "Fetard",
-        "SocialSecurityNumber": 0,
+        "SocialSecurityNumber": 354187313,
         "Birthday": null,
         "Address": "",
-        "Email": "",
-        "PhoneNumber": ""
+        "Email": "g.fetard@transconnect.fr",
+        "PhoneNumber": "\u002B33 1 25 75 84 62"
       },
       {
-        "JoinDate": "0001-01-01T00:00:00",
+        "JoinDate": "2016-06-16T00:00:00",
         "JobTitle": "Directrice des RH",
-        "Salary": 0,
+        "Salary": 2300,
         "Subordinates": [
           {
             "JoinDate": "0001-01-01T00:00:00",
             "JobTitle": "Formation",
-            "Salary": 0,
+            "Salary": 1850,
             "Subordinates": null,
-            "FirstName": "Mme",
+            "FirstName": "Fleur",
             "LastName": "Couleur",
-            "SocialSecurityNumber": 0,
+            "SocialSecurityNumber": 163845,
             "Birthday": null,
             "Address": "",
-            "Email": "",
-            "PhoneNumber": ""
+            "Email": "f.couleur@transconnect.fr",
+            "PhoneNumber": "\u002B33 1 64 94 85 32"
           },
           {
             "JoinDate": "0001-01-01T00:00:00",
             "JobTitle": "Contrats",
             "Salary": 0,
             "Subordinates": null,
-            "FirstName": "Mme",
-            "LastName": "ToutleMonde",
-            "SocialSecurityNumber": 0,
+            "FirstName": "Cun\u00E9gonde",
+            "LastName": "Toutlemonde",
+            "SocialSecurityNumber": 6248502,
             "Birthday": null,
             "Address": "",
-            "Email": "",
-            "PhoneNumber": ""
+            "Email": "c.toutlemonde@transconnect.fr",
+            "PhoneNumber": "\u002B33 2 06 58 45 91"
           }
         ],
-        "FirstName": "Mme",
+        "FirstName": "N\u00E9buleuse",
         "LastName": "Joyeuse",
-        "SocialSecurityNumber": 0,
+        "SocialSecurityNumber": 2369117,
         "Birthday": null,
         "Address": "",
-        "Email": "",
-        "PhoneNumber": ""
+        "Email": "n.joyeuse@transconnect.fr",
+        "PhoneNumber": "\u002B33 4 50 12 26 84"
       },
       {
-        "JoinDate": "0001-01-01T00:00:00",
+        "JoinDate": "2020-02-02T00:00:00",
         "JobTitle": "Directeur Financier",
-        "Salary": 0,
-        "Subordinates": null,
-        "FirstName": "Mr",
+        "Salary": 2450,
+        "Subordinates": [],
+        "FirstName": "Michou",
         "LastName": "GripSous",
-        "SocialSecurityNumber": 0,
+        "SocialSecurityNumber": 186463,
         "Birthday": null,
         "Address": "",
         "Email": "",
         "PhoneNumber": ""
       }
     ],
-    "FirstName": "Mr",
-    "LastName": "DUPOND",
-    "SocialSecurityNumber": 0,
+    "FirstName": "Jeannon",
+    "LastName": "Dupond",
+    "SocialSecurityNumber": 113354,
     "Birthday": null,
     "Address": "",
-    "Email": "",
-    "PhoneNumber": ""
+    "Email": "j.dupond@transconnect.fr",
+    "PhoneNumber": "\u002B33 6 24 20 45 91"
   },
   "Count": 16,
   "Height": 4

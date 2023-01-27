@@ -32,6 +32,18 @@
     "FuelType": "Electric"
   },
   {
+    "$type": "Truck",
+    "PayloadType": "Living stock",
+    "Capacity": 2800,
+    "CapacityUnit": "kg",
+    "Model": "Red Animal Truck",
+    "Brand": "Trucker",
+    "NumberPlate": "0PT1MU5-TF",
+    "LastRevision": "0001-01-01T00:00:00",
+    "KilometerCount": 1256,
+    "FuelType": "SP"
+  },
+  {
     "$type": "Van",
     "Type": "Generic",
     "Model": "Generic Van",
@@ -40,5 +52,15 @@
     "LastRevision": "0001-01-01T00:00:00",
     "KilometerCount": 4384,
     "FuelType": "SP98"
+  },
+  {
+    "$type": "Van",
+    "Type": "Refrigerated Van",
+    "Model": "Frigivan",
+    "Brand": "Vanced Refrigeration",
+    "NumberPlate": "13933546FF",
+    "LastRevision": "0001-01-01T00:00:00",
+    "KilometerCount": 85961,
+    "FuelType": "Hybric Ethanol/Electric"
   }
 ]

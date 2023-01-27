@@ -13,16 +13,42 @@
     "PhoneNumber": "\u002B33 6 48 62 98 24"
   },
   {
+    "Company": "Lumon Inc.",
+    "City": {
+      "Name": "Avignon"
+    },
+    "FirstName": "Mark",
+    "LastName": "Scout",
+    "SocialSecurityNumber": 5373430,
+    "Birthday": "1985-12-12T00:00:00",
+    "Address": "Lumon Headquarters",
+    "Email": "severance.isbad@lumon.com",
+    "PhoneNumber": "SEVERED"
+  },
+  {
+    "Company": "Lookers",
+    "City": {
+      "Name": "Monaco"
+    },
+    "FirstName": "John",
+    "LastName": "McHamm",
+    "SocialSecurityNumber": 223442,
+    "Birthday": "2001-01-01T00:00:00",
+    "Address": "",
+    "Email": "j.hamm@heyitsme.uk",
+    "PhoneNumber": "\u002B38 951 143 161"
+  },
+  {
     "Company": "Pastichat",
     "City": {
       "Name": "Angers"
     },
     "FirstName": "Nono",
     "LastName": "Gats",
-    "SocialSecurityNumber": 0,
+    "SocialSecurityNumber": 232945,
     "Birthday": "2004-07-01T00:00:00",
     "Address": "28 rue Pierre Curie, 49000 Angers",
-    "Email": null,
+    "Email": "n.g@ts.fr",
     "PhoneNumber": null
   },
   {
@@ -36,6 +62,32 @@
     "Birthday": "2002-07-05T00:00:00",
     "Address": "(M)11 - Porte des Lilas",
     "Email": null,
+    "PhoneNumber": null
+  },
+  {
+    "Company": "Gravillux",
+    "City": {
+      "Name": "Paris"
+    },
+    "FirstName": "Chon",
+    "LastName": "Kman",
+    "SocialSecurityNumber": 26845,
+    "Birthday": null,
+    "Address": "31 rue des Gravilliers, 75003 Paris",
+    "Email": "chonk@gravillux.fr",
+    "PhoneNumber": "\u002B33 6 24 20 45 91"
+  },
+  {
+    "Company": "Feshn Inc.",
+    "City": {
+      "Name": "La Rochelle"
+    },
+    "FirstName": "Boudim",
+    "LastName": "Anh",
+    "SocialSecurityNumber": 39745851,
+    "Birthday": "2003-06-11T00:00:00",
+    "Address": "",
+    "Email": "boudim@feshninc.fr",
     "PhoneNumber": null
   }
 ]
